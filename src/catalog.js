@@ -32,4 +32,4 @@ export const CATALOG = [
   { group: 'Other', label: 'Box', item: { type: 'box', name: 'Box', w: 600, d: 600, h: 600, color: '#9aa5b1' } },
 ];
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs'];

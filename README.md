@@ -4,8 +4,22 @@ An editable 3D model of the ground floor, made for trying out furniture layouts,
 kitchen designs and door positions. It runs in a web browser. The whole house is
 described in one file, [`plan.json`](plan.json), with every size in millimetres.
 
-The `plan.json` in this repo is an **example house**. Follow the steps below to replace
-it with your own measurements.
+`plan.json` has been **traced from the estate agent's floor plan** at about 15 mm per
+drawing pixel. Room sizes come within ~60 mm of the stated dimensions (kitchen 3.93 ×
+9.42 m vs 3.90 × 9.36 m stated). It includes the angled annexe, the sun room, the bay,
+the garage and stores, every door and window, the stairs, the chimney breast and the
+existing kitchen and utility units. Estate-agent drawings aren't survey-accurate, so
+**check with a tape measure before ordering anything** (see Step 1). These are guesses
+and need confirming:
+
+- wall thicknesses (220 mm main house, 200 mm annexe, 100 mm internal)
+- window sill heights and the bay window shape
+- which way each door swings and where it's hinged (read off the drawing)
+- the garage door, drawn as a plain opening
+
+To correct a value, select the wall, door or window in the app and type in your
+measurement, then **Export** and commit the file. Each room has a floor outline
+(`poly`) and floor colour (`floor`) in `plan.json`.
 
 ---
 
@@ -75,11 +89,16 @@ That lets the editor stretch connected walls when you drag one.
 - `hinge` (`start`/`end`) and `side` (`1`/`-1`) set the swing. You don't need to work
   these out by hand: set them in the app with **Flip swing** and the Hinge drop-down.
 
-### Rooms (labels only)
+### Rooms
 
 ```json
-{ "name": "Kitchen / dining", "x": 4300, "y": 5800 }
+{ "name": "Kitchen / dining", "x": 4300, "y": 5800, "floor": "#b9bdbf",
+  "poly": [[0, 0], [3000, 0], [3000, 4000], [0, 4000]] }
 ```
+
+`x, y` is where the label goes. `poly` (optional) is the floor outline, usually the
+wall centre lines around the room, and `floor` is its colour. Without any `poly`, one
+rectangular floor is drawn under the whole plan.
 
 ### Furniture and kitchen units
 
@@ -156,5 +175,5 @@ git branch per option. **Reset** throws away browser changes and reloads `plan.j
 
 ## Limitations
 
-Walls are straight boxes. Curved bays, sloping ceilings and an upper floor aren't
+Walls are straight boxes, so curved bays are drawn as a few straight segments. Curved walls, sloping ceilings and an upper floor aren't
 supported yet. Furniture is drawn as simple shapes, not detailed models.

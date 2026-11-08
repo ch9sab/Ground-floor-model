@@ -1,58 +1,1660 @@
 {
-  "name": "Example ground floor — replace with your measurements",
-  "units": "mm",
-  "walls": [
-    { "id": "W1", "name": "Front wall", "a": [0, 0], "b": [9000, 0], "thickness": 300, "height": 2400 },
-    { "id": "W2", "name": "Right side wall", "a": [9000, 0], "b": [9000, 7000], "thickness": 300, "height": 2400 },
-    { "id": "W3", "name": "Back wall", "a": [9000, 7000], "b": [0, 7000], "thickness": 300, "height": 2400 },
-    { "id": "W4", "name": "Left side wall", "a": [0, 7000], "b": [0, 0], "thickness": 300, "height": 2400 },
-    { "id": "W5", "name": "Kitchen / front rooms", "a": [0, 4500], "b": [9000, 4500], "thickness": 100, "height": 2400 },
-    { "id": "W6", "name": "Living / hall", "a": [4500, 0], "b": [4500, 4500], "thickness": 100, "height": 2400 },
-    { "id": "W7", "name": "Hall / study", "a": [6500, 0], "b": [6500, 4500], "thickness": 100, "height": 2400 }
-  ],
-  "openings": [
-    { "id": "O1", "type": "door", "wall": "W1", "offset": 5000, "width": 1000, "height": 2100, "hinge": "start", "side": 1, "openAngle": 80 },
-    { "id": "O2", "type": "window", "wall": "W1", "offset": 1250, "width": 2000, "height": 1200, "sill": 900 },
-    { "id": "O3", "type": "window", "wall": "W1", "offset": 7150, "width": 1200, "height": 1200, "sill": 900 },
-    { "id": "O4", "type": "door", "wall": "W6", "offset": 3300, "width": 826, "height": 2040, "hinge": "end", "side": 1, "openAngle": 80 },
-    { "id": "O5", "type": "door", "wall": "W7", "offset": 3300, "width": 826, "height": 2040, "hinge": "end", "side": -1, "openAngle": 80 },
-    { "id": "O6", "type": "door", "wall": "W5", "offset": 5200, "width": 826, "height": 2040, "hinge": "start", "side": 1, "openAngle": 80 },
-    { "id": "O7", "type": "window", "wall": "W3", "offset": 1500, "width": 2400, "height": 2100, "sill": 0 },
-    { "id": "O8", "type": "window", "wall": "W3", "offset": 6000, "width": 1500, "height": 1050, "sill": 1050 }
-  ],
-  "rooms": [
-    { "name": "Living room", "x": 2250, "y": 3800 },
-    { "name": "Hall", "x": 5500, "y": 2600 },
-    { "name": "Study", "x": 7750, "y": 2600 },
-    { "name": "Kitchen / dining", "x": 4300, "y": 5800 }
-  ],
-  "items": [
-    { "id": "i1", "type": "sofa", "name": "Sofa", "x": 600, "y": 2250, "w": 2200, "d": 900, "h": 850, "z": 0, "rot": 90, "color": "#6b7c93" },
-    { "id": "i2", "type": "rug", "name": "Rug", "x": 1950, "y": 2250, "w": 2000, "d": 1400, "h": 10, "z": 0, "rot": 90, "color": "#b9a48a" },
-    { "id": "i3", "type": "table", "name": "Coffee table", "x": 1750, "y": 2250, "w": 1200, "d": 600, "h": 400, "z": 0, "rot": 90, "color": "#a0785a" },
-    { "id": "i4", "type": "box", "name": "TV unit", "x": 4250, "y": 2250, "w": 1600, "d": 400, "h": 500, "z": 0, "rot": 270, "color": "#4a4a4a" },
-    { "id": "i5", "type": "box", "name": "Bookcase", "x": 3900, "y": 300, "w": 800, "d": 300, "h": 1800, "z": 0, "rot": 180, "color": "#c9b79c" },
-
-    { "id": "i6", "type": "table", "name": "Desk", "x": 7750, "y": 500, "w": 1400, "d": 700, "h": 750, "z": 0, "rot": 180, "color": "#c9b79c" },
-    { "id": "i7", "type": "chair", "name": "Desk chair", "x": 7750, "y": 1050, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 0, "color": "#3a3a3a" },
-
-    { "id": "k1", "type": "base-unit", "name": "Base unit", "x": 450, "y": 6550, "w": 600, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
-    { "id": "k2", "type": "hob-unit", "name": "Hob unit", "x": 1050, "y": 6550, "w": 600, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
-    { "id": "k3", "type": "base-unit", "name": "Base unit", "x": 1600, "y": 6550, "w": 500, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
-    { "id": "k4", "type": "sink-unit", "name": "Sink unit", "x": 2250, "y": 6550, "w": 800, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
-    { "id": "k5", "type": "base-unit", "name": "Dishwasher", "x": 2950, "y": 6550, "w": 600, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
-    { "id": "k6", "type": "base-unit", "name": "Base unit", "x": 3550, "y": 6550, "w": 600, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
-    { "id": "k7", "type": "wall-unit", "name": "Wall unit", "x": 450, "y": 6675, "w": 600, "d": 350, "h": 720, "z": 1450, "rot": 0, "color": "#2f4f4f" },
-    { "id": "k8", "type": "wall-unit", "name": "Wall unit", "x": 1050, "y": 6675, "w": 600, "d": 350, "h": 720, "z": 1450, "rot": 0, "color": "#2f4f4f" },
-    { "id": "k9", "type": "tall-unit", "name": "Fridge housing", "x": 450, "y": 5900, "w": 600, "d": 600, "h": 2200, "z": 0, "rot": 90, "color": "#2f4f4f" },
-    { "id": "k10", "type": "tall-unit", "name": "Oven housing", "x": 450, "y": 5300, "w": 600, "d": 600, "h": 2200, "z": 0, "rot": 90, "color": "#2f4f4f" },
-
-    { "id": "d1", "type": "table", "name": "Dining table", "x": 6300, "y": 5700, "w": 1800, "d": 900, "h": 750, "z": 0, "rot": 0, "color": "#a0785a" },
-    { "id": "d2", "type": "chair", "name": "Chair", "x": 5700, "y": 5100, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 180, "color": "#5b4636" },
-    { "id": "d3", "type": "chair", "name": "Chair", "x": 6300, "y": 5100, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 180, "color": "#5b4636" },
-    { "id": "d4", "type": "chair", "name": "Chair", "x": 6900, "y": 5100, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 180, "color": "#5b4636" },
-    { "id": "d5", "type": "chair", "name": "Chair", "x": 5700, "y": 6300, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 0, "color": "#5b4636" },
-    { "id": "d6", "type": "chair", "name": "Chair", "x": 6300, "y": 6300, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 0, "color": "#5b4636" },
-    { "id": "d7", "type": "chair", "name": "Chair", "x": 6900, "y": 6300, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 0, "color": "#5b4636" }
-  ]
+ "name": "Ground floor (traced from the estate agent's floor plan, verify with a tape measure)",
+ "units": "mm",
+ "walls": [
+  {
+   "id": "W1",
+   "name": "Back wall (sitting room)",
+   "a": [
+    13590,
+    14110
+   ],
+   "b": [
+    15300,
+    14110
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W2",
+   "name": "Bay 1",
+   "a": [
+    15300,
+    14110
+   ],
+   "b": [
+    15530,
+    14720
+   ],
+   "thickness": 150,
+   "height": 2400
+  },
+  {
+   "id": "W3",
+   "name": "Bay 2",
+   "a": [
+    15530,
+    14720
+   ],
+   "b": [
+    16140,
+    15090
+   ],
+   "thickness": 150,
+   "height": 2400
+  },
+  {
+   "id": "W4",
+   "name": "Bay 3",
+   "a": [
+    16140,
+    15090
+   ],
+   "b": [
+    16900,
+    15090
+   ],
+   "thickness": 150,
+   "height": 2400
+  },
+  {
+   "id": "W5",
+   "name": "Bay 4",
+   "a": [
+    16900,
+    15090
+   ],
+   "b": [
+    17510,
+    14720
+   ],
+   "thickness": 150,
+   "height": 2400
+  },
+  {
+   "id": "W6",
+   "name": "Bay 5",
+   "a": [
+    17510,
+    14720
+   ],
+   "b": [
+    17740,
+    14110
+   ],
+   "thickness": 150,
+   "height": 2400
+  },
+  {
+   "id": "W7",
+   "name": "Back wall",
+   "a": [
+    17740,
+    14110
+   ],
+   "b": [
+    30510,
+    14110
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W8",
+   "name": "Side wall (sitting room / hall)",
+   "a": [
+    13590,
+    14110
+   ],
+   "b": [
+    13590,
+    5930
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W9",
+   "name": "Front wall",
+   "a": [
+    10090,
+    5930
+   ],
+   "b": [
+    20250,
+    5930
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W10",
+   "name": "Sitting room / hall",
+   "a": [
+    13590,
+    9750
+   ],
+   "b": [
+    19420,
+    9750
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W11",
+   "name": "Sitting room / kitchen",
+   "a": [
+    19420,
+    14110
+   ],
+   "b": [
+    19420,
+    7970
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W12",
+   "name": "Kitchen step",
+   "a": [
+    19420,
+    7970
+   ],
+   "b": [
+    20250,
+    7970
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W13",
+   "name": "Kitchen / stairs",
+   "a": [
+    20250,
+    7970
+   ],
+   "b": [
+    20250,
+    4470
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W14",
+   "name": "Kitchen front wall",
+   "a": [
+    20250,
+    4470
+   ],
+   "b": [
+    23450,
+    4470
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W15",
+   "name": "Kitchen / utility",
+   "a": [
+    23450,
+    14110
+   ],
+   "b": [
+    23450,
+    4470
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W16",
+   "name": "Utility & garage front",
+   "a": [
+    23450,
+    6840
+   ],
+   "b": [
+    30510,
+    6840
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W17",
+   "name": "Utility / garage",
+   "a": [
+    25630,
+    14110
+   ],
+   "b": [
+    25630,
+    6840
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W18",
+   "name": "Larder side",
+   "a": [
+    24620,
+    12970
+   ],
+   "b": [
+    24620,
+    11260
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W19",
+   "name": "Larder front",
+   "a": [
+    23450,
+    11260
+   ],
+   "b": [
+    24620,
+    11260
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W20",
+   "name": "Store / garage",
+   "a": [
+    25630,
+    12430
+   ],
+   "b": [
+    28190,
+    12430
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W21",
+   "name": "Store divider",
+   "a": [
+    28190,
+    14110
+   ],
+   "b": [
+    28190,
+    12430
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W22",
+   "name": "Store 2 / garage",
+   "a": [
+    28190,
+    12850
+   ],
+   "b": [
+    30510,
+    12850
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W23",
+   "name": "Garage side wall",
+   "a": [
+    30510,
+    14110
+   ],
+   "b": [
+    30510,
+    6840
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W24",
+   "name": "Cloaks cupboard",
+   "a": [
+    13590,
+    8570
+   ],
+   "b": [
+    15810,
+    8570
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W25",
+   "name": "Cupboard side",
+   "a": [
+    15810,
+    8570
+   ],
+   "b": [
+    15810,
+    7690
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W26",
+   "name": "WC / cupboard",
+   "a": [
+    13590,
+    7690
+   ],
+   "b": [
+    16250,
+    7690
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W27",
+   "name": "WC / hall",
+   "a": [
+    15810,
+    7690
+   ],
+   "b": [
+    15810,
+    5930
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W28",
+   "name": "Stair side",
+   "a": [
+    18270,
+    7690
+   ],
+   "b": [
+    18270,
+    5930
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W29",
+   "name": "Stair nib",
+   "a": [
+    17860,
+    7690
+   ],
+   "b": [
+    18270,
+    7690
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W30",
+   "name": "Sun room glazing",
+   "a": [
+    13590,
+    10700
+   ],
+   "b": [
+    10240,
+    10630
+   ],
+   "thickness": 120,
+   "height": 2400
+  },
+  {
+   "id": "W31",
+   "name": "Sun room glazing (angled)",
+   "a": [
+    10240,
+    10630
+   ],
+   "b": [
+    7390,
+    9550
+   ],
+   "thickness": 120,
+   "height": 2400
+  },
+  {
+   "id": "W32",
+   "name": "Annexe back wall",
+   "a": [
+    150,
+    4180
+   ],
+   "b": [
+    7390,
+    9550
+   ],
+   "thickness": 200,
+   "height": 2400
+  },
+  {
+   "id": "W33",
+   "name": "Annexe living side wall",
+   "a": [
+    3140,
+    150
+   ],
+   "b": [
+    150,
+    4180
+   ],
+   "thickness": 200,
+   "height": 2400
+  },
+  {
+   "id": "W34",
+   "name": "Annexe living front wall",
+   "a": [
+    5720,
+    2070
+   ],
+   "b": [
+    3140,
+    150
+   ],
+   "thickness": 200,
+   "height": 2400
+  },
+  {
+   "id": "W35",
+   "name": "Annexe living / hall",
+   "a": [
+    2730,
+    6090
+   ],
+   "b": [
+    5720,
+    2070
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W36",
+   "name": "Shower / kitchen",
+   "a": [
+    4880,
+    7690
+   ],
+   "b": [
+    5870,
+    6370
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W37",
+   "name": "Shower room / hall",
+   "a": [
+    3710,
+    4770
+   ],
+   "b": [
+    5870,
+    6370
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W38",
+   "name": "Annexe kitchen / bedroom",
+   "a": [
+    5870,
+    6370
+   ],
+   "b": [
+    8370,
+    8230
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W39",
+   "name": "Annexe side wall (sun room)",
+   "a": [
+    7390,
+    9550
+   ],
+   "b": [
+    10080,
+    5930
+   ],
+   "thickness": 200,
+   "height": 2400
+  },
+  {
+   "id": "W40",
+   "name": "Bedroom / hall",
+   "a": [
+    5300,
+    5940
+   ],
+   "b": [
+    7000,
+    3640
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W41",
+   "name": "Bedroom front wall",
+   "a": [
+    7000,
+    3640
+   ],
+   "b": [
+    10080,
+    5930
+   ],
+   "thickness": 200,
+   "height": 2400
+  },
+  {
+   "id": "W42",
+   "name": "Annexe hall front wall",
+   "a": [
+    5110,
+    2880
+   ],
+   "b": [
+    6700,
+    4060
+   ],
+   "thickness": 200,
+   "height": 2400
+  }
+ ],
+ "openings": [
+  {
+   "id": "O1",
+   "type": "window",
+   "wall": "W2",
+   "offset": 50,
+   "width": 560,
+   "height": 1600,
+   "sill": 500
+  },
+  {
+   "id": "O2",
+   "type": "window",
+   "wall": "W3",
+   "offset": 50,
+   "width": 620,
+   "height": 1600,
+   "sill": 500
+  },
+  {
+   "id": "O3",
+   "type": "window",
+   "wall": "W4",
+   "offset": 50,
+   "width": 660,
+   "height": 1600,
+   "sill": 500
+  },
+  {
+   "id": "O4",
+   "type": "window",
+   "wall": "W5",
+   "offset": 50,
+   "width": 620,
+   "height": 1600,
+   "sill": 500
+  },
+  {
+   "id": "O5",
+   "type": "window",
+   "wall": "W6",
+   "offset": 50,
+   "width": 560,
+   "height": 1600,
+   "sill": 500
+  },
+  {
+   "id": "O6",
+   "type": "window",
+   "wall": "W7",
+   "offset": 2610,
+   "width": 2050,
+   "height": 1200,
+   "sill": 900
+  },
+  {
+   "id": "O7",
+   "type": "window",
+   "wall": "W7",
+   "offset": 6010,
+   "width": 610,
+   "height": 1050,
+   "sill": 1050
+  },
+  {
+   "id": "O8",
+   "type": "door",
+   "wall": "W7",
+   "offset": 7000,
+   "width": 830,
+   "height": 2100,
+   "hinge": "start",
+   "side": -1,
+   "openAngle": 80
+  },
+  {
+   "id": "O9",
+   "type": "opening",
+   "wall": "W7",
+   "offset": 8330,
+   "width": 1670,
+   "height": 2100
+  },
+  {
+   "id": "O10",
+   "type": "door",
+   "wall": "W7",
+   "offset": 11010,
+   "width": 910,
+   "height": 2100,
+   "hinge": "end",
+   "side": -1,
+   "openAngle": 80
+  },
+  {
+   "id": "O11",
+   "type": "window",
+   "wall": "W8",
+   "offset": 420,
+   "width": 1740,
+   "height": 2100,
+   "sill": 0
+  },
+  {
+   "id": "O12",
+   "type": "door",
+   "wall": "W8",
+   "offset": 4470,
+   "width": 980,
+   "height": 2040,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O13",
+   "type": "window",
+   "wall": "W9",
+   "offset": 640,
+   "width": 2580,
+   "height": 1500,
+   "sill": 600
+  },
+  {
+   "id": "O14",
+   "type": "window",
+   "wall": "W9",
+   "offset": 4200,
+   "width": 1110,
+   "height": 1000,
+   "sill": 1100
+  },
+  {
+   "id": "O15",
+   "type": "window",
+   "wall": "W9",
+   "offset": 5940,
+   "width": 580,
+   "height": 2100,
+   "sill": 0
+  },
+  {
+   "id": "O16",
+   "type": "door",
+   "wall": "W9",
+   "offset": 6510,
+   "width": 940,
+   "height": 2100,
+   "hinge": "end",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O17",
+   "type": "window",
+   "wall": "W9",
+   "offset": 7450,
+   "width": 580,
+   "height": 2100,
+   "sill": 0
+  },
+  {
+   "id": "O18",
+   "type": "door",
+   "wall": "W10",
+   "offset": 4610,
+   "width": 830,
+   "height": 2040,
+   "hinge": "end",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O19",
+   "type": "door",
+   "wall": "W11",
+   "offset": 4890,
+   "width": 800,
+   "height": 2040,
+   "hinge": "end",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O20",
+   "type": "window",
+   "wall": "W14",
+   "offset": 770,
+   "width": 1560,
+   "height": 1100,
+   "sill": 1000
+  },
+  {
+   "id": "O21",
+   "type": "door",
+   "wall": "W15",
+   "offset": 4620,
+   "width": 880,
+   "height": 2040,
+   "hinge": "end",
+   "side": -1,
+   "openAngle": 80
+  },
+  {
+   "id": "O22",
+   "type": "door",
+   "wall": "W16",
+   "offset": 1030,
+   "width": 980,
+   "height": 2100,
+   "hinge": "end",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O23",
+   "type": "opening",
+   "wall": "W16",
+   "offset": 2390,
+   "width": 4350,
+   "height": 2100
+  },
+  {
+   "id": "O24",
+   "type": "door",
+   "wall": "W17",
+   "offset": 2500,
+   "width": 830,
+   "height": 2040,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O25",
+   "type": "door",
+   "wall": "W24",
+   "offset": 740,
+   "width": 860,
+   "height": 2040,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O26",
+   "type": "door",
+   "wall": "W27",
+   "offset": 0,
+   "width": 850,
+   "height": 2040,
+   "hinge": "start",
+   "side": -1,
+   "openAngle": 80
+  },
+  {
+   "id": "O27",
+   "type": "window",
+   "wall": "W30",
+   "offset": 80,
+   "width": 3200,
+   "height": 2100,
+   "sill": 0
+  },
+  {
+   "id": "O28",
+   "type": "window",
+   "wall": "W31",
+   "offset": 80,
+   "width": 2890,
+   "height": 2100,
+   "sill": 0
+  },
+  {
+   "id": "O29",
+   "type": "window",
+   "wall": "W32",
+   "offset": 3360,
+   "width": 730,
+   "height": 700,
+   "sill": 1300
+  },
+  {
+   "id": "O30",
+   "type": "window",
+   "wall": "W32",
+   "offset": 6170,
+   "width": 1260,
+   "height": 1050,
+   "sill": 1050
+  },
+  {
+   "id": "O31",
+   "type": "window",
+   "wall": "W33",
+   "offset": 2390,
+   "width": 1330,
+   "height": 1300,
+   "sill": 800
+  },
+  {
+   "id": "O32",
+   "type": "window",
+   "wall": "W34",
+   "offset": 830,
+   "width": 1440,
+   "height": 1300,
+   "sill": 800
+  },
+  {
+   "id": "O33",
+   "type": "door",
+   "wall": "W35",
+   "offset": 2620,
+   "width": 830,
+   "height": 2040,
+   "hinge": "end",
+   "side": -1,
+   "openAngle": 80
+  },
+  {
+   "id": "O34",
+   "type": "door",
+   "wall": "W37",
+   "offset": 240,
+   "width": 860,
+   "height": 2040,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O35",
+   "type": "door",
+   "wall": "W38",
+   "offset": 320,
+   "width": 830,
+   "height": 2040,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O36",
+   "type": "door",
+   "wall": "W39",
+   "offset": 800,
+   "width": 800,
+   "height": 2040,
+   "hinge": "end",
+   "side": -1,
+   "openAngle": 80
+  },
+  {
+   "id": "O37",
+   "type": "door",
+   "wall": "W40",
+   "offset": 60,
+   "width": 970,
+   "height": 2040,
+   "hinge": "end",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O38",
+   "type": "window",
+   "wall": "W41",
+   "offset": 910,
+   "width": 2090,
+   "height": 1300,
+   "sill": 800
+  },
+  {
+   "id": "O39",
+   "type": "door",
+   "wall": "W42",
+   "offset": 200,
+   "width": 910,
+   "height": 2100,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O40",
+   "type": "window",
+   "wall": "W42",
+   "offset": 1140,
+   "width": 580,
+   "height": 1200,
+   "sill": 900
+  }
+ ],
+ "rooms": [
+  {
+   "name": "Sitting room",
+   "x": 16506,
+   "y": 12107,
+   "floor": "#c8a77e",
+   "poly": [
+    [
+     13590,
+     9750
+    ],
+    [
+     13590,
+     14110
+    ],
+    [
+     15300,
+     14110
+    ],
+    [
+     15530,
+     14720
+    ],
+    [
+     16140,
+     15090
+    ],
+    [
+     16900,
+     15090
+    ],
+    [
+     17510,
+     14720
+    ],
+    [
+     17740,
+     14110
+    ],
+    [
+     19420,
+     14110
+    ],
+    [
+     19420,
+     9750
+    ]
+   ]
+  },
+  {
+   "name": "Entrance hall",
+   "x": 17401,
+   "y": 7948,
+   "floor": "#c8a77e",
+   "poly": [
+    [
+     13590,
+     8570
+    ],
+    [
+     15810,
+     8570
+    ],
+    [
+     15810,
+     5930
+    ],
+    [
+     20250,
+     5930
+    ],
+    [
+     20250,
+     7970
+    ],
+    [
+     19420,
+     7970
+    ],
+    [
+     19420,
+     9750
+    ],
+    [
+     13590,
+     9750
+    ]
+   ]
+  },
+  {
+   "name": "Cloaks",
+   "x": 14700,
+   "y": 8130,
+   "floor": "#c8a77e",
+   "poly": [
+    [
+     13590,
+     8570
+    ],
+    [
+     13590,
+     7690
+    ],
+    [
+     15810,
+     7690
+    ],
+    [
+     15810,
+     8570
+    ]
+   ]
+  },
+  {
+   "name": "WC",
+   "x": 14700,
+   "y": 6810,
+   "floor": "#b9bdbf",
+   "poly": [
+    [
+     13590,
+     7690
+    ],
+    [
+     13590,
+     5930
+    ],
+    [
+     15810,
+     5930
+    ],
+    [
+     15810,
+     7690
+    ]
+   ]
+  },
+  {
+   "name": "Kitchen / dining / family",
+   "x": 21564,
+   "y": 9538,
+   "floor": "#b9bdbf",
+   "poly": [
+    [
+     19420,
+     14110
+    ],
+    [
+     23450,
+     14110
+    ],
+    [
+     23450,
+     4470
+    ],
+    [
+     20250,
+     4470
+    ],
+    [
+     20250,
+     7970
+    ],
+    [
+     19420,
+     7970
+    ]
+   ]
+  },
+  {
+   "name": "Utility",
+   "x": 24540,
+   "y": 10475,
+   "floor": "#b9bdbf",
+   "poly": [
+    [
+     23450,
+     14110
+    ],
+    [
+     25630,
+     14110
+    ],
+    [
+     25630,
+     6840
+    ],
+    [
+     23450,
+     6840
+    ]
+   ]
+  },
+  {
+   "name": "Garage",
+   "x": 28114,
+   "y": 9739,
+   "floor": "#a6a49e",
+   "poly": [
+    [
+     25630,
+     12430
+    ],
+    [
+     28190,
+     12430
+    ],
+    [
+     28190,
+     12850
+    ],
+    [
+     30510,
+     12850
+    ],
+    [
+     30510,
+     6840
+    ],
+    [
+     25630,
+     6840
+    ]
+   ]
+  },
+  {
+   "name": "Store",
+   "x": 26910,
+   "y": 13270,
+   "floor": "#a6a49e",
+   "poly": [
+    [
+     25630,
+     14110
+    ],
+    [
+     28190,
+     14110
+    ],
+    [
+     28190,
+     12430
+    ],
+    [
+     25630,
+     12430
+    ]
+   ]
+  },
+  {
+   "name": "Store",
+   "x": 29350,
+   "y": 13480,
+   "floor": "#a6a49e",
+   "poly": [
+    [
+     28190,
+     14110
+    ],
+    [
+     30510,
+     14110
+    ],
+    [
+     30510,
+     12850
+    ],
+    [
+     28190,
+     12850
+    ]
+   ]
+  },
+  {
+   "name": "Sun room",
+   "x": 11114,
+   "y": 8402,
+   "floor": "#d9c9a8",
+   "poly": [
+    [
+     13590,
+     10700
+    ],
+    [
+     10240,
+     10630
+    ],
+    [
+     7390,
+     9550
+    ],
+    [
+     10080,
+     5930
+    ],
+    [
+     13590,
+     5930
+    ]
+   ]
+  },
+  {
+   "name": "Annexe living / dining",
+   "x": 2935,
+   "y": 3122,
+   "floor": "#c8a77e",
+   "poly": [
+    [
+     150,
+     4180
+    ],
+    [
+     2730,
+     6090
+    ],
+    [
+     5720,
+     2070
+    ],
+    [
+     3140,
+     150
+    ]
+   ]
+  },
+  {
+   "name": "Shower room",
+   "x": 4298,
+   "y": 6230,
+   "floor": "#b9bdbf",
+   "poly": [
+    [
+     2730,
+     6090
+    ],
+    [
+     4880,
+     7690
+    ],
+    [
+     5870,
+     6370
+    ],
+    [
+     3710,
+     4770
+    ]
+   ]
+  },
+  {
+   "name": "Annexe kitchen",
+   "x": 6627,
+   "y": 7960,
+   "floor": "#b9bdbf",
+   "poly": [
+    [
+     4880,
+     7690
+    ],
+    [
+     7390,
+     9550
+    ],
+    [
+     8370,
+     8230
+    ],
+    [
+     5870,
+     6370
+    ]
+   ]
+  },
+  {
+   "name": "Annexe hall",
+   "x": 5205,
+   "y": 4412,
+   "floor": "#c8a77e",
+   "poly": [
+    [
+     3710,
+     4770
+    ],
+    [
+     5300,
+     5940
+    ],
+    [
+     6700,
+     4060
+    ],
+    [
+     5110,
+     2880
+    ]
+   ]
+  },
+  {
+   "name": "Bedroom",
+   "x": 7688,
+   "y": 5935,
+   "floor": "#bfb4a3",
+   "poly": [
+    [
+     5300,
+     5940
+    ],
+    [
+     8370,
+     8230
+    ],
+    [
+     10080,
+     5930
+    ],
+    [
+     7000,
+     3640
+    ]
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "i1",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Corner base unit",
+   "x": 20663,
+   "y": 4885,
+   "w": 600,
+   "d": 600,
+   "h": 900,
+   "rot": 90,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i2",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Base unit",
+   "x": 20663,
+   "y": 5485,
+   "w": 600,
+   "d": 600,
+   "h": 900,
+   "rot": 90,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i3",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Base unit",
+   "x": 20663,
+   "y": 6085,
+   "w": 600,
+   "d": 600,
+   "h": 900,
+   "rot": 90,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i4",
+   "z": 0,
+   "type": "tall-unit",
+   "name": "Oven housing",
+   "x": 20663,
+   "y": 6685,
+   "w": 600,
+   "d": 600,
+   "h": 2200,
+   "rot": 90,
+   "color": "#3f5a6b"
+  },
+  {
+   "id": "i5",
+   "z": 0,
+   "type": "tall-unit",
+   "name": "Fridge freezer",
+   "x": 20663,
+   "y": 7285,
+   "w": 600,
+   "d": 600,
+   "h": 2200,
+   "rot": 90,
+   "color": "#3f5a6b"
+  },
+  {
+   "id": "i6",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Base unit",
+   "x": 20663,
+   "y": 7735,
+   "w": 300,
+   "d": 600,
+   "h": 900,
+   "rot": 90,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i7",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Base unit",
+   "x": 21163,
+   "y": 4885,
+   "w": 400,
+   "d": 600,
+   "h": 900,
+   "rot": 180,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i8",
+   "z": 0,
+   "type": "sink-unit",
+   "name": "Sink unit",
+   "x": 21763,
+   "y": 4885,
+   "w": 800,
+   "d": 600,
+   "h": 900,
+   "rot": 180,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i9",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Dishwasher",
+   "x": 22463,
+   "y": 4885,
+   "w": 600,
+   "d": 600,
+   "h": 900,
+   "rot": 180,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i10",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Corner base unit",
+   "x": 23100,
+   "y": 4885,
+   "w": 600,
+   "d": 600,
+   "h": 900,
+   "rot": 270,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i11",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Base unit",
+   "x": 23100,
+   "y": 5485,
+   "w": 600,
+   "d": 600,
+   "h": 900,
+   "rot": 270,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i12",
+   "z": 0,
+   "type": "hob-unit",
+   "name": "Hob unit",
+   "x": 23100,
+   "y": 6085,
+   "w": 600,
+   "d": 600,
+   "h": 900,
+   "rot": 270,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i13",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Base unit",
+   "x": 23100,
+   "y": 6785,
+   "w": 800,
+   "d": 600,
+   "h": 900,
+   "rot": 270,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i14",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Peninsula",
+   "x": 22538,
+   "y": 7595,
+   "w": 1723,
+   "d": 820,
+   "h": 900,
+   "rot": 0,
+   "color": "#3f5a6b",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i15",
+   "z": 0,
+   "type": "sink-unit",
+   "name": "Utility sink",
+   "x": 23800,
+   "y": 7948,
+   "w": 800,
+   "d": 600,
+   "h": 900,
+   "rot": 90,
+   "color": "#d9d5cc",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i16",
+   "z": 0,
+   "type": "base-unit",
+   "name": "Washing machine",
+   "x": 23800,
+   "y": 8648,
+   "w": 600,
+   "d": 600,
+   "h": 900,
+   "rot": 90,
+   "color": "#d9d5cc",
+   "worktop": "#e2ddd3"
+  },
+  {
+   "id": "i17",
+   "z": 0,
+   "type": "stairs",
+   "name": "Stairs",
+   "x": 18799,
+   "y": 7035,
+   "w": 909,
+   "d": 2030,
+   "h": 2600,
+   "rot": 180,
+   "color": "#b08b62"
+  },
+  {
+   "id": "i18",
+   "z": 0,
+   "type": "box",
+   "name": "Chimney breast",
+   "x": 16541,
+   "y": 9792,
+   "w": 1485,
+   "d": 606,
+   "h": 2400,
+   "rot": 0,
+   "color": "#e8e4dc"
+  }
+ ]
 }

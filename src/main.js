@@ -9,7 +9,7 @@ import { CATALOG, ITEM_TYPES } from './catalog.js';
 import { buildItem } from './items.js';
 
 const S = 0.001;
-const STORAGE_KEY = 'ground-floor-plan.v1';
+const STORAGE_KEY = 'ground-floor-plan.v2';
 const SNAP = 50;
 const CUTAWAY_HEIGHT = 1000;
 
@@ -48,6 +48,7 @@ let controls = makeControls(camera);
 function makeControls(cam) {
   const c = new OrbitControls(cam, renderer.domElement);
   c.enableDamping = true;
+  c.zoomToCursor = true;
   if (cam === ortho) {
     c.enableRotate = false;
     c.screenSpacePanning = true;
@@ -70,6 +71,12 @@ const glassMat = new THREE.MeshStandardMaterial({ color: '#9fd3ff', transparent:
 const pickMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
 const arcMat = new THREE.LineBasicMaterial({ color: '#8a6a4a' });
 const floorMat = new THREE.MeshStandardMaterial({ color: '#d9c7a7', roughness: 0.95 });
+const floorMats = new Map();
+function floorMaterial(color) {
+  if (!color) return floorMat;
+  if (!floorMats.has(color)) floorMats.set(color, new THREE.MeshStandardMaterial({ color, roughness: 0.95 }));
+  return floorMats.get(color);
+}
 
 // ---------------------------------------------------------------- plan helpers
 const getItem = (id) => plan.items.find((i) => i.id === id);
@@ -153,11 +160,23 @@ function rebuild() {
   pickables.length = 0;
   const b = bounds();
 
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(b.w * S, b.h * S), floorMat);
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.set(b.cx * S, 0, -b.cy * S);
-  floor.receiveShadow = true;
-  root.add(floor);
+  // floors: one per room outline if the plan has them, otherwise a rectangle under everything
+  const outlined = plan.rooms.filter((r) => r.poly?.length >= 3);
+  if (outlined.length) {
+    for (const r of outlined) {
+      const shape = new THREE.Shape(r.poly.map(([x, y]) => new THREE.Vector2(x * S, y * S)));
+      const floor = new THREE.Mesh(new THREE.ShapeGeometry(shape), floorMaterial(r.floor));
+      floor.rotation.x = -Math.PI / 2; // shape (x, y) -> world (x, 0, -y)
+      floor.receiveShadow = true;
+      root.add(floor);
+    }
+  } else {
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(b.w * S, b.h * S), floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.set(b.cx * S, 0, -b.cy * S);
+    floor.receiveShadow = true;
+    root.add(floor);
+  }
 
   const size = 2 * Math.ceil(Math.max(b.w, b.h) / 2000) + 4; // even, so lines fall on whole metres
   const grid = new THREE.GridHelper(size, size, '#b9c0c9', '#cfd5dc');
@@ -289,17 +308,21 @@ function roomLabel(r) {
   let tex = labelTextures.get(r.name);
   if (!tex) {
     const c = document.createElement('canvas');
-    c.width = 512; c.height = 128;
-    const ctx = c.getContext('2d');
-    ctx.font = '600 64px system-ui, sans-serif';
+    const font = '600 64px system-ui, sans-serif';
+    let ctx = c.getContext('2d');
+    ctx.font = font;
+    c.width = Math.ceil(ctx.measureText(r.name).width) + 32; c.height = 96;
+    ctx = c.getContext('2d'); // resizing resets the context state
+    ctx.font = font;
     ctx.fillStyle = 'rgba(60,60,70,0.75)';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(r.name, 256, 64);
+    ctx.fillText(r.name, c.width / 2, c.height / 2);
     tex = new THREE.CanvasTexture(c);
     tex.colorSpace = THREE.SRGBColorSpace;
     labelTextures.set(r.name, tex);
   }
-  const m = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 0.4),
+  const aspect = tex.image.width / tex.image.height;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(0.3 * aspect, 0.3), // text ~300 mm tall
     new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false }));
   m.rotation.x = -Math.PI / 2;
   m.position.set(r.x * S, 0.02, -r.y * S); // just above rugs

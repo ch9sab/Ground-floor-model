@@ -83,6 +83,15 @@ export function buildItem(it) {
       box(g, w * 0.35, 120, 400, w * 0.22, h + 60, -d / 2 + 260, '#ffffff');
       break;
     }
+    case 'stairs': {
+      // a straight flight rising from the front (+z) to the back (-z)
+      const steps = Math.max(2, Math.round(h / 200));
+      const rise = h / steps, run = d / steps;
+      for (let i = 0; i < steps; i++) {
+        box(g, w, rise * (i + 1), run, 0, (rise * (i + 1)) / 2, d / 2 - run * (i + 0.5), c);
+      }
+      break;
+    }
     case 'rug':
       box(g, w, Math.max(h, 5), d, 0, Math.max(h, 5) / 2, 0, c);
       break;
