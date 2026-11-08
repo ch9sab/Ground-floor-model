@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ground Floor Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header id="toolbar">
+    <strong class="title">Ground Floor Planner</strong>
+    <button id="btn-view" title="Switch between 3D and top-down plan view (V)">Plan view</button>
+    <button id="btn-walls" title="Cut walls down to 1 m so you can see inside (C)">Walls: full</button>
+    <button id="btn-undo" title="Undo (Ctrl+Z)">Undo</button>
+    <span class="sep"></span>
+    <button id="btn-add-wall">+ Wall</button>
+    <button id="btn-add-door" title="Adds a door to the selected wall">+ Door</button>
+    <button id="btn-add-window" title="Adds a window to the selected wall">+ Window</button>
+    <span class="sep"></span>
+    <button id="btn-export" title="Download the current layout as JSON">Export</button>
+    <label class="btn" title="Load a layout JSON file">Import<input type="file" id="file-import" accept=".json,application/json" hidden></label>
+    <button id="btn-reset" title="Discard browser changes and reload plan.json">Reset</button>
+  </header>
+
+  <main>
+    <div id="view"></div>
+    <aside id="sidebar">
+      <section>
+        <h2>Selected</h2>
+        <div id="props"><p class="hint">Click a wall, door, window or piece of furniture to select it.</p></div>
+      </section>
+      <section>
+        <h2>Add item</h2>
+        <div id="catalog"></div>
+      </section>
+      <section class="help">
+        <h2>Controls</h2>
+        <ul>
+          <li><b>Drag furniture</b> to move it (snaps to 50 mm, hold <kbd>Shift</kbd> for 10 mm)</li>
+          <li><b>Drag a door/window</b> to slide it along its wall</li>
+          <li><b>Select a wall, then drag it</b> to move it; connected walls stretch with it</li>
+          <li>Orbit: left-drag on empty space · Pan: right-drag · Zoom: wheel</li>
+          <li><kbd>R</kbd> rotate 90° (<kbd>Shift</kbd>+<kbd>R</kbd> 15°) · <kbd>D</kbd> duplicate · <kbd>Del</kbd> delete</li>
+          <li><kbd>V</kbd> toggle plan/3D · <kbd>C</kbd> cut-away walls · <kbd>Ctrl</kbd>+<kbd>Z</kbd> undo</li>
+          <li>All sizes are in millimetres. Changes save in this browser automatically.</li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+  <footer id="status">Loading…</footer>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

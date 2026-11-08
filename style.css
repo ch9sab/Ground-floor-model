@@ -1,0 +1,64 @@
+:root {
+  --bg: #f5f6f8;
+  --panel: #ffffff;
+  --ink: #1f2430;
+  --muted: #6b7280;
+  --line: #d9dde3;
+  --accent: #e8730c;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+#toolbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  padding: 8px 12px; background: var(--panel); border-bottom: 1px solid var(--line);
+}
+#toolbar .title { margin-right: 8px; }
+#toolbar .sep { width: 1px; height: 22px; background: var(--line); margin: 0 4px; }
+button, .btn {
+  font: inherit; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px;
+  background: #fff; color: var(--ink); cursor: pointer; white-space: nowrap;
+}
+button:hover, .btn:hover { border-color: var(--accent); }
+button.danger { color: #b42318; }
+main { flex: 1; display: flex; min-height: 0; }
+#view { flex: 1; position: relative; min-width: 0; }
+#view canvas { display: block; touch-action: none; }
+#sidebar {
+  width: 300px; overflow-y: auto; background: var(--panel);
+  border-left: 1px solid var(--line); padding: 4px 12px 12px;
+}
+#sidebar h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 0 8px; }
+.hint { color: var(--muted); margin: 0; }
+.help ul { padding-left: 18px; margin: 0; color: var(--muted); font-size: 13px; }
+.help li { margin-bottom: 4px; }
+kbd { font: 12px ui-monospace, monospace; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; background: var(--bg); }
+
+#props .row { display: grid; grid-template-columns: 90px 1fr; align-items: center; gap: 6px; margin-bottom: 6px; }
+#props label { color: var(--muted); font-size: 13px; }
+#props input, #props select { font: inherit; width: 100%; padding: 4px 6px; border: 1px solid var(--line); border-radius: 5px; }
+#props input[type=color] { padding: 1px; height: 28px; }
+#props .actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+#props .kind { font-weight: 600; margin-bottom: 8px; }
+
+#catalog details { margin-bottom: 6px; }
+#catalog summary { cursor: pointer; font-weight: 600; padding: 2px 0; }
+#catalog .items { display: flex; flex-wrap: wrap; gap: 5px; padding: 6px 0; }
+#catalog button { font-size: 13px; padding: 4px 8px; }
+
+#status {
+  padding: 6px 12px; background: var(--panel); border-top: 1px solid var(--line);
+  font-size: 13px; color: var(--muted); min-height: 30px;
+}
+
+@media (max-width: 760px) {
+  main { flex-direction: column; }
+  #view { min-height: 55vh; }
+  #sidebar { width: auto; border-left: 0; border-top: 1px solid var(--line); max-height: 45vh; }
+}

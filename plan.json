@@ -1,0 +1,58 @@
+{
+  "name": "Example ground floor — replace with your measurements",
+  "units": "mm",
+  "walls": [
+    { "id": "W1", "name": "Front wall", "a": [0, 0], "b": [9000, 0], "thickness": 300, "height": 2400 },
+    { "id": "W2", "name": "Right side wall", "a": [9000, 0], "b": [9000, 7000], "thickness": 300, "height": 2400 },
+    { "id": "W3", "name": "Back wall", "a": [9000, 7000], "b": [0, 7000], "thickness": 300, "height": 2400 },
+    { "id": "W4", "name": "Left side wall", "a": [0, 7000], "b": [0, 0], "thickness": 300, "height": 2400 },
+    { "id": "W5", "name": "Kitchen / front rooms", "a": [0, 4500], "b": [9000, 4500], "thickness": 100, "height": 2400 },
+    { "id": "W6", "name": "Living / hall", "a": [4500, 0], "b": [4500, 4500], "thickness": 100, "height": 2400 },
+    { "id": "W7", "name": "Hall / study", "a": [6500, 0], "b": [6500, 4500], "thickness": 100, "height": 2400 }
+  ],
+  "openings": [
+    { "id": "O1", "type": "door", "wall": "W1", "offset": 5000, "width": 1000, "height": 2100, "hinge": "start", "side": 1, "openAngle": 80 },
+    { "id": "O2", "type": "window", "wall": "W1", "offset": 1250, "width": 2000, "height": 1200, "sill": 900 },
+    { "id": "O3", "type": "window", "wall": "W1", "offset": 7150, "width": 1200, "height": 1200, "sill": 900 },
+    { "id": "O4", "type": "door", "wall": "W6", "offset": 3300, "width": 826, "height": 2040, "hinge": "end", "side": 1, "openAngle": 80 },
+    { "id": "O5", "type": "door", "wall": "W7", "offset": 3300, "width": 826, "height": 2040, "hinge": "end", "side": -1, "openAngle": 80 },
+    { "id": "O6", "type": "door", "wall": "W5", "offset": 5200, "width": 826, "height": 2040, "hinge": "start", "side": 1, "openAngle": 80 },
+    { "id": "O7", "type": "window", "wall": "W3", "offset": 1500, "width": 2400, "height": 2100, "sill": 0 },
+    { "id": "O8", "type": "window", "wall": "W3", "offset": 6000, "width": 1500, "height": 1050, "sill": 1050 }
+  ],
+  "rooms": [
+    { "name": "Living room", "x": 2250, "y": 3800 },
+    { "name": "Hall", "x": 5500, "y": 2600 },
+    { "name": "Study", "x": 7750, "y": 2600 },
+    { "name": "Kitchen / dining", "x": 4300, "y": 5800 }
+  ],
+  "items": [
+    { "id": "i1", "type": "sofa", "name": "Sofa", "x": 600, "y": 2250, "w": 2200, "d": 900, "h": 850, "z": 0, "rot": 90, "color": "#6b7c93" },
+    { "id": "i2", "type": "rug", "name": "Rug", "x": 1950, "y": 2250, "w": 2000, "d": 1400, "h": 10, "z": 0, "rot": 90, "color": "#b9a48a" },
+    { "id": "i3", "type": "table", "name": "Coffee table", "x": 1750, "y": 2250, "w": 1200, "d": 600, "h": 400, "z": 0, "rot": 90, "color": "#a0785a" },
+    { "id": "i4", "type": "box", "name": "TV unit", "x": 4250, "y": 2250, "w": 1600, "d": 400, "h": 500, "z": 0, "rot": 270, "color": "#4a4a4a" },
+    { "id": "i5", "type": "box", "name": "Bookcase", "x": 3900, "y": 300, "w": 800, "d": 300, "h": 1800, "z": 0, "rot": 180, "color": "#c9b79c" },
+
+    { "id": "i6", "type": "table", "name": "Desk", "x": 7750, "y": 500, "w": 1400, "d": 700, "h": 750, "z": 0, "rot": 180, "color": "#c9b79c" },
+    { "id": "i7", "type": "chair", "name": "Desk chair", "x": 7750, "y": 1050, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 0, "color": "#3a3a3a" },
+
+    { "id": "k1", "type": "base-unit", "name": "Base unit", "x": 450, "y": 6550, "w": 600, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
+    { "id": "k2", "type": "hob-unit", "name": "Hob unit", "x": 1050, "y": 6550, "w": 600, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
+    { "id": "k3", "type": "base-unit", "name": "Base unit", "x": 1600, "y": 6550, "w": 500, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
+    { "id": "k4", "type": "sink-unit", "name": "Sink unit", "x": 2250, "y": 6550, "w": 800, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
+    { "id": "k5", "type": "base-unit", "name": "Dishwasher", "x": 2950, "y": 6550, "w": 600, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
+    { "id": "k6", "type": "base-unit", "name": "Base unit", "x": 3550, "y": 6550, "w": 600, "d": 600, "h": 900, "z": 0, "rot": 0, "color": "#2f4f4f", "worktop": "#d8d2c4" },
+    { "id": "k7", "type": "wall-unit", "name": "Wall unit", "x": 450, "y": 6675, "w": 600, "d": 350, "h": 720, "z": 1450, "rot": 0, "color": "#2f4f4f" },
+    { "id": "k8", "type": "wall-unit", "name": "Wall unit", "x": 1050, "y": 6675, "w": 600, "d": 350, "h": 720, "z": 1450, "rot": 0, "color": "#2f4f4f" },
+    { "id": "k9", "type": "tall-unit", "name": "Fridge housing", "x": 450, "y": 5900, "w": 600, "d": 600, "h": 2200, "z": 0, "rot": 90, "color": "#2f4f4f" },
+    { "id": "k10", "type": "tall-unit", "name": "Oven housing", "x": 450, "y": 5300, "w": 600, "d": 600, "h": 2200, "z": 0, "rot": 90, "color": "#2f4f4f" },
+
+    { "id": "d1", "type": "table", "name": "Dining table", "x": 6300, "y": 5700, "w": 1800, "d": 900, "h": 750, "z": 0, "rot": 0, "color": "#a0785a" },
+    { "id": "d2", "type": "chair", "name": "Chair", "x": 5700, "y": 5100, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 180, "color": "#5b4636" },
+    { "id": "d3", "type": "chair", "name": "Chair", "x": 6300, "y": 5100, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 180, "color": "#5b4636" },
+    { "id": "d4", "type": "chair", "name": "Chair", "x": 6900, "y": 5100, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 180, "color": "#5b4636" },
+    { "id": "d5", "type": "chair", "name": "Chair", "x": 5700, "y": 6300, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 0, "color": "#5b4636" },
+    { "id": "d6", "type": "chair", "name": "Chair", "x": 6300, "y": 6300, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 0, "color": "#5b4636" },
+    { "id": "d7", "type": "chair", "name": "Chair", "x": 6900, "y": 6300, "w": 450, "d": 500, "h": 900, "z": 0, "rot": 0, "color": "#5b4636" }
+  ]
+}
