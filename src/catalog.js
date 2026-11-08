@@ -2,6 +2,10 @@
 //   w = width (left-right), d = depth (front-back), h = height, z = height above floor.
 // Edit or extend this list freely; `type` picks how the item is drawn (see items.js).
 export const CATALOG = [
+  // Corner sofa from the product page: 315 × 212 cm, 80 cm high, seat 48 cm, arm 65 cm, legs 18 cm.
+  // Main-run depth (95 cm) and chaise width (110 cm) are estimated from the photos — check in store.
+  { group: 'Living', label: 'Corner sofa 315×212 (chaise left)', item: { type: 'sectional', name: 'Corner sofa', w: 3150, d: 2120, h: 800, color: '#5d6878', chaise: 'left', chaiseW: 1100, seatD: 950, sideBack: 1100, seat: 480, armH: 650, legs: 180 } },
+  { group: 'Living', label: 'Corner sofa 315×212 (chaise right)', item: { type: 'sectional', name: 'Corner sofa', w: 3150, d: 2120, h: 800, color: '#5d6878', chaise: 'right', chaiseW: 1100, seatD: 950, sideBack: 1100, seat: 480, armH: 650, legs: 180 } },
   { group: 'Living', label: 'Sofa (3 seat)', item: { type: 'sofa', name: 'Sofa', w: 2200, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Sofa (2 seat)', item: { type: 'sofa', name: 'Sofa', w: 1700, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Armchair', item: { type: 'sofa', name: 'Armchair', w: 900, d: 850, h: 850, color: '#8a6f5a' } },
@@ -32,4 +36,4 @@ export const CATALOG = [
   { group: 'Other', label: 'Box', item: { type: 'box', name: 'Box', w: 600, d: 600, h: 600, color: '#9aa5b1' } },
 ];
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional'];

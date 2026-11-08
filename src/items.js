@@ -83,6 +83,45 @@ export function buildItem(it) {
       box(g, w * 0.35, 120, 400, w * 0.22, h + 60, -d / 2 + 260, '#ffffff');
       break;
     }
+    case 'sectional': {
+      // L-shaped corner sofa: seat along the back, open-ended chaise on one side,
+      // a short side back over the corner and an arm on the far end.
+      // Built with the chaise on the left (-x), then mirrored when chaise === 'right'.
+      const s = new THREE.Group();
+      g.add(s);
+      if (it.chaise === 'right') s.scale.x = -1;
+      const legH = it.legs ?? 180, seat = it.seat ?? 480, armH = it.armH ?? 650;
+      const mainD = Math.min(it.seatD ?? 950, d), chW = Math.min(it.chaiseW ?? 1100, w - 400);
+      const sideLen = Math.min(it.sideBack ?? 1100, d);
+      const backT = 180, armW = 160, cush = 110, base = seat - cush;
+      const x0 = -w / 2, z0 = -d / 2;
+      const light = shade(c, 1.12), dark = '#1c1c1c';
+      // bases
+      box(s, w, base - legH, mainD, 0, (legH + base) / 2, z0 + mainD / 2, c);
+      box(s, chW, base - legH, d - mainD, x0 + chW / 2, (legH + base) / 2, z0 + mainD + (d - mainD) / 2, c);
+      // back, side back and arm
+      box(s, w - armW, h - base, backT, x0 + (w - armW) / 2, (base + h) / 2, z0 + backT / 2, c);
+      box(s, backT, h - base - 40, sideLen - backT, x0 + backT / 2, (base + h - 40) / 2, z0 + backT + (sideLen - backT) / 2, c);
+      box(s, armW, armH - legH, mainD, w / 2 - armW / 2, (legH + armH) / 2, z0 + mainD / 2, c);
+      // seat cushions: three along the main run, one on the chaise
+      const runX0 = x0 + chW, runX1 = w / 2 - armW, n = 3, cw = (runX1 - runX0) / n;
+      for (let i = 0; i < n; i++) {
+        box(s, cw - 12, cush, mainD - backT - 10, runX0 + cw * (i + 0.5), base + cush / 2, z0 + backT + (mainD - backT) / 2, light);
+      }
+      box(s, chW - backT - 12, cush, sideLen - backT, x0 + backT + (chW - backT) / 2, base + cush / 2, z0 + backT + (sideLen - backT) / 2, light);
+      box(s, chW - 12, cush, d - sideLen - 10, x0 + chW / 2, base + cush / 2, z0 + sideLen + (d - sideLen) / 2, light);
+      // back cushions
+      for (let i = 0; i < n; i++) {
+        box(s, cw - 16, h - seat - 30, 150, runX0 + cw * (i + 0.5), seat + (h - seat - 30) / 2, z0 + backT + 75, light);
+      }
+      box(s, chW - backT - 16, h - seat - 30, 150, x0 + backT + (chW - backT) / 2, seat + (h - seat - 30) / 2, z0 + backT + 75, light);
+      box(s, 150, h - seat - 70, sideLen - backT - 170, x0 + backT + 75, seat + (h - seat - 70) / 2, z0 + backT + 170 + (sideLen - backT - 170) / 2, light);
+      // legs
+      const legsAt = [[x0 + 60, z0 + 60], [w / 2 - 60, z0 + 60], [w / 2 - 60, z0 + mainD - 60],
+        [x0 + chW - 60, z0 + mainD - 60], [x0 + 60, d / 2 - 60], [x0 + chW - 60, d / 2 - 60]];
+      for (const [lx, lz] of legsAt) box(s, 45, legH, 45, lx, legH / 2, lz, dark);
+      break;
+    }
     case 'stairs': {
       // a straight flight rising from the front (+z) to the back (-z)
       const steps = Math.max(2, Math.round(h / 200));

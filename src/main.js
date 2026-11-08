@@ -437,6 +437,11 @@ function fieldsFor(kind, o) {
   if (kind === 'item') {
     const f = [...ITEM_FIELDS];
     if (['base-unit', 'sink-unit', 'hob-unit'].includes(o.type)) f.push(['worktop', 'color', 'Worktop']);
+    if (o.type === 'sectional') {
+      f.push(['chaise', ['left', 'right'], 'Chaise side']);
+      f.push(['chaiseW', 'num', 'Chaise width']);
+      f.push(['seatD', 'num', 'Main depth']);
+    }
     return f;
   }
   if (kind === 'wall') return WALL_FIELDS;
