@@ -29,6 +29,8 @@ export const CATALOG = [
   { group: 'Kitchen', label: 'Hob unit', item: { type: 'hob-unit', name: 'Hob unit', w: 600, d: 600, h: 900, color: '#2f4f4f', worktop: '#d8d2c4' } },
   { group: 'Kitchen', label: 'Wall unit 600', item: { type: 'wall-unit', name: 'Wall unit', w: 600, d: 350, h: 720, z: 1450, color: '#2f4f4f' } },
   { group: 'Kitchen', label: 'Tall unit', item: { type: 'tall-unit', name: 'Tall unit', w: 600, d: 600, h: 2200, color: '#2f4f4f' } },
+  // Fisher & Paykel RF540ANUB6 569L French door fridge freezer (ice & water): 900 W x 695 D x 1790 H.
+  { group: 'Kitchen', label: 'American fridge freezer 900', item: { type: 'french-door-fridge', name: 'American fridge freezer', w: 900, d: 695, h: 1790, color: '#74777c' } },
   { group: 'Kitchen', label: 'Fridge freezer', item: { type: 'appliance', name: 'Fridge freezer', w: 600, d: 650, h: 1850, color: '#d0d4d8' } },
   { group: 'Kitchen', label: 'Range cooker', item: { type: 'appliance', name: 'Range cooker', w: 1000, d: 600, h: 900, color: '#3a3a3a' } },
   { group: 'Kitchen', label: 'Island', item: { type: 'base-unit', name: 'Island', w: 2000, d: 900, h: 900, color: '#2f4f4f', worktop: '#d8d2c4' } },
@@ -40,4 +42,4 @@ export const CATALOG = [
   { group: 'Other', label: 'Box', item: { type: 'box', name: 'Box', w: 600, d: 600, h: 600, color: '#9aa5b1' } },
 ];
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge'];

@@ -220,6 +220,27 @@ export function buildItem(it) {
       box(g, w - 4, h - plinth - lower - 4, 18, 0, plinth + lower + (h - plinth - lower) / 2, d / 2 - 9, c);
       break;
     }
+    case 'french-door-fridge': {
+      // American-style fridge freezer: two fridge doors over a freezer drawer.
+      const feet = 25, gap = 8, door = 40;
+      box(g, w, h - feet, d - door, 0, feet + (h - feet) / 2, -door / 2, shade(c, 0.88));
+      // dark panel just behind the doors, seen only through the gaps between them
+      box(g, w - 2, h - feet - 2, 4, 0, feet + (h - feet) / 2, d / 2 - door - 1, '#1e1f21');
+      const drawerTop = feet + (h - feet) * 0.36;
+      const metal = { roughness: 0.45 };
+      // freezer drawer
+      box(g, w - 2 * gap, drawerTop - feet - gap, door, 0, feet + (drawerTop - feet - gap) / 2, d / 2 - door / 2, c, metal);
+      // left and right fridge doors
+      const doorH = h - drawerTop - gap, dw = w / 2 - 1.5 * gap;
+      for (const sx of [-1, 1]) {
+        box(g, dw, doorH, door, sx * (gap / 2 + dw / 2), drawerTop + gap + doorH / 2 - gap / 2, d / 2 - door / 2, c, metal);
+      }
+      // ice & water dispenser on the right door
+      box(g, w * 0.16, doorH * 0.16, 8, w * 0.33, drawerTop + doorH * 0.45, d / 2 + 4, '#151515', { roughness: 0.3 });
+      // feet
+      for (const sx of [-1, 1]) box(g, 40, feet, 40, sx * (w / 2 - 40), feet / 2, d / 2 - 60, '#111111');
+      break;
+    }
     case 'appliance':
       box(g, w, h, d, 0, h / 2, 0, c, { roughness: 0.4, metalness: 0.2 });
       box(g, w * 0.04, h * 0.3, 20, w * 0.4, h * 0.6, d / 2 + 10, '#888888', { metalness: 0.6 });
