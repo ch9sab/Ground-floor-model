@@ -105,6 +105,27 @@ export function buildItem(it) {
       legs(g, w, d, h - 30, 50, 70, shade(c, 0.8));
       break;
     }
+    case 'trestle-table': {
+      // Extendable table: legs and frame stay put, the top grows from closedW to w.
+      const top = 30, apron = 70, leg = 60;
+      const span = it.legSpan ?? 1270;           // outside of leg to outside of leg, lengthways
+      const legZ = d / 2 - (it.legInset ?? 80);  // legs are set in from the long edges
+      const under = h - top - apron;             // 650 clearance under the apron
+      const lx = span / 2 - leg / 2, frame = shade(c, 0.95);
+      const closed = Math.min(it.closedW ?? w, w);
+      box(g, closed, top, d, 0, h - top / 2, 0, c);
+      if (w > closed) {                          // extension leaves at each end
+        const leaf = (w - closed) / 2;
+        for (const sx of [-1, 1]) box(g, leaf - 4, top, d, sx * (closed / 2 + leaf / 2 + 2), h - top / 2, 0, shade(c, 1.05));
+      }
+      for (const sx of [-1, 1]) for (const sz of [-1, 1]) box(g, leg, h - top, leg, sx * lx, (h - top) / 2, sz * legZ, frame);
+      for (const sz of [-1, 1]) box(g, 2 * lx, apron, 25, 0, under + apron / 2, sz * legZ, frame);   // side aprons
+      for (const sx of [-1, 1]) box(g, 25, apron, 2 * legZ, sx * lx, under + apron / 2, 0, frame);   // end aprons
+      const low = it.stretcher ?? 150, sh = 60;
+      for (const sx of [-1, 1]) box(g, 40, sh, 2 * legZ, sx * lx, low + sh / 2, 0, frame);           // end stretchers
+      box(g, 2 * lx, sh, 40, 0, low + sh / 2, 0, frame);                                          // centre stretcher
+      break;
+    }
     case 'longview-chair':
       g.add(longviewChair(it));
       break;

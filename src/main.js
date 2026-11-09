@@ -437,6 +437,7 @@ function fieldsFor(kind, o) {
   if (kind === 'item') {
     const f = [...ITEM_FIELDS];
     if (['base-unit', 'sink-unit', 'hob-unit'].includes(o.type)) f.push(['worktop', 'color', 'Worktop']);
+    if (o.type === 'trestle-table' && o.openW) f.push(['extension', ['closed', 'extended'], 'Extension']);
     if (o.type === 'sectional') {
       f.push(['chaise', ['left', 'right'], 'Chaise side']);
       f.push(['chaiseW', 'num', 'Chaise width']);
@@ -470,6 +471,7 @@ function setField(kind, o, key, value) {
   }
   if (kind === 'opening' && key === 'type' && value === 'window') { o.sill ??= 900; }
   if (kind === 'opening' && key === 'side') o.side = Number(value);
+  if (kind === 'item' && key === 'extension') o.w = value === 'extended' ? o.openW : o.closedW;
 }
 
 function renderProps() {

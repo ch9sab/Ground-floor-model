@@ -16,6 +16,8 @@ export const CATALOG = [
 
   { group: 'Dining', label: 'Dining table 6', item: { type: 'table', name: 'Dining table', w: 1800, d: 900, h: 750, color: '#a0785a' } },
   { group: 'Dining', label: 'Dining table 4', item: { type: 'table', name: 'Dining table', w: 1200, d: 800, h: 750, color: '#a0785a' } },
+  // Extendable dining table: 160 cm closed / 220 cm extended, 90 deep, 75 high, legs 127 cm apart.
+  { group: 'Dining', label: 'Extendable table 160–220', item: { type: 'trestle-table', name: 'Dining table', w: 1600, d: 900, h: 750, closedW: 1600, openW: 2200, extension: 'closed', legSpan: 1270, color: '#d9b88f' } },
   // Longview dining chair (Foureyes, 2020): 508 W x 673 D x 749 H, seat 470 high, 419 deep.
   { group: 'Dining', label: 'Longview dining chair', item: { type: 'longview-chair', name: 'Longview chair', w: 508, d: 673, h: 749, color: '#dcc29a' } },
   { group: 'Dining', label: 'Chair', item: { type: 'chair', name: 'Chair', w: 450, d: 500, h: 900, color: '#5b4636' } },
@@ -38,4 +40,4 @@ export const CATALOG = [
   { group: 'Other', label: 'Box', item: { type: 'box', name: 'Box', w: 600, d: 600, h: 600, color: '#9aa5b1' } },
 ];
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table'];
