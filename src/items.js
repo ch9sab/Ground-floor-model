@@ -83,6 +83,78 @@ function baseUnit(g, it) {
   box(g, w, top, d + 20, 0, h - top / 2, 10, it.worktop || '#d8d2c4');
 }
 
+// Plywood cabinet built from panels, so open cells really are open.
+// it.fronts lists rows from top to bottom, separated by '/'. Each row is
+// [height:]<count><kind>, e.g. "150:1w/1w/1w" = shallow drawer over two drawers.
+// Kinds: d door, w drawer, o open, b wire basket, x empty space (e.g. for a fridge),
+// v oven, m compact oven. Rows without a height share the remaining space.
+const PLY = '#dcc39b';
+function cabinet(g, it) {
+  const T = 18;
+  const { w, d, h } = it;
+  const ply = it.carcass || PLY, front = it.color || '#b5654c';
+  const plinth = it.plinth ?? 0, top = it.topT ?? 0;
+  const cH = h - plinth - top, y0 = plinth;
+  const handle = (x, y) => box(g, 100, 16, 4, x, y, d / 2 + 1, '#4a3a2e');
+  if (plinth > 0) box(g, w - 4, plinth, d - 60, 0, plinth / 2, -30, shade(ply, 0.82));
+  // carcass panels: sides, base, top, back
+  for (const sx of [-1, 1]) box(g, T, cH, d, sx * (w / 2 - T / 2), y0 + cH / 2, 0, ply);
+  box(g, w - 2 * T, T, d, 0, y0 + T / 2, 0, ply);
+  box(g, w - 2 * T, T, d, 0, y0 + cH - T / 2, 0, ply);
+  box(g, w - 2 * T, cH - 2 * T, T, 0, y0 + cH / 2, -d / 2 + T / 2, shade(ply, 0.92));
+  // rows
+  const rows = String(it.fronts || '1d').split('/').map((r) => {
+    const m = r.trim().match(/^(?:(\d+):)?(\d*)([dwobxvm])$/);
+    return m ? { h: m[1] ? Number(m[1]) : null, n: Number(m[2] || 1), k: m[3] } : { h: null, n: 1, k: 'd' };
+  });
+  const inner = cH - 2 * T - (rows.length - 1) * T;
+  const fixed = rows.reduce((a, r) => a + (r.h || 0), 0);
+  const free = rows.filter((r) => !r.h).length;
+  const share = free ? Math.max(50, (inner - fixed) / free) : 0;
+  let yTop = y0 + cH - T;
+  const iw = w - 2 * T;
+  rows.forEach((r, ri) => {
+    const rh = r.h || share;
+    const yc = yTop - rh / 2;
+    const open = 'obx'.includes(r.k);
+    const cw = (iw - (open ? (r.n - 1) * T : 0)) / r.n;
+    for (let i = 0; i < r.n; i++) {
+      const xc = -iw / 2 + cw / 2 + i * (cw + (open ? T : 0));
+      if (open && i > 0) box(g, T, rh, d - T, xc - cw / 2 - T / 2, yc, T / 2, ply); // divider
+      if (r.k === 'd' || r.k === 'w') {
+        box(g, cw - 4, rh - 4, T, xc, yc, d / 2 - T / 2, front);
+        const hy = r.k === 'w' ? yc + Math.min(rh / 2 - 40, 60) : (it.handle === 'bottom' ? yc - rh / 2 + 70 : yc + rh / 2 - 70);
+        handle(xc, hy);
+      } else if (r.k === 'b') {
+        box(g, cw - 40, rh - 50, d - 80, xc, yc - 10, 20, '#4b4f55');
+      } else if (r.k === 'v' || r.k === 'm') {
+        box(g, cw - 4, rh - 4, 25, xc, yc, d / 2 - 12, '#161616', { roughness: 0.3 });
+        const winH = r.k === 'v' ? rh * 0.5 : rh * 0.42;
+        box(g, cw * 0.72, winH, 4, xc, yc - rh * 0.08, d / 2 + 2, '#2c2f33', { roughness: 0.15 });
+        box(g, cw * 0.12, 22, 4, xc, yc + rh / 2 - 40, d / 2 + 2, '#d8d2c0');
+      }
+    }
+    if (ri < rows.length - 1) box(g, iw, T, open ? d - T : d, 0, yTop - rh - T / 2, open ? T / 2 : 0, ply); // rail/shelf
+    yTop -= rh + T;
+  });
+  // worktop, sink and hob
+  if (top > 0) {
+    const wt = it.worktop || '#e6e2da';
+    box(g, w, top, d + 20, 0, h - top / 2, 10, wt);
+    if (it.sink) {
+      const bowls = it.sink === 'double' ? 2 : 1, bw = (w - 160) / bowls;
+      for (let i = 0; i < bowls; i++) {
+        const bx = -((w - 160) / 2) + bw * (i + 0.5);
+        box(g, bw - 30, 4, d - 160, bx, h + 1, 10, '#b9bec4', { metalness: 0.3, roughness: 0.3 });
+        box(g, bw - 70, 5, d - 200, bx, h + 2, 10, '#7d8389', { roughness: 0.4 });
+      }
+      box(g, 30, 300, 30, 0, h + 150, -d / 2 + 60, '#c9ced3', { metalness: 0.4, roughness: 0.25 });
+      box(g, 30, 30, 200, 0, h + 300, -d / 2 + 150, '#c9ced3', { metalness: 0.4, roughness: 0.25 });
+    }
+    if (it.hob) box(g, Math.min(800, w - 100), 6, 520, 0, h + 3, 10, '#111111', { roughness: 0.15 });
+  }
+}
+
 export function buildItem(it) {
   const g = new THREE.Group();
   const { w, d, h } = it;
@@ -220,6 +292,9 @@ export function buildItem(it) {
       box(g, w - 4, h - plinth - lower - 4, 18, 0, plinth + lower + (h - plinth - lower) / 2, d / 2 - 9, c);
       break;
     }
+    case 'cabinet':
+      cabinet(g, it);
+      break;
     case 'french-door-fridge': {
       // American-style fridge freezer: two fridge doors over a freezer drawer.
       const feet = 25, gap = 8, door = 40;

@@ -438,6 +438,11 @@ function fieldsFor(kind, o) {
     const f = [...ITEM_FIELDS];
     if (['base-unit', 'sink-unit', 'hob-unit'].includes(o.type)) f.push(['worktop', 'color', 'Worktop']);
     if (o.type === 'trestle-table' && o.openW) f.push(['extension', ['closed', 'extended'], 'Extension']);
+    if (o.type === 'cabinet') {
+      f.push(['fronts', 'text', 'Fronts layout']);
+      f.push(['carcass', 'color', 'Carcass']);
+      if (o.topT > 0) f.push(['worktop', 'color', 'Worktop']);
+    }
     if (o.type === 'sectional') {
       f.push(['chaise', ['left', 'right'], 'Chaise side']);
       f.push(['chaiseW', 'num', 'Chaise width']);

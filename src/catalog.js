@@ -42,4 +42,34 @@ export const CATALOG = [
   { group: 'Other', label: 'Box', item: { type: 'box', name: 'Box', w: 600, d: 600, h: 600, color: '#9aa5b1' } },
 ];
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge'];
+// ---- Plyko kitchen design (birch ply with terracotta Formica fronts) ----
+// Sizes from the elevation drawings: base units 150 plinth + 720 carcass + 30 worktop = 900 high,
+// 600 deep; tall units 2300 high. fronts: rows top→bottom, e.g. "150:1w/1w/1w" (see items.js).
+const TERRA = '#b5654c', PLYW = '#dcc39b', TOP = '#e6e2da';
+const base = (label, w, fronts, extra = {}) => ({ group: 'Plyko kitchen', label, item: {
+  type: 'cabinet', name: label, w, d: 600, h: 900, plinth: 150, topT: 30, fronts, color: PLYW, carcass: PLYW, worktop: TOP, ...extra } });
+CATALOG.push(
+  base('Large double sink unit 1000', 1000, '140:1w/2d', { sink: 'double' }),
+  base('Integrated dishwasher 636', 636, '1d'),
+  base('Pull-out bins 600', 600, '1w'),
+  base('Base unit 1 door 600', 600, '1d'),
+  base('2-drawer unit 850', 850, '1w/1w'),
+  base('Open basket unit 620', 620, '1b/1b/1b'),
+  base('Open shelf end unit 600', 600, '1o/1o'),
+  base('3-drawer unit 900 (terracotta)', 900, '150:1w/1w/1w', { color: TERRA }),
+  base('3-drawer unit 900 with hob', 900, '150:1w/1w/1w', { color: TERRA, hob: true }),
+  base('Island 2-door 800 (terracotta)', 800, '2d', { color: TERRA }),
+  base('Island open cubbies 1100', 1100, '3o/2o'),
+  { group: 'Plyko kitchen', label: 'Fridge housing 960 (924 gap)', item: { type: 'cabinet', name: 'Fridge housing', w: 960, d: 650, h: 2300, fronts: '450:2d/1x', color: TERRA, carcass: PLYW } },
+  { group: 'Plyko kitchen', label: 'Oven tower 636 (2 ovens)', item: { type: 'cabinet', name: 'Oven tower', w: 636, d: 600, h: 2300, plinth: 150, fronts: '450:1d/455:1m/595:1v/1d', color: TERRA, carcass: PLYW } },
+  { group: 'Plyko kitchen', label: 'Open shelf column 600×150', item: { type: 'cabinet', name: 'Shelf column', w: 600, d: 150, h: 2300, plinth: 150, fronts: '1o/1o/1o/1o/1o/1o/1o/1o/1o', carcass: PLYW } },
+  { group: 'Plyko kitchen', label: 'Dresser top unit 650', item: { type: 'cabinet', name: 'Dresser top unit', w: 650, d: 400, h: 1500, z: 900, fronts: '700:2d/1o/1o/1o', handle: 'bottom', color: TERRA, carcass: PLYW } },
+  { group: 'Plyko kitchen', label: 'Wall unit 2-door 650', item: { type: 'cabinet', name: 'Wall unit', w: 650, d: 350, h: 700, z: 1450, fronts: '2d', handle: 'bottom', color: TERRA, carcass: PLYW } },
+  { group: 'Plyko kitchen', label: 'Tall 2-door cupboard 1000', item: { type: 'cabinet', name: 'Tall cupboard', w: 1000, d: 600, h: 2150, fronts: '2d', color: TERRA, carcass: PLYW } },
+  { group: 'Plyko kitchen', label: 'End panel 18', item: { type: 'box', name: 'End panel', w: 18, d: 620, h: 900, color: PLYW } },
+  { group: 'Plyko kitchen', label: 'Worktop piece 1000', item: { type: 'box', name: 'Worktop', w: 1000, d: 620, h: 30, z: 870, color: TOP } },
+  { group: 'Plyko kitchen', label: 'Splashback 1000', item: { type: 'box', name: 'Splashback', w: 1000, d: 15, h: 450, z: 900, color: '#cfccc6' } },
+  { group: 'Plyko kitchen', label: 'Floating shelf 900', item: { type: 'box', name: 'Floating shelf', w: 900, d: 250, h: 25, z: 1500, color: PLYW } },
+);
+
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet'];
