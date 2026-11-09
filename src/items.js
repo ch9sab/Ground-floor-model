@@ -31,6 +31,43 @@ function box(g, w, h, d, x, y, z, color, opts) {
 
 const CARCASS = '#efede8';
 
+// a straight member between two points in the y-z plane (mm), tx thick across, tz thick the other way
+function strut(g, x, [y0, z0], [y1, z1], tx, tz, color) {
+  const len = Math.hypot(y1 - y0, z1 - z0);
+  const m = box(g, tx, len, tz, x, (y0 + y1) / 2, (z0 + z1) / 2, color);
+  m.rotation.x = Math.atan2(z1 - z0, y1 - y0);
+  return m;
+}
+
+// Longview-style dining chair, modelled at its drawn size (508 x 673 x 749 mm)
+// and then stretched to the item's w/d/h. +z is the front.
+function longviewChair(it) {
+  const outer = new THREE.Group();
+  const g = new THREE.Group();
+  outer.add(g);
+  g.scale.set(it.w / 508, it.h / 749, it.d / 673);
+  const c = it.color || '#dcc29a';
+  const slat = shade(c, 0.93);
+  for (const side of [-1, 1]) {
+    const x = side * (508 / 2 - 13);
+    strut(g, x, [0, 323], [462, 278], 25, 45, c);      // front leg, splayed forward
+    strut(g, x, [0, -321], [440, -112], 25, 55, c);    // back leg, splayed back
+    strut(g, x, [425, -112], [749, -170], 25, 45, c);  // back post
+    strut(g, x, [432, 290], [412, -125], 25, 65, c);   // seat rail
+  }
+  // slatted seat, 419 deep, front edge at 470 high with a slight 4° rake back
+  const slats = 6, seatD = 419, z0 = 285;
+  for (let i = 0; i < slats; i++) {
+    const z = z0 - (seatD / slats) * (i + 0.5);
+    const y = 470 - 9 - (z0 - z) * Math.tan((4 * Math.PI) / 180);
+    box(g, 508 - 50, 18, seatD / slats - 8, 0, y, z, slat);
+  }
+  // back panel (127 tall) leaning with the back posts
+  const back = box(g, 508 - 50, 127, 20, 0, 668, -140, c);
+  back.rotation.x = -Math.atan2(58, 324);
+  return outer;
+}
+
 function legs(g, w, d, h, size, inset, color) {
   for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
     box(g, size, h, size, sx * (w / 2 - inset), h / 2, sz * (d / 2 - inset), color);
@@ -68,6 +105,9 @@ export function buildItem(it) {
       legs(g, w, d, h - 30, 50, 70, shade(c, 0.8));
       break;
     }
+    case 'longview-chair':
+      g.add(longviewChair(it));
+      break;
     case 'chair': {
       const seat = it.seat || 450;
       box(g, w, 40, d, 0, seat - 20, 0, c);

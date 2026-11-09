@@ -16,6 +16,8 @@ export const CATALOG = [
 
   { group: 'Dining', label: 'Dining table 6', item: { type: 'table', name: 'Dining table', w: 1800, d: 900, h: 750, color: '#a0785a' } },
   { group: 'Dining', label: 'Dining table 4', item: { type: 'table', name: 'Dining table', w: 1200, d: 800, h: 750, color: '#a0785a' } },
+  // Longview dining chair (Foureyes, 2020): 508 W x 673 D x 749 H, seat 470 high, 419 deep.
+  { group: 'Dining', label: 'Longview dining chair', item: { type: 'longview-chair', name: 'Longview chair', w: 508, d: 673, h: 749, color: '#dcc29a' } },
   { group: 'Dining', label: 'Chair', item: { type: 'chair', name: 'Chair', w: 450, d: 500, h: 900, color: '#5b4636' } },
 
   { group: 'Kitchen', label: 'Base unit 600', item: { type: 'base-unit', name: 'Base unit', w: 600, d: 600, h: 900, color: '#2f4f4f', worktop: '#d8d2c4' } },
@@ -36,4 +38,4 @@ export const CATALOG = [
   { group: 'Other', label: 'Box', item: { type: 'box', name: 'Box', w: 600, d: 600, h: 600, color: '#9aa5b1' } },
 ];
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair'];
