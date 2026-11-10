@@ -42,6 +42,17 @@ export const CATALOG = [
   { group: 'Other', label: 'Box', item: { type: 'box', name: 'Box', w: 600, d: 600, h: 600, color: '#9aa5b1' } },
 ];
 
+// ---- Home gym ----
+CATALOG.push(
+  // Lionscool leg extension / curl machine: 57.1" x 43.7" footprint, 38.6" high.
+  { group: 'Gym', label: 'Leg extension / curl machine', item: { type: 'leg-machine', name: 'Leg extension machine', w: 1110, d: 1450, h: 980, color: '#c4262e' } },
+  // WalkingPad Z3 Hybrid+: 1472 L x 765 W x 1030 H with the handlebar up.
+  { group: 'Gym', label: 'WalkingPad Z3 treadmill', item: { type: 'walking-pad', name: 'WalkingPad Z3', w: 765, d: 1472, h: 1030, handlebar: 'up', color: '#2a2b2e' } },
+  // Freak Athlete Hyper Pro X: in-use size estimated from the original Hyper Pro (65" x 30"); stores upright at 23" x 58" high.
+  { group: 'Gym', label: 'Freak Athlete Hyper Pro X', item: { type: 'hyper-bench', name: 'Hyper Pro X', w: 760, d: 1650, h: 950, color: '#1d1d1f' } },
+  { group: 'Gym', label: 'Hyper Pro X (stored upright)', item: { type: 'box', name: 'Hyper Pro X (stored)', w: 760, d: 585, h: 1470, color: '#1d1d1f' } },
+);
+
 // ---- Plyko kitchen design (birch ply with terracotta Formica fronts) ----
 // Sizes from the elevation drawings: base units 150 plinth + 720 carcass + 30 worktop = 900 high,
 // 600 deep; tall units 2300 high. fronts: rows top→bottom, e.g. "150:1w/1w/1w" (see items.js).
@@ -72,4 +83,4 @@ CATALOG.push(
   { group: 'Plyko kitchen', label: 'Floating shelf 900', item: { type: 'box', name: 'Floating shelf', w: 900, d: 250, h: 25, z: 1500, color: PLYW } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench'];

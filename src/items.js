@@ -155,6 +155,95 @@ function cabinet(g, it) {
   }
 }
 
+// cylinder of radius r and length len along 'x', 'y' or 'z'
+function cyl(g, r, len, x, y, z, axis, color, opts) {
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r * S, r * S, len * S, 20), mat(color, opts));
+  if (axis === 'x') m.rotation.z = Math.PI / 2;
+  if (axis === 'z') m.rotation.x = Math.PI / 2;
+  m.position.set(x * S, y * S, z * S);
+  m.castShadow = m.receiveShadow = true;
+  g.add(m);
+  return m;
+}
+
+const STEEL = '#1d1d1f', PAD = '#202022', CHROME = '#c8ccd0';
+
+// Seated leg extension / curl machine (user faces +z, rollers at the front).
+function legMachine(g, it) {
+  const { w, d, h } = it, red = it.color || '#c4262e', t = 60;
+  const z0 = -d / 2 + 120, z1 = d / 2 - 260;          // base frame (front leaves room for the lower roller)
+  for (const sx of [-1, 1]) box(g, t, t, z1 - z0, sx * (w / 2 - 260), t / 2, (z0 + z1) / 2, STEEL);
+  box(g, w - 520, t, t, 0, t / 2, z0, STEEL);
+  box(g, w * 0.55, t, t, 0, t / 2, z1, STEEL);
+  for (const sx of [-1, 1]) for (const z of [z0, z1]) box(g, 80, 30, 80, sx * (w / 2 - 260), 15, z, '#111');
+  box(g, t, 420, t, 0, 210, z0 + 200, STEEL);         // rear seat post
+  box(g, t, 400, t, 0, 200, z1 - 200, STEEL);         // front seat post
+  box(g, t, t, z1 - z0 - 200, 0, 400, (z0 + z1) / 2, STEEL);
+  // seat and backrest
+  const seatZ = (z0 + z1) / 2 + 60;
+  box(g, 330, 70, 520, 0, 470, seatZ, PAD);
+  const back = box(g, 320, 640, 70, 0, 520 + 300, z0 + 140, PAD);
+  back.rotation.x = -0.28;
+  // side uprights with the cam disc, lever arm and rollers
+  const sideX = 260;
+  box(g, t, 700, t, sideX, 350, seatZ + 260, STEEL);
+  cyl(g, 140, 30, sideX + 40, 640, seatZ + 260, 'x', STEEL);
+  const arm = box(g, 70, 520, 70, sideX - 40, 420, seatZ + 400, red);
+  arm.rotation.x = 0.45;
+  cyl(g, 65, 410, 0, 560, seatZ + 330, 'x', PAD);     // upper (thigh) roller
+  cyl(g, 75, 480, 0, 200, z1 + 140, 'x', PAD);        // lower (shin) roller
+  // plate-loading arm out the side with a chrome horn
+  box(g, 360, 60, 60, -sideX - 120, 420, seatZ + 150, red);
+  cyl(g, 25, 300, -w / 2 + 150, 440, seatZ + 150, 'x', CHROME, { metalness: 0.6, roughness: 0.25 });
+  void h;
+}
+
+// Under-desk walking pad / folding treadmill (user faces +z, motor housing at the front).
+function walkingPad(g, it) {
+  const { w, d, h } = it, deckH = 60, house = 220;
+  box(g, w, 110, house, 0, 55, d / 2 - house / 2, it.color || '#2a2b2e');           // motor housing
+  box(g, w - 40, deckH, d - house, 0, deckH / 2, -house / 2, '#2a2b2e');            // deck
+  box(g, w - 170, 4, d - house - 60, 0, deckH + 2, -house / 2, '#111111');          // belt
+  for (const sx of [-1, 1]) box(g, 60, deckH + 6, d - house, sx * (w / 2 - 50), (deckH + 6) / 2, -house / 2, '#9a9da2', { roughness: 0.4 }); // silver side rails
+  if (it.handlebar !== 'down') {
+    const postZ = d / 2 - house - 20;
+    for (const sx of [-1, 1]) {
+      box(g, 45, h - deckH, 45, sx * (w / 2 - 40), deckH + (h - deckH) / 2, postZ, '#3a3b3e');
+      box(g, 55, 55, 450, sx * (w / 2 - 40), h - 28, postZ - 225, '#3a3b3e');      // handles over the deck
+    }
+    box(g, w - 40, 50, 50, 0, h - 25, postZ, '#3a3b3e');
+  }
+  for (const sx of [-1, 1]) cyl(g, 22, 30, sx * (w / 2 - 60), 22, d / 2 - 40, 'x', '#d4a24a');
+}
+
+// Nordic / hyperextension bench (pads at the top, foot plate and ankle rollers at the back).
+function hyperBench(g, it) {
+  const { w, d, h } = it, t = 55;
+  box(g, t, t, d - 300, 0, t / 2, -150 / 2, STEEL);                 // spine
+  box(g, w, t, t, 0, t / 2, -d / 2 + 120, STEEL);                   // rear foot bar
+  for (const sx of [-1, 1]) {
+    box(g, t, t, 420, sx * (w / 2 - 30), t / 2, d / 2 - 210, STEEL); // front U-hoop legs
+    box(g, 70, 40, 70, sx * (w / 2 - 30), 20, d / 2 - 20, '#111');
+    box(g, 70, 40, 70, sx * (w / 2 - 30), 20, -d / 2 + 120, '#111');
+  }
+  box(g, w, t, t, 0, t / 2, d / 2 - 420, STEEL);
+  // angled struts up to the pad carriage
+  const s1 = strut(g, 0, [t, -d / 2 + 300], [h - 160, -60], t, t, STEEL); void s1;
+  strut(g, 0, [t, d / 2 - 420], [h - 160, 120], t, t, STEEL);
+  box(g, 120, 60, 700, 0, h - 150, 0, STEEL);                        // carriage
+  // two rounded hip pads side by side
+  for (const sx of [-1, 1]) {
+    box(g, 230, 90, 520, sx * 125, h - 75, 60, PAD);
+    cyl(g, 120, 230, sx * 125, h - 60, 60, 'x', PAD).scale.set(1, 0.6, 1);
+  }
+  // handles at the front
+  for (const sx of [-1, 1]) strut(g, sx * 230, [h - 160, 320], [h - 300, 520], 30, 30, STEEL);
+  // foot plate and ankle rollers at the back
+  strut(g, 0, [h - 160, -300], [450, -d / 2 + 260], t, t, STEEL);
+  box(g, 380, 420, 20, 0, 560, -d / 2 + 200, '#2c2c2e');
+  for (const y of [520, 700]) for (const sx of [-1, 1]) cyl(g, 60, 170, sx * 100, y, -d / 2 + 290, 'x', PAD);
+}
+
 export function buildItem(it) {
   const g = new THREE.Group();
   const { w, d, h } = it;
@@ -292,6 +381,15 @@ export function buildItem(it) {
       box(g, w - 4, h - plinth - lower - 4, 18, 0, plinth + lower + (h - plinth - lower) / 2, d / 2 - 9, c);
       break;
     }
+    case 'leg-machine':
+      legMachine(g, it);
+      break;
+    case 'walking-pad':
+      walkingPad(g, it);
+      break;
+    case 'hyper-bench':
+      hyperBench(g, it);
+      break;
     case 'cabinet':
       cabinet(g, it);
       break;
