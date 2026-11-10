@@ -50,6 +50,9 @@ CATALOG.push(
   { group: 'Gym', label: 'WalkingPad Z3 treadmill', item: { type: 'walking-pad', name: 'WalkingPad Z3', w: 765, d: 1472, h: 1030, handlebar: 'up', color: '#2a2b2e' } },
   // Freak Athlete Hyper Pro X: in-use size estimated from the original Hyper Pro (65" x 30"); stores upright at 23" x 58" high.
   { group: 'Gym', label: 'Freak Athlete Hyper Pro X', item: { type: 'hyper-bench', name: 'Hyper Pro X', w: 760, d: 1650, h: 950, color: '#1d1d1f' } },
+  // REP Fitness Ares 2.0 wall-mounted cable rack with storage wings: 2391 W (2685 with plates), 2085 high,
+  // 737 from the wall to the frame front, 1113 to the pull-up bar extension. Back of the item goes against the wall.
+  { group: 'Gym', label: 'REP Ares 2.0 cable rack', item: { type: 'cable-rack', name: 'REP Ares 2.0', w: 2391, d: 1113, h: 2085, frameD: 737, coreW: 1404, color: '#1b1b1d' } },
   { group: 'Gym', label: 'Hyper Pro X (stored upright)', item: { type: 'box', name: 'Hyper Pro X (stored)', w: 760, d: 585, h: 1470, color: '#1d1d1f' } },
 );
 
@@ -83,4 +86,4 @@ CATALOG.push(
   { group: 'Plyko kitchen', label: 'Floating shelf 900', item: { type: 'box', name: 'Floating shelf', w: 900, d: 250, h: 25, z: 1500, color: PLYW } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack'];

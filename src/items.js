@@ -244,6 +244,49 @@ function hyperBench(g, it) {
   for (const y of [520, 700]) for (const sx of [-1, 1]) cyl(g, 60, 170, sx * 100, y, -d / 2 + 290, 'x', PAD);
 }
 
+// Wall-mounted cable rack with weight stacks and plate-storage wings.
+// The back (-z) is the wall. Frame depth `frameD`; the pull-up extension reaches the full item depth.
+function cableRack(g, it) {
+  const { w, d, h } = it, frameD = Math.min(it.frameD ?? 737, d), t = 75, blk = it.color || '#1b1b1d';
+  const zb = -d / 2, zf = zb + frameD, top = Math.min(2032, h);
+  const cw = it.coreW ?? 1404, cx = cw / 2 - t / 2;
+  const metal = { roughness: 0.5 };
+  box(g, cw, Math.min(1900, top - 100), 20, 0, top - Math.min(1900, top - 100) / 2, zb + 10, blk, metal); // wall plate
+  for (const sx of [-1, 1]) {
+    for (const z of [zb + 60, zf - t / 2]) box(g, t, top, t, sx * cx, top / 2, z, blk, metal);       // uprights
+    box(g, t, t, frameD, sx * cx, t / 2, zb + frameD / 2, blk, metal);                              // foot rails
+    box(g, t, t, frameD, sx * cx, top - t / 2, zb + frameD / 2, blk, metal);                        // top rails
+    // cable trolley with pulley on each front upright
+    box(g, 120, 200, 120, sx * (cx + 90), 1150, zf - 20, '#2b2b2e', metal);
+    cyl(g, 55, 30, sx * (cx + 90), 1080, zf + 50, 'x', '#3a3a3d');
+  }
+  box(g, cw, 250, t, 0, top - 125, zf - t / 2, blk, metal);       // front header
+  box(g, cw, t, t, 0, t / 2, zf - t / 2, blk, metal);             // front base
+  // two weight stacks with chrome guide rods
+  for (const sx of [-1, 1]) {
+    box(g, 330, 650, 160, sx * 210, 420, zb + frameD * 0.45, '#111113', metal);
+    for (const rx of [-110, 110]) cyl(g, 10, top - 400, sx * 210 + rx, (top - 300) / 2 + 100, zb + frameD * 0.45 + 95, 'y', CHROME, { metalness: 0.6, roughness: 0.25 });
+  }
+  // lat bar
+  box(g, cw - 300, 28, 28, 0, top - 330, zf + 40, CHROME, { metalness: 0.6, roughness: 0.25 });
+  // pull-up bar on extension brackets
+  if (d > frameD + 50) {
+    for (const sx of [-1, 1]) box(g, 60, 60, d - frameD, sx * (cx - 60), top - 30, zf + (d - frameD) / 2, blk, metal);
+    cyl(g, 16, cw - 80, 0, top - 70, d / 2 - 40, 'x', CHROME, { metalness: 0.6, roughness: 0.25 });
+  }
+  // storage wings either side, shallow off the wall, with plate horns pointing outwards
+  const wingX = w / 2 - t / 2 - 150, wingD = it.wingD ?? 215;
+  if (wingX > cx + 200) {
+    for (const sx of [-1, 1]) {
+      box(g, t, top - 120, t, sx * wingX, (top - 120) / 2, zb + wingD, blk, metal);
+      box(g, wingX - cx, t, t, sx * (cx + wingX) / 2, top - 160, zb + wingD, blk, metal);
+      box(g, t, t, wingD + 120, sx * wingX, t / 2, zb + wingD / 2 + 20, blk, metal);
+      box(g, wingX - cx, t, t, sx * (cx + wingX) / 2, t / 2, zb + 60, blk, metal);
+      for (const y of [350, 750, 1150, 1550]) cyl(g, 25, 180, sx * (wingX + 120), y, zb + wingD, 'x', '#2b2b2e');
+    }
+  }
+}
+
 export function buildItem(it) {
   const g = new THREE.Group();
   const { w, d, h } = it;
@@ -389,6 +432,9 @@ export function buildItem(it) {
       break;
     case 'hyper-bench':
       hyperBench(g, it);
+      break;
+    case 'cable-rack':
+      cableRack(g, it);
       break;
     case 'cabinet':
       cabinet(g, it);
