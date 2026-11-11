@@ -17,6 +17,7 @@
 <body>
   <header id="toolbar">
     <strong class="title">Ground Floor Planner</strong>
+    <select id="plan-select" title="Choose which plan to view and edit"></select>
     <button id="btn-view" title="Switch between 3D and top-down plan view (V)">Plan view</button>
     <button id="btn-walls" title="Cut walls down to 1 m so you can see inside (C)">Walls: full</button>
     <button id="btn-undo" title="Undo (Ctrl+Z)">Undo</button>
@@ -27,7 +28,7 @@
     <span class="sep"></span>
     <button id="btn-export" title="Download the current layout as JSON">Export</button>
     <label class="btn" title="Load a layout JSON file">Import<input type="file" id="file-import" accept=".json,application/json" hidden></label>
-    <button id="btn-reset" title="Discard browser changes and reload plan.json">Reset</button>
+    <button id="btn-reset" title="Discard browser changes and reload this plan from the repo">Reset</button>
   </header>
 
   <main>

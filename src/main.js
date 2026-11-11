@@ -9,7 +9,14 @@ import { CATALOG, ITEM_TYPES } from './catalog.js';
 import { buildItem } from './items.js';
 
 const S = 0.001;
-const STORAGE_KEY = 'ground-floor-plan.v2';
+// Plans kept in the repo. Each has its own browser-saved copy of any edits.
+const PLANS = [
+  { label: 'Current house', file: 'plan.json', key: 'ground-floor-plan.v2' },
+  { label: 'Future plan 1', file: 'plans/future-plan-1.json' },
+];
+const keyFor = (p) => p.key || 'ground-floor-plan:' + p.file;
+const CURRENT_KEY = 'ground-floor-plan.current';
+let current = PLANS[0];
 const SNAP = 50;
 const CUTAWAY_HEIGHT = 1000;
 
@@ -116,7 +123,7 @@ const toPlan = (v) => ({ x: v.x / S, y: -v.z / S });
 
 // ---------------------------------------------------------------- persistence & history
 function save() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(plan)); } catch { /* storage unavailable */ }
+  try { localStorage.setItem(keyFor(current), JSON.stringify(plan)); } catch { /* storage unavailable */ }
 }
 
 function pushHistory(snapshot = JSON.stringify(plan)) {
@@ -138,8 +145,8 @@ function normalise(p) {
 }
 
 async function loadDefault() {
-  const res = await fetch('plan.json', { cache: 'no-store' });
-  if (!res.ok) throw new Error('Could not load plan.json');
+  const res = await fetch(current.file, { cache: 'no-store' });
+  if (!res.ok) throw new Error('Could not load ' + current.file);
   return normalise(await res.json());
 }
 
@@ -806,7 +813,7 @@ $('#btn-export').addEventListener('click', () => {
   const blob = new Blob([JSON.stringify(plan, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'plan.json';
+  a.download = current.file.split('/').pop();
   a.click();
   URL.revokeObjectURL(a.href);
 });
@@ -824,7 +831,7 @@ $('#file-import').addEventListener('change', async (e) => {
   e.target.value = '';
 });
 $('#btn-reset').addEventListener('click', async () => {
-  if (!confirm('Discard the changes saved in this browser and reload plan.json?')) return;
+  if (!confirm(`Discard the changes saved in this browser and reload ${current.label}?`)) return;
   pushHistory();
   plan = await loadDefault(); selection = null;
   rebuild(); save(); renderProps(); resetCameras();
@@ -843,16 +850,49 @@ window.addEventListener('keydown', (e) => {
   else if (k === 'c') toggleWalls();
 });
 
+// ---------------------------------------------------------------- plans
+// load the chosen plan: this browser's saved edits if any, otherwise the file from the repo
+async function openPlan(p) {
+  current = p;
+  try { localStorage.setItem(CURRENT_KEY, p.file); } catch { /* storage unavailable */ }
+  let next = null;
+  try {
+    const stored = localStorage.getItem(keyFor(p));
+    next = stored ? normalise(JSON.parse(stored)) : null;
+  } catch { next = null; }
+  plan = next || await loadDefault();
+  selection = null;
+  history.length = 0;
+}
+
+const planSelect = $('#plan-select');
+for (const p of PLANS) {
+  const o = document.createElement('option');
+  o.value = p.file; o.textContent = p.label;
+  planSelect.appendChild(o);
+}
+planSelect.addEventListener('change', async () => {
+  const p = PLANS.find((x) => x.file === planSelect.value);
+  try {
+    await openPlan(p);
+  } catch (err) {
+    alert('Could not open that plan: ' + err.message);
+    return;
+  }
+  rebuild(); renderProps(); resetCameras();
+});
+
 // ---------------------------------------------------------------- start
 (async function init() {
+  // ?plan=plans/future-plan-1.json in the URL, else the plan open last time, else the current house
+  let wanted = new URLSearchParams(location.search).get('plan');
+  try { wanted ||= localStorage.getItem(CURRENT_KEY); } catch { /* storage unavailable */ }
+  const first = PLANS.find((p) => p.file === wanted) || PLANS[0];
+  planSelect.value = first.file;
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    plan = stored ? normalise(JSON.parse(stored)) : null;
-  } catch { plan = null; }
-  try {
-    plan ||= await loadDefault();
+    await openPlan(first);
   } catch (err) {
-    statusEl.textContent = 'Could not load plan.json — serve this folder over http (see README). ' + err.message;
+    statusEl.textContent = 'Could not load the plan — serve this folder over http (see README). ' + err.message;
     return;
   }
   buildCatalog();

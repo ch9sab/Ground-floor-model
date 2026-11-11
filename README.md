@@ -148,6 +148,20 @@ work on a phone or tablet too.
 Changes save automatically **in that browser only**. To keep a layout permanently, click
 **Export**, then replace `plan.json` in the repo with the downloaded file and commit it.
 
+### Plans in this repo
+
+The **Plan** drop-down in the toolbar switches between the plans stored in the repo:
+
+| Plan | File |
+|---|---|
+| Current house | `plan.json` |
+| Future plan 1 | `plans/future-plan-1.json` |
+
+Each plan keeps its own browser-saved edits. **Reset** reloads the plan that's open from its
+file, and **Export** downloads it under that file's name. A link can open a plan directly, for
+example `…/?plan=plans/future-plan-1.json`. To add another plan, put its JSON in `plans/` and
+add a line to the `PLANS` list at the top of `src/main.js`.
+
 ### Comparing options
 
 Export each idea under its own name (e.g. `kitchen-option-a.json`,
