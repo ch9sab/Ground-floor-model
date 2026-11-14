@@ -288,26 +288,56 @@ function cableRack(g, it) {
 }
 
 // Sofa raised on legs with slim square arms, one long seat cushion and back cushions.
+// With it.chaise ('left'/'right', as you face the sofa) one end becomes an open-ended chaise
+// running forward to the full depth; the main seat is it.seatD deep and the chaise it.chaiseW wide.
 function leggedSofa(g, it) {
+  const s = new THREE.Group();
+  g.add(s);
+  if (it.chaise === 'right') s.scale.x = -1;          // built with the chaise on the left (-x)
   const { w, d, h } = it, c = it.color || '#8d8a85';
   const legH = it.legs ?? 150, seat = it.seat ?? 450, armH = it.armH ?? 650;
   const armW = it.armW ?? 150, backD = 200, cushion = 120, base = seat - cushion;
-  const inner = w - 2 * armW;
-  box(g, w, base - legH, d, 0, (legH + base) / 2, 0, c);                                  // frame
-  for (const sx of [-1, 1]) box(g, armW, armH - legH, d, sx * (w / 2 - armW / 2), (legH + armH) / 2, 0, c); // arms
-  box(g, inner, h - base, backD, 0, (base + h) / 2 - 40, -d / 2 + backD / 2, c);         // back frame
-  // one long tufted seat cushion
-  box(g, inner - 10, cushion, d - backD - 30, 0, base + cushion / 2, backD / 2 - 5, shade(c, 1.08));
-  const tufts = Math.max(2, Math.round(inner / 300));
-  for (let i = 1; i < tufts; i++) box(g, 8, 4, d - backD - 60, -inner / 2 + (inner / tufts) * i, seat + 1, backD / 2 - 5, shade(c, 0.8));
+  const chaise = it.chaise === 'left' || it.chaise === 'right';
+  const mainD = chaise ? Math.min(it.seatD ?? 875, d) : d;
+  const chW = chaise ? Math.min(it.chaiseW ?? 1000, w - 600) : 0;
+  const z0 = -d / 2, x0 = -w / 2;
+  const leftArm = chaise ? 0 : armW;                  // the chaise end is open
+  const seatX0 = x0 + leftArm, seatX1 = w / 2 - armW;
+  const tuft = (cx, cz, cw, cd) => {
+    const n = Math.max(2, Math.round(cw / 300));
+    for (let i = 1; i < n; i++) box(s, 8, 4, cd - 30, cx - cw / 2 + (cw / n) * i, seat + 1, cz, shade(c, 0.8));
+  };
+  // frame (main run, plus the chaise front section)
+  box(s, w, base - legH, mainD, 0, (legH + base) / 2, z0 + mainD / 2, c);
+  if (chaise) box(s, chW, base - legH, d - mainD, x0 + chW / 2, (legH + base) / 2, z0 + mainD + (d - mainD) / 2, c);
+  // arms
+  box(s, armW, armH - legH, mainD, w / 2 - armW / 2, (legH + armH) / 2, z0 + mainD / 2, c);
+  if (!chaise) box(s, armW, armH - legH, d, x0 + armW / 2, (legH + armH) / 2, 0, c);
+  // back frame
+  box(s, seatX1 - seatX0, h - base, backD, (seatX0 + seatX1) / 2, (base + h) / 2 - 40, z0 + backD / 2, c);
+  // seat cushions: chaise cushion runs the full depth, the rest is one long tufted cushion
+  const cushionTop = (x, cw, zA, zB) => {
+    box(s, cw - 10, cushion, zB - zA - 10, x, base + cushion / 2, (zA + zB) / 2, shade(c, 1.08));
+    tuft(x, (zA + zB) / 2, cw - 10, zB - zA - 10);
+  };
+  if (chaise) {
+    cushionTop(x0 + chW / 2, chW, z0 + backD, d / 2 - 10);
+    cushionTop((x0 + chW + seatX1) / 2, seatX1 - x0 - chW, z0 + backD, z0 + mainD - 10);
+  } else {
+    cushionTop((seatX0 + seatX1) / 2, seatX1 - seatX0, z0 + backD, z0 + mainD - 10);
+  }
   // back cushions
-  const n = it.backCushions ?? (inner > 1500 ? 2 : 1), bw = inner / n;
+  const inner = seatX1 - seatX0;
+  const n = it.backCushions ?? Math.max(1, Math.round(inner / 900)), bw = inner / n;
   for (let i = 0; i < n; i++) {
-    const bc = box(g, bw - 20, h - seat - 30, 170, -inner / 2 + bw * (i + 0.5), seat + (h - seat - 30) / 2, -d / 2 + backD + 70, shade(c, 1.12));
+    const bc = box(s, bw - 20, h - seat - 30, 170, seatX0 + bw * (i + 0.5), seat + (h - seat - 30) / 2, z0 + backD + 70, shade(c, 1.12));
     bc.rotation.x = -0.12;
   }
   // slim legs
-  for (const sx of [-1, 1]) for (const sz of [-1, 1]) box(g, 35, legH, 35, sx * (w / 2 - 70), legH / 2, sz * (d / 2 - 70), it.legColor || '#2b2723');
+  const legs = [[x0 + 70, z0 + 70], [w / 2 - 70, z0 + 70], [w / 2 - 70, z0 + mainD - 70]];
+  if (chaise) legs.push([x0 + 70, d / 2 - 70], [x0 + chW - 70, d / 2 - 70], [x0 + chW - 70, z0 + mainD - 70]);
+  else legs.push([x0 + 70, d / 2 - 70]);
+  for (const [lx, lz] of legs) box(s, 35, legH, 35, lx, legH / 2, lz, it.legColor || '#2b2723');
 }
 
 export function buildItem(it) {

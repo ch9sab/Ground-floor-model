@@ -451,6 +451,11 @@ function fieldsFor(kind, o) {
       f.push(['carcass', 'color', 'Carcass']);
       if (o.topT > 0) f.push(['worktop', 'color', 'Worktop']);
     }
+    if (o.type === 'legged-sofa' && o.chaise) {
+      f.push(['chaise', ['left', 'right'], 'Chaise side']);
+      f.push(['chaiseW', 'num', 'Chaise width']);
+      f.push(['seatD', 'num', 'Main depth']);
+    }
     if (o.type === 'sectional') {
       f.push(['chaise', ['left', 'right'], 'Chaise side']);
       f.push(['chaiseW', 'num', 'Chaise width']);

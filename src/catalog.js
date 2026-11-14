@@ -8,6 +8,9 @@ export const CATALOG = [
   { group: 'Living', label: 'Corner sofa 315×212 (chaise right)', item: { type: 'sectional', name: 'Corner sofa', w: 3150, d: 2120, h: 800, color: '#5d6878', chaise: 'right', chaiseW: 1100, seatD: 950, sideBack: 1100, seat: 480, armH: 650, legs: 180 } },
   // BoConcept Osaka 2.5-seater, tufted seat (433AC29): 206 W x 87.5 D x 77 H cm, seat 45, arms 65, legs 15.
   { group: 'Living', label: 'BoConcept Osaka 2½-seater', item: { type: 'legged-sofa', name: 'Osaka sofa', w: 2060, d: 875, h: 770, seat: 450, armH: 650, legs: 150, color: '#8d8a85' } },
+  // BoConcept Osaka chaise longue sofa (433AF29), "direction right": 242 W x 141.5 D x 77 H cm, seat 45, arms 65.
+  // Main seat depth taken from the 2.5-seater (87.5); chaise width estimated at 100 cm.
+  { group: 'Living', label: 'BoConcept Osaka chaise sofa (right)', item: { type: 'legged-sofa', name: 'Osaka chaise sofa', w: 2420, d: 1415, h: 770, seat: 450, armH: 650, legs: 150, chaise: 'right', chaiseW: 1000, seatD: 875, color: '#8d8a85' } },
   { group: 'Living', label: 'Sofa (3 seat)', item: { type: 'sofa', name: 'Sofa', w: 2200, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Sofa (2 seat)', item: { type: 'sofa', name: 'Sofa', w: 1700, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Armchair', item: { type: 'sofa', name: 'Armchair', w: 900, d: 850, h: 850, color: '#8a6f5a' } },
