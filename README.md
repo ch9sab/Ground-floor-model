@@ -175,9 +175,18 @@ wall is on the kitchen wall (x 20250) and the stairwell is over the ground-floor
 The landing floor stops at the stairwell, so you can see down into it. Only the top of the
 dog-leg stair is modelled (the half landing at the front and the short flight up to the landing).
 The drawing shows winders that the ground floor's single straight `stairs` item doesn't, so
-measure the stairs before relying on either. The built-in wardrobes, bath, basins, toilets and
-shower are where the drawing shows them. The beds, bedside tables, chest of drawers and desk are
-examples from the Bedroom catalogue; move or delete them.
+measure the stairs before relying on either. The built-in wardrobes are where the drawing shows
+them. The bathroom, shower room and furniture follow the estate agent's photos:
+
+- **Bathroom:** bath along the back wall, a long white vanity with an off-centre basin and a mirror
+  cabinet on the opposite wall, a wall-hung toilet and a tall towel rail on the window wall
+- **Shower room:** walk-in shower behind a glass-block wall, vanity with a drawer stack next to it,
+  radiator by the window. The ceiling slopes on the window side, which the planner can't show
+- **Bedroom 1:** bed against the wall to bedroom 3, dressing table with a round mirror on the window wall
+- **Bedroom 2:** bed against the wall to bedroom 1, a small chest and a tall mirror on the far wall
+- **Bedroom 3:** set up as an office with two desks, wall-mounted storage units and a rug
+
+Sizes and exact positions of these are estimates from the photos.
 
 Still guesses, as for the ground floor: wall thicknesses, window heights and sills (bathroom and
 shower room windows are set high, as obscured glass usually is), door swings and the airing

@@ -221,6 +221,12 @@ function dressingTable(g, it) {
   }
   legs(g, w, d, h - 25, 40, 40, shade(c, 0.85));
   const mh = it.mirrorH ?? 700, mw = Math.min(w * 0.6, 700);
+  if (it.mirror === 'round') {          // round mirror on the wall above the table
+    const r = Math.min(mw, mh) / 2;
+    cyl(g, r + 15, 15, 0, h + 250 + r, -d / 2 + 8, 'z', shade(c, 0.9));
+    cyl(g, r, 6, 0, h + 250 + r, -d / 2 + 18, 'z', '#c7d2d8', { metalness: 0.6, roughness: 0.1 });
+    return;
+  }
   box(g, mw + 40, mh + 40, 20, 0, h + mh / 2 + 20, -d / 2 + 40, shade(c, 0.9));
   box(g, mw, mh, 6, 0, h + mh / 2 + 20, -d / 2 + 52, '#c7d2d8', { metalness: 0.6, roughness: 0.1 });
 }
@@ -281,10 +287,12 @@ function showerTray(g, it) {
   cyl(g, 60, 15, 0, 1850, -d / 2 + 120, 'y', TAP, { metalness: 0.5, roughness: 0.25 });
 }
 
-// Close-coupled toilet: oval pan, seat and a cistern against the back wall.
+// Toilet: oval pan and seat. style 'close-coupled' (default) has a cistern against the back wall;
+// 'wall-hung' has the pan off the floor in front of a tiled boxing (h high) hiding the cistern.
 function toilet(g, it) {
   const { w, d, h } = it;
-  const c = it.color || CHINA, seatH = it.seat ?? 410, cisD = it.cisternD ?? 180;
+  const hung = it.style === 'wall-hung';
+  const c = it.color || CHINA, seatH = it.seat ?? 410, cisD = it.cisternD ?? (hung ? 200 : 180);
   const bowlD = d - cisD + 40;
   const bowl = (y, hh, rw, rd, color) => {
     const m = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, hh * S, 28), mat(color));
@@ -293,12 +301,20 @@ function toilet(g, it) {
     m.castShadow = m.receiveShadow = true;
     g.add(m);
   };
-  bowl((seatH - 60) / 2, seatH - 60, w * 0.6, bowlD * 0.75, c);              // pedestal
-  bowl(seatH - 60 + 25, 50, w * 0.95, bowlD, c);                             // rim
-  bowl(seatH - 6, 22, w, bowlD + 10, it.seatColor || '#ffffff');             // seat
-  box(g, w, h - seatH + 40, cisD, 0, seatH - 40 + (h - seatH + 40) / 2, -d / 2 + cisD / 2, c);
-  box(g, w + 10, 20, cisD + 10, 0, h - 10, -d / 2 + cisD / 2, c);           // cistern lid
-  cyl(g, 22, 8, 0, h + 4, -d / 2 + cisD / 2, 'y', TAP, { metalness: 0.5 });   // flush button
+  if (hung) {
+    bowl(seatH - 190, 260, w * 0.85, bowlD * 0.95, c);                       // pan, clear of the floor
+    box(g, w, h, cisD, 0, h / 2, -d / 2 + cisD / 2, it.boxing || '#eeeeea'); // boxing over the cistern
+    box(g, 160, 100, 6, 0, Math.min(h - 120, 1000), -d / 2 + cisD + 3, TAP, { metalness: 0.5 }); // flush plate
+  } else {
+    bowl((seatH - 60) / 2, seatH - 60, w * 0.6, bowlD * 0.75, c);            // pedestal
+    bowl(seatH - 60 + 25, 50, w * 0.95, bowlD, c);                           // rim
+  }
+  bowl(seatH - 6, 22, w * (hung ? 0.9 : 1), bowlD + 10, it.seatColor || '#ffffff'); // seat
+  if (!hung) {
+    box(g, w, h - seatH + 40, cisD, 0, seatH - 40 + (h - seatH + 40) / 2, -d / 2 + cisD / 2, c);
+    box(g, w + 10, 20, cisD + 10, 0, h - 10, -d / 2 + cisD / 2, c);         // cistern lid
+    cyl(g, 22, 8, 0, h + 4, -d / 2 + cisD / 2, 'y', TAP, { metalness: 0.5 }); // flush button
+  }
 }
 
 // Basin on a pedestal (it.pedestal false for wall-hung).
@@ -309,18 +325,31 @@ function basin(g, it) {
   basinTop(g, w, d, h, bt, c);
 }
 
-function basinTop(g, w, d, h, bt, c) {
+// basin top w wide; the bowl (bw wide, default the whole top) is centred at bx
+function basinTop(g, w, d, h, bt, c, bx = 0, bw = w) {
   box(g, w, bt, d, 0, h - bt / 2, 0, c);
-  box(g, w - 90, 6, d - 140, 0, h - 1, 25, '#d9dde0', { roughness: 0.3 });   // bowl
-  cyl(g, 15, 140, 0, h + 70, -d / 2 + 45, 'y', TAP, { metalness: 0.5, roughness: 0.25 });
-  cyl(g, 11, 110, 0, h + 135, -d / 2 + 95, 'z', TAP, { metalness: 0.5, roughness: 0.25 });
+  box(g, Math.min(bw, 600) - 90, 6, d - 140, bx, h - 1, 25, '#d9dde0', { roughness: 0.3 });   // bowl
+  cyl(g, 15, 140, bx, h + 70, -d / 2 + 45, 'y', TAP, { metalness: 0.5, roughness: 0.25 });
+  cyl(g, 11, 110, bx, h + 135, -d / 2 + 95, 'z', TAP, { metalness: 0.5, roughness: 0.25 });
 }
 
 // Vanity unit: a cabinet (fronts as for 'cabinet') with a ceramic basin top.
+// basinAt moves the basin along the unit (mm from the centre, + to the right).
 function vanity(g, it) {
   const bt = 40;
   cabinet(g, { ...it, h: it.h - bt, plinth: it.plinth ?? 0, topT: 0, fronts: it.fronts || '2d', carcass: it.carcass || it.color });
-  basinTop(g, it.w, it.d, it.h, bt, it.basinColor || CHINA);
+  basinTop(g, it.w, it.d, it.h, bt, it.basinColor || CHINA, it.basinAt || 0, 600);
+}
+
+// Glass-block wall panel: w long, d thick, h high, in blocks of it.block (190) mm.
+function glassBlock(g, it) {
+  const { w, d, h } = it;
+  const b = it.block || 190, nx = Math.max(1, Math.round(w / b)), ny = Math.max(1, Math.round(h / b));
+  const bw = w / nx, bh = h / ny;
+  box(g, w, h, d * 0.5, 0, h / 2, 0, '#d9e4e6');                              // mortar core
+  for (let i = 0; i < nx; i++) for (let j = 0; j < ny; j++) {
+    box(g, bw - 10, bh - 10, d, -w / 2 + bw * (i + 0.5), bh * (j + 0.5), 0, it.color || '#bcd8de', { transparent: true, opacity: 0.75, roughness: 0.1 });
+  }
 }
 
 const STEEL = '#1d1d1f', PAD = '#202022', CHROME = '#c8ccd0';
@@ -582,6 +611,9 @@ export function buildItem(it) {
       break;
     case 'vanity':
       vanity(g, it);
+      break;
+    case 'glass-block':
+      glassBlock(g, it);
       break;
     case 'sectional': {
       // L-shaped corner sofa: seat along the back, open-ended chaise on one side,

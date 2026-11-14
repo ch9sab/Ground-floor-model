@@ -114,6 +114,8 @@ CATALOG.push(
   { group: 'Bedroom', label: 'Sliding-door wardrobe 2400 (mirror)', item: { type: 'sliding-wardrobe', name: 'Sliding wardrobe', w: 2400, d: 650, h: 2200, doors: 3, mirror: true, color: WHITE } },
   unit('Chest of drawers 800 (2 over 3)', 800, 450, 900, '2w/1w/1w/1w'),
   { group: 'Bedroom', label: 'Dressing table 1200 + mirror', item: { type: 'dressing-table', name: 'Dressing table', w: 1200, d: 450, h: 760, color: WOOD } },
+  { group: 'Bedroom', label: 'Dressing table 1000 + round mirror', item: { type: 'dressing-table', name: 'Dressing table', w: 1000, d: 400, h: 760, mirror: 'round', drawers: 1, color: '#e8d9b8' } },
+  { group: 'Bedroom', label: 'Full-length mirror', item: { type: 'box', name: 'Mirror', w: 500, d: 30, h: 1500, z: 300, color: '#c7d2d8' } },
   { group: 'Bedroom', label: 'Desk 1200', item: { type: 'desk', name: 'Desk', w: 1200, d: 600, h: 740, pedestal: 'none', color: WOOD } },
   { group: 'Bedroom', label: 'Desk 1400 with drawers', item: { type: 'desk', name: 'Desk', w: 1400, d: 700, h: 740, pedestal: 'right', color: WOOD } },
 );
@@ -129,7 +131,11 @@ CATALOG.push(
   { group: 'Bathroom', label: 'Basin on pedestal 550', item: { type: 'basin', name: 'Basin', w: 550, d: 450, h: 850, color: '#f6f6f3' } },
   { group: 'Bathroom', label: 'Vanity unit 600 (2 doors)', item: { type: 'vanity', name: 'Vanity unit', w: 600, d: 450, h: 850, fronts: '2d', color: '#5f7a76' } },
   { group: 'Bathroom', label: 'Vanity unit 800 (2 drawers)', item: { type: 'vanity', name: 'Vanity unit', w: 800, d: 460, h: 850, fronts: '1w/1w', color: '#5f7a76' } },
+  { group: 'Bathroom', label: 'Toilet (wall-hung, boxed in)', item: { type: 'toilet', name: 'Toilet', style: 'wall-hung', w: 360, d: 740, h: 1000, color: '#f6f6f3' } },
+  { group: 'Bathroom', label: 'Vanity run 1800 (basin off-centre)', item: { type: 'vanity', name: 'Vanity unit', w: 1800, d: 400, h: 850, fronts: '150:3w/3d', basinAt: 400, color: '#f2f2f0', carcass: '#f2f2f0' } },
+  { group: 'Bathroom', label: 'Mirror cabinet 1000', item: { type: 'cabinet', name: 'Mirror cabinet', w: 1000, d: 150, h: 700, z: 1250, fronts: '2d', handle: 'bottom', color: '#c7d2d8', carcass: '#e8e8e6' } },
+  { group: 'Bathroom', label: 'Glass-block wall 1000', item: { type: 'glass-block', name: 'Glass-block wall', w: 1000, d: 80, h: 2100 } },
   { group: 'Bathroom', label: 'Heated towel rail 500', item: { type: 'box', name: 'Towel rail', w: 500, d: 80, h: 1200, z: 150, color: '#c9ced3' } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block'];
