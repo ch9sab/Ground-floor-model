@@ -287,6 +287,29 @@ function cableRack(g, it) {
   }
 }
 
+// Sofa raised on legs with slim square arms, one long seat cushion and back cushions.
+function leggedSofa(g, it) {
+  const { w, d, h } = it, c = it.color || '#8d8a85';
+  const legH = it.legs ?? 150, seat = it.seat ?? 450, armH = it.armH ?? 650;
+  const armW = it.armW ?? 150, backD = 200, cushion = 120, base = seat - cushion;
+  const inner = w - 2 * armW;
+  box(g, w, base - legH, d, 0, (legH + base) / 2, 0, c);                                  // frame
+  for (const sx of [-1, 1]) box(g, armW, armH - legH, d, sx * (w / 2 - armW / 2), (legH + armH) / 2, 0, c); // arms
+  box(g, inner, h - base, backD, 0, (base + h) / 2 - 40, -d / 2 + backD / 2, c);         // back frame
+  // one long tufted seat cushion
+  box(g, inner - 10, cushion, d - backD - 30, 0, base + cushion / 2, backD / 2 - 5, shade(c, 1.08));
+  const tufts = Math.max(2, Math.round(inner / 300));
+  for (let i = 1; i < tufts; i++) box(g, 8, 4, d - backD - 60, -inner / 2 + (inner / tufts) * i, seat + 1, backD / 2 - 5, shade(c, 0.8));
+  // back cushions
+  const n = it.backCushions ?? (inner > 1500 ? 2 : 1), bw = inner / n;
+  for (let i = 0; i < n; i++) {
+    const bc = box(g, bw - 20, h - seat - 30, 170, -inner / 2 + bw * (i + 0.5), seat + (h - seat - 30) / 2, -d / 2 + backD + 70, shade(c, 1.12));
+    bc.rotation.x = -0.12;
+  }
+  // slim legs
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) box(g, 35, legH, 35, sx * (w / 2 - 70), legH / 2, sz * (d / 2 - 70), it.legColor || '#2b2723');
+}
+
 export function buildItem(it) {
   const g = new THREE.Group();
   const { w, d, h } = it;
@@ -435,6 +458,9 @@ export function buildItem(it) {
       break;
     case 'cable-rack':
       cableRack(g, it);
+      break;
+    case 'legged-sofa':
+      leggedSofa(g, it);
       break;
     case 'cabinet':
       cabinet(g, it);
