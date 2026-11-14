@@ -156,11 +156,32 @@ The **Plan** drop-down in the toolbar switches between the plans stored in the r
 |---|---|
 | Current house | `plan.json` |
 | Future plan 1 | `plans/future-plan-1.json` |
+| First floor | `plans/first-floor.json` |
 
 Each plan keeps its own browser-saved edits. **Reset** reloads the plan that's open from its
 file, and **Export** downloads it under that file's name. A link can open a plan directly, for
 example `…/?plan=plans/future-plan-1.json`. To add another plan, put its JSON in `plans/` and
 add a line to the `PLANS` list at the top of `src/main.js`.
+
+### First floor
+
+`plans/first-floor.json` is the upstairs, traced from the "First Floor, approx. 80.4 sq m" part of
+the same estate agent's drawing (about 19.8 mm per drawing pixel). It uses the **same origin and
+axes as `plan.json`**, so a point upstairs sits directly above the same point downstairs: the
+external walls are on the ground floor's lines (x 13590–23450, y 5930–14110), the shower room
+wall is on the kitchen wall (x 20250) and the stairwell is over the ground-floor stairs
+(x 18270–20250, against the front wall). Room sizes come within ~0.2 m of the stated ones.
+
+The landing floor stops at the stairwell, so you can see down into it. Only the top of the
+dog-leg stair is modelled (the half landing at the front and the short flight up to the landing).
+The drawing shows winders that the ground floor's single straight `stairs` item doesn't, so
+measure the stairs before relying on either. The built-in wardrobes, bath, basins, toilets and
+shower are where the drawing shows them. The beds, bedside tables, chest of drawers and desk are
+examples from the Bedroom catalogue; move or delete them.
+
+Still guesses, as for the ground floor: wall thicknesses, window heights and sills (bathroom and
+shower room windows are set high, as obscured glass usually is), door swings and the airing
+cupboard's size.
 
 ### Comparing options
 
@@ -178,16 +199,23 @@ git branch per option. **Reset** throws away browser changes and reloads `plan.j
 | Walkway between worktops / an island | 1000–1200 |
 | Space behind a dining chair | 900 to walk past |
 | Internal door (UK) | 762 or 838 wide door leaf, 1981 high |
+| Mattress (UK) | single 900 × 1900, small double 1200 × 1900, double 1350 × 1900, king 1500 × 2000, super king 1800 × 2000 |
+| Space beside / at the foot of a bed | 600–700 to walk past, 900+ where a wardrobe door opens |
+| Wardrobe | 600 deep (650 with sliding doors), 2000–2200 high |
+| Bath | 1700 × 700 (1700 × 800 shower bath), 550 high |
+| Shower tray | 800 × 800 to 1200 × 900; leave 700 clear in front |
+| Toilet / basin | toilet ~370 × 650, basin 550 wide; leave ~600 clear in front of each |
 
 ## Files
 
 - `index.html`, `style.css`: the page
 - `src/main.js`: scene, editing and interaction
 - `src/items.js`: how each furniture type is drawn
-- `src/catalog.js`: the **Add item** presets. Add your own exact products here
+- `src/catalog.js`: the **Add item** presets, including the Bedroom and Bathroom groups. Add your own exact products here
+- `plans/first-floor.json`: the first floor
 - `plan.json`: your house
 
 ## Limitations
 
-Walls are straight boxes, so curved bays are drawn as a few straight segments. Curved walls, sloping ceilings and an upper floor aren't
-supported yet. Furniture is drawn as simple shapes, not detailed models.
+Walls are straight boxes, so curved bays are drawn as a few straight segments. Curved walls and sloping ceilings aren't
+supported yet. Each floor is a separate plan, so the two floors aren't shown stacked together. Furniture is drawn as simple shapes, not detailed models.

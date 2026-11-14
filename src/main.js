@@ -13,6 +13,7 @@ const S = 0.001;
 const PLANS = [
   { label: 'Current house', file: 'plan.json', key: 'ground-floor-plan.v2' },
   { label: 'Future plan 1', file: 'plans/future-plan-1.json' },
+  { label: 'First floor', file: 'plans/first-floor.json' },
 ];
 const keyFor = (p) => p.key || 'ground-floor-plan:' + p.file;
 const CURRENT_KEY = 'ground-floor-plan.current';
@@ -456,6 +457,19 @@ function fieldsFor(kind, o) {
       f.push(['chaiseW', 'num', 'Chaise width']);
       f.push(['seatD', 'num', 'Main depth']);
     }
+    if (o.type === 'bed') {
+      f.push(['mattressW', 'num', 'Mattress width']);
+      f.push(['mattressD', 'num', 'Mattress length']);
+      f.push(['headboard', 'num', 'Headboard height']);
+    }
+    if (o.type === 'sliding-wardrobe') f.push(['doors', 'num', 'Doors']);
+    if (o.type === 'desk') f.push(['pedestal', ['none', 'left', 'right'], 'Drawers']);
+    if (o.type === 'bath') f.push(['taps', ['left', 'right'], 'Tap end']);
+    if (o.type === 'shower-tray') {
+      f.push(['screen', ['none', 'enclosure'], 'Screen']);
+      if (o.screen === 'enclosure') f.push(['wall', ['right', 'left'], 'Side wall']);
+    }
+    if (o.type === 'vanity') f.push(['fronts', 'text', 'Fronts layout']);
     if (o.type === 'sectional') {
       f.push(['chaise', ['left', 'right'], 'Chaise side']);
       f.push(['chaiseW', 'num', 'Chaise width']);
