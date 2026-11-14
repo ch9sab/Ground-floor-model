@@ -166,6 +166,163 @@ function cyl(g, r, len, x, y, z, axis, color, opts) {
   return m;
 }
 
+// ---------------------------------------------------------------- bedroom
+const LINEN = '#f4f2ee', CHINA = '#f6f6f3', TAP = '#c9ced3';
+const glass = { transparent: true, opacity: 0.25, roughness: 0.05 };
+
+// Bed frame. w/d is the whole frame, headboard included; the mattress is it.mattressW x it.mattressD
+// (UK sizes), centred across the width with the headboard at the back (-z).
+function bed(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#b9a48a';
+  const head = it.headboard ?? 1050, hbT = 60, rail = 30;
+  const mW = Math.min(it.mattressW ?? w - 60, w), mD = Math.min(it.mattressD ?? d - hbT - rail, d - hbT);
+  const base = Math.max(150, h - 250);                 // top of the base / bottom of the mattress
+  const mz = -d / 2 + hbT + mD / 2;
+  box(g, w, base - 60, d - hbT, 0, 60 + (base - 60) / 2, hbT / 2, c);   // base / divan
+  legs(g, w, d - hbT, 60, 50, 50, shade(c, 0.6));
+  g.children.slice(-4).forEach((m) => { m.position.z += (hbT / 2) * S; });
+  box(g, w, head, hbT, 0, head / 2, -d / 2 + hbT / 2, c);               // headboard
+  box(g, mW - 10, h - base, mD - 10, 0, base + (h - base) / 2, mz, LINEN); // mattress
+  box(g, mW - 20, 40, mD * 0.62, 0, h + 20, mz + mD * 0.19, shade(c, 1.2)); // duvet over the lower part
+  const pillows = mW >= 1200 ? 2 : 1, pw = (mW - 120) / pillows;
+  for (let i = 0; i < pillows; i++) {
+    box(g, pw - 40, 130, 420, -mW / 2 + 60 + pw * (i + 0.5), h + 65, -d / 2 + hbT + 260, '#ffffff');
+  }
+}
+
+// Sliding-door wardrobe: carcass with it.doors panels on two staggered tracks.
+function slidingWardrobe(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#e8e4dc', frame = it.frame || '#9a9ea3';
+  const n = Math.max(2, it.doors ?? 2), track = 30, front = 2 * track + 20;
+  box(g, w, h, d - front, 0, h / 2, -front / 2, it.carcass || CARCASS);
+  box(g, w, 40, front, 0, h - 20, d / 2 - front / 2, frame);     // top track
+  box(g, w, 20, front, 0, 10, d / 2 - front / 2, frame);         // bottom track
+  const pw = w / n + 25;
+  for (let i = 0; i < n; i++) {
+    const x = -w / 2 + (w / n) * (i + 0.5);
+    const z = d / 2 - (i % 2 ? track * 1.5 + 10 : track / 2 + 5);
+    const mirror = it.mirror && i % 2 === 1;
+    box(g, pw - 4, h - 70, 20, x, 20 + (h - 70) / 2, z, mirror ? '#c7d2d8' : c, mirror ? { metalness: 0.6, roughness: 0.1 } : undefined);
+    for (const sx of [-1, 1]) box(g, 22, h - 70, 24, x + sx * (pw / 2 - 11), 20 + (h - 70) / 2, z, frame);
+  }
+}
+
+// Dressing table: legged table with a drawer apron and a mirror at the back.
+function dressingTable(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#d9c7a7';
+  box(g, w, 25, d, 0, h - 12, 0, c);
+  box(g, w - 80, 140, d - 40, 0, h - 25 - 70, 0, c);
+  for (const sx of it.drawers === 1 ? [0] : [-1, 1]) {
+    box(g, (w - 140) / (it.drawers === 1 ? 1 : 2), 110, 18, sx * (w - 80) / 4, h - 95, d / 2 - 10, shade(c, 1.06));
+    box(g, 60, 12, 6, sx * (w - 80) / 4, h - 95, d / 2 + 2, '#4a3a2e');
+  }
+  legs(g, w, d, h - 25, 40, 40, shade(c, 0.85));
+  const mh = it.mirrorH ?? 700, mw = Math.min(w * 0.6, 700);
+  box(g, mw + 40, mh + 40, 20, 0, h + mh / 2 + 20, -d / 2 + 40, shade(c, 0.9));
+  box(g, mw, mh, 6, 0, h + mh / 2 + 20, -d / 2 + 52, '#c7d2d8', { metalness: 0.6, roughness: 0.1 });
+}
+
+// Desk: top and legs, with an optional drawer pedestal on one side ('left'/'right'/'none').
+function desk(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#c9b79c';
+  box(g, w, 25, d, 0, h - 12, 0, c);
+  const ped = it.pedestal || 'none', pw = 400;
+  if (ped === 'none') {
+    legs(g, w, d, h - 25, 45, 40, shade(c, 0.8));
+  } else {
+    const sx = ped === 'left' ? -1 : 1, px = sx * (w / 2 - pw / 2 - 10);
+    box(g, pw, h - 25, d - 40, px, (h - 25) / 2, -10, shade(c, 0.95));
+    const dh = (h - 25 - 40) / 3;
+    for (let i = 0; i < 3; i++) {
+      box(g, pw - 10, dh - 6, 18, px, 20 + dh * (i + 0.5), d / 2 - 20, shade(c, 1.05));
+      box(g, 80, 12, 6, px, 20 + dh * (i + 0.5) + dh / 2 - 40, d / 2 - 8, '#4a4a4a');
+    }
+    for (const sz of [-1, 1]) box(g, 45, h - 25, 45, -sx * (w / 2 - 40), (h - 25) / 2, sz * (d / 2 - 40), shade(c, 0.8));
+    box(g, w - pw - 60, 300, 18, -sx * (pw / 2), h - 25 - 150, -d / 2 + 30, shade(c, 0.9)); // modesty panel
+  }
+}
+
+// ---------------------------------------------------------------- bathroom
+// Bath: rim, sunken tub floor, front panel and taps at the left (-x) end unless taps: 'right'.
+function bath(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || CHINA, rim = 70;
+  box(g, w, h - 20, d, 0, (h - 20) / 2, 0, it.panel || '#ffffff');               // panelled body
+  for (const sz of [-1, 1]) box(g, w, 20, rim, 0, h - 10, sz * (d / 2 - rim / 2), c);
+  for (const sx of [-1, 1]) box(g, rim * 1.6, 20, d - 2 * rim, sx * (w / 2 - rim * 0.8), h - 10, 0, c);
+  box(g, w - rim * 3.2, 4, d - 2 * rim, 0, h - 18, 0, '#c9dbe3', { roughness: 0.2 }); // tub (seen as water line)
+  const tx = (it.taps === 'right' ? 1 : -1) * (w / 2 - rim * 0.8);
+  cyl(g, 18, 160, tx, h + 80, -d / 2 + rim / 2, 'y', TAP, { metalness: 0.5, roughness: 0.25 });
+  cyl(g, 14, 120, tx + (tx < 0 ? 60 : -60), h + 160, -d / 2 + rim / 2, 'x', TAP, { metalness: 0.5, roughness: 0.25 });
+  // hinged bath screen along the front rim, from the tap (shower) end
+  if (it.screen) box(g, 800, 1400, 10, Math.sign(tx) * (w / 2 - 400), h + 700, d / 2 - rim / 2, '#bfe0f0', glass);
+}
+
+// Shower tray, with an optional glass enclosure (screen: 'enclosure') on the front and on the side away
+// from the wall (wall: 'right' puts the glass on the left side, 'left' on the right).
+function showerTray(g, it) {
+  const { w, d } = it;
+  const c = it.color || CHINA, t = Math.max(25, it.h ?? 40);
+  box(g, w, t, d, 0, t / 2, 0, c);
+  cyl(g, 50, 4, 0, t + 1, 0, 'y', '#9aa0a6', { metalness: 0.5, roughness: 0.3 });
+  if (it.screen === 'enclosure') {
+    const sh = it.screenH ?? 1950, f = '#c9ced3';
+    box(g, w, sh, 8, 0, t + sh / 2, d / 2 - 15, '#bfe0f0', glass);
+    const gx = (it.wall === 'left' ? 1 : -1) * (w / 2 - 15);
+    box(g, 8, sh, d, gx, t + sh / 2, 0, '#bfe0f0', glass);
+    box(g, 20, sh, 20, gx, t + sh / 2, d / 2 - 15, f, { metalness: 0.5, roughness: 0.3 });
+  }
+  // riser rail and head on the back wall
+  box(g, 25, 900, 25, 0, 1300, -d / 2 + 30, TAP, { metalness: 0.5, roughness: 0.25 });
+  cyl(g, 60, 15, 0, 1850, -d / 2 + 120, 'y', TAP, { metalness: 0.5, roughness: 0.25 });
+}
+
+// Close-coupled toilet: oval pan, seat and a cistern against the back wall.
+function toilet(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || CHINA, seatH = it.seat ?? 410, cisD = it.cisternD ?? 180;
+  const bowlD = d - cisD + 40;
+  const bowl = (y, hh, rw, rd, color) => {
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, hh * S, 28), mat(color));
+    m.scale.set(rw * S, 1, rd * S);
+    m.position.set(0, y * S, (d / 2 - bowlD / 2) * S);
+    m.castShadow = m.receiveShadow = true;
+    g.add(m);
+  };
+  bowl((seatH - 60) / 2, seatH - 60, w * 0.6, bowlD * 0.75, c);              // pedestal
+  bowl(seatH - 60 + 25, 50, w * 0.95, bowlD, c);                             // rim
+  bowl(seatH - 6, 22, w, bowlD + 10, it.seatColor || '#ffffff');             // seat
+  box(g, w, h - seatH + 40, cisD, 0, seatH - 40 + (h - seatH + 40) / 2, -d / 2 + cisD / 2, c);
+  box(g, w + 10, 20, cisD + 10, 0, h - 10, -d / 2 + cisD / 2, c);           // cistern lid
+  cyl(g, 22, 8, 0, h + 4, -d / 2 + cisD / 2, 'y', TAP, { metalness: 0.5 });   // flush button
+}
+
+// Basin on a pedestal (it.pedestal false for wall-hung).
+function basin(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || CHINA, bt = 170;
+  if (it.pedestal !== false) box(g, w * 0.32, h - bt, d * 0.4, 0, (h - bt) / 2, -d / 2 + d * 0.25, c);
+  basinTop(g, w, d, h, bt, c);
+}
+
+function basinTop(g, w, d, h, bt, c) {
+  box(g, w, bt, d, 0, h - bt / 2, 0, c);
+  box(g, w - 90, 6, d - 140, 0, h - 1, 25, '#d9dde0', { roughness: 0.3 });   // bowl
+  cyl(g, 15, 140, 0, h + 70, -d / 2 + 45, 'y', TAP, { metalness: 0.5, roughness: 0.25 });
+  cyl(g, 11, 110, 0, h + 135, -d / 2 + 95, 'z', TAP, { metalness: 0.5, roughness: 0.25 });
+}
+
+// Vanity unit: a cabinet (fronts as for 'cabinet') with a ceramic basin top.
+function vanity(g, it) {
+  const bt = 40;
+  cabinet(g, { ...it, h: it.h - bt, plinth: it.plinth ?? 0, topT: 0, fronts: it.fronts || '2d', carcass: it.carcass || it.color });
+  basinTop(g, it.w, it.d, it.h, bt, it.basinColor || CHINA);
+}
+
 const STEEL = '#1d1d1f', PAD = '#202022', CHROME = '#c8ccd0';
 
 // Seated leg extension / curl machine (user faces +z, rollers at the front).
@@ -399,14 +556,33 @@ export function buildItem(it) {
       box(g, w, h - seat, 30, 0, seat + (h - seat) / 2, -d / 2 + 15, c);
       break;
     }
-    case 'bed': {
-      box(g, w, 300, d, 0, 150, 0, shade(c, 0.6));
-      box(g, w - 40, h - 300, d - 40, 0, 300 + (h - 300) / 2, 0, c);
-      box(g, w, 1000, 80, 0, 500, -d / 2 - 40, shade(c, 0.6));
-      box(g, w * 0.35, 120, 400, -w * 0.22, h + 60, -d / 2 + 260, '#ffffff');
-      box(g, w * 0.35, 120, 400, w * 0.22, h + 60, -d / 2 + 260, '#ffffff');
+    case 'bed':
+      bed(g, it);
       break;
-    }
+    case 'sliding-wardrobe':
+      slidingWardrobe(g, it);
+      break;
+    case 'dressing-table':
+      dressingTable(g, it);
+      break;
+    case 'desk':
+      desk(g, it);
+      break;
+    case 'bath':
+      bath(g, it);
+      break;
+    case 'shower-tray':
+      showerTray(g, it);
+      break;
+    case 'toilet':
+      toilet(g, it);
+      break;
+    case 'basin':
+      basin(g, it);
+      break;
+    case 'vanity':
+      vanity(g, it);
+      break;
     case 'sectional': {
       // L-shaped corner sofa: seat along the back, open-ended chaise on one side,
       // a short side back over the corner and an arm on the far end.

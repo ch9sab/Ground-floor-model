@@ -43,7 +43,6 @@ export const CATALOG = [
   { group: 'Kitchen', label: 'Bar stool', item: { type: 'chair', name: 'Bar stool', w: 400, d: 400, h: 950, color: '#3a3a3a', seat: 650 } },
 
   { group: 'Other', label: 'Desk', item: { type: 'table', name: 'Desk', w: 1400, d: 700, h: 750, color: '#c9b79c' } },
-  { group: 'Other', label: 'Double bed', item: { type: 'bed', name: 'Bed', w: 1400, d: 2000, h: 550, color: '#e6e1d8' } },
   { group: 'Other', label: 'Radiator', item: { type: 'box', name: 'Radiator', w: 1000, d: 100, h: 600, z: 150, color: '#f0f0f0' } },
   { group: 'Other', label: 'Box', item: { type: 'box', name: 'Box', w: 600, d: 600, h: 600, color: '#9aa5b1' } },
 ];
@@ -92,4 +91,45 @@ CATALOG.push(
   { group: 'Plyko kitchen', label: 'Floating shelf 900', item: { type: 'box', name: 'Floating shelf', w: 900, d: 250, h: 25, z: 1500, color: PLYW } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa'];
+// ---- Bedroom (UK sizes) ----
+// Beds: w/d is the whole frame (mattress + 30 mm each side, 60 mm headboard + 30 mm foot rail);
+// mattressW/mattressD are the UK mattress sizes. h is the top of the mattress.
+const bed = (label, mW, mD) => ({ group: 'Bedroom', label, item: {
+  type: 'bed', name: label.replace(/ \d.*/, ''), w: mW + 60, d: mD + 90, h: 550, mattressW: mW, mattressD: mD, headboard: 1050, color: '#b9a48a' } });
+// Wardrobes, drawers and bedsides use the 'cabinet' fronts layout (see items.js): d = door, w = drawer.
+const WOOD = '#e4d8c4', WHITE = '#efede8';
+const unit = (label, w, d, h, fronts, extra = {}) => ({ group: 'Bedroom', label, item: {
+  type: 'cabinet', name: label.replace(/ \d.*/, ''), w, d, h, plinth: 50, fronts, color: WOOD, carcass: WOOD, ...extra } });
+CATALOG.push(
+  bed('Single bed 90×190', 900, 1900),
+  bed('Small double bed 120×190', 1200, 1900),
+  bed('Double bed 135×190', 1350, 1900),
+  bed('King bed 150×200', 1500, 2000),
+  bed('Super king bed 180×200', 1800, 2000),
+  unit('Bedside table 450 (2 drawers)', 450, 400, 550, '1w/1w'),
+  unit('Bedside table 400 (drawer + shelf)', 400, 350, 500, '150:1w/1o'),
+  unit('Single wardrobe 500', 500, 600, 2000, '150:1w/1d'),
+  unit('Double wardrobe 1000', 1000, 600, 2000, '2d'),
+  { group: 'Bedroom', label: 'Sliding-door wardrobe 1800', item: { type: 'sliding-wardrobe', name: 'Sliding wardrobe', w: 1800, d: 650, h: 2200, doors: 2, color: WHITE } },
+  { group: 'Bedroom', label: 'Sliding-door wardrobe 2400 (mirror)', item: { type: 'sliding-wardrobe', name: 'Sliding wardrobe', w: 2400, d: 650, h: 2200, doors: 3, mirror: true, color: WHITE } },
+  unit('Chest of drawers 800 (2 over 3)', 800, 450, 900, '2w/1w/1w/1w'),
+  { group: 'Bedroom', label: 'Dressing table 1200 + mirror', item: { type: 'dressing-table', name: 'Dressing table', w: 1200, d: 450, h: 760, color: WOOD } },
+  { group: 'Bedroom', label: 'Desk 1200', item: { type: 'desk', name: 'Desk', w: 1200, d: 600, h: 740, pedestal: 'none', color: WOOD } },
+  { group: 'Bedroom', label: 'Desk 1400 with drawers', item: { type: 'desk', name: 'Desk', w: 1400, d: 700, h: 740, pedestal: 'right', color: WOOD } },
+);
+
+// ---- Bathroom (UK sizes) ----
+// The back of each fitting goes against the wall (-z); taps and cisterns are drawn there.
+CATALOG.push(
+  { group: 'Bathroom', label: 'Bath 1700×700', item: { type: 'bath', name: 'Bath', w: 1700, d: 700, h: 550, taps: 'left', color: '#f6f6f3' } },
+  { group: 'Bathroom', label: 'Shower bath 1700×800 + screen', item: { type: 'bath', name: 'Shower bath', w: 1700, d: 800, h: 550, taps: 'left', screen: true, color: '#f6f6f3' } },
+  { group: 'Bathroom', label: 'Shower tray 900×900', item: { type: 'shower-tray', name: 'Shower tray', w: 900, d: 900, h: 40, screen: 'none', color: '#f6f6f3' } },
+  { group: 'Bathroom', label: 'Shower tray 1200×800 + enclosure', item: { type: 'shower-tray', name: 'Shower enclosure', w: 1200, d: 800, h: 40, screen: 'enclosure', color: '#f6f6f3' } },
+  { group: 'Bathroom', label: 'Toilet (close-coupled)', item: { type: 'toilet', name: 'Toilet', w: 370, d: 650, h: 800, color: '#f6f6f3' } },
+  { group: 'Bathroom', label: 'Basin on pedestal 550', item: { type: 'basin', name: 'Basin', w: 550, d: 450, h: 850, color: '#f6f6f3' } },
+  { group: 'Bathroom', label: 'Vanity unit 600 (2 doors)', item: { type: 'vanity', name: 'Vanity unit', w: 600, d: 450, h: 850, fronts: '2d', color: '#5f7a76' } },
+  { group: 'Bathroom', label: 'Vanity unit 800 (2 drawers)', item: { type: 'vanity', name: 'Vanity unit', w: 800, d: 460, h: 850, fronts: '1w/1w', color: '#5f7a76' } },
+  { group: 'Bathroom', label: 'Heated towel rail 500', item: { type: 'box', name: 'Towel rail', w: 500, d: 80, h: 1200, z: 150, color: '#c9ced3' } },
+);
+
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity'];
