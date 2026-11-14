@@ -106,6 +106,10 @@ CATALOG.push(
   bed('Double bed 135×190', 1350, 1900),
   bed('King bed 150×200', 1500, 2000),
   bed('Super king bed 180×200', 1800, 2000),
+  // Mid-sleeper cabin bed with pull-out desk: 198 cm long, 105 cm deep with the desk in (183–192 cm
+  // with it pulled out), 109 cm high; 90 x 190 mattress up to 15–16 cm deep. Grey painted pine.
+  { group: 'Bedroom', label: 'Mid-sleeper with pull-out desk', item: { type: 'mid-sleeper', name: 'Mid-sleeper bed', w: 1980, d: 1050, h: 1090,
+    closedD: 1050, openD: 1880, extension: 'closed', deck: 780, mattressH: 150, deskD: 900, color: '#8e9196' } },
   unit('Bedside table 450 (2 drawers)', 450, 400, 550, '1w/1w'),
   unit('Bedside table 400 (drawer + shelf)', 400, 350, 500, '150:1w/1o'),
   unit('Single wardrobe 500', 500, 600, 2000, '150:1w/1d'),
@@ -138,4 +142,4 @@ CATALOG.push(
   { group: 'Bathroom', label: 'Heated towel rail 500', item: { type: 'box', name: 'Towel rail', w: 500, d: 80, h: 1200, z: 150, color: '#c9ced3' } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper'];

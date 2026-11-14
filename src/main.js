@@ -445,7 +445,7 @@ function fieldsFor(kind, o) {
   if (kind === 'item') {
     const f = [...ITEM_FIELDS];
     if (['base-unit', 'sink-unit', 'hob-unit'].includes(o.type)) f.push(['worktop', 'color', 'Worktop']);
-    if (o.type === 'trestle-table' && o.openW) f.push(['extension', ['closed', 'extended'], 'Extension']);
+    if ((o.type === 'trestle-table' && o.openW) || o.openD) f.push(['extension', ['closed', 'extended'], 'Extension']);
     if (o.type === 'walking-pad') f.push(['handlebar', ['up', 'down'], 'Handlebar']);
     if (o.type === 'cabinet') {
       f.push(['fronts', 'text', 'Fronts layout']);
@@ -505,7 +505,12 @@ function setField(kind, o, key, value) {
   }
   if (kind === 'opening' && key === 'type' && value === 'window') { o.sill ??= 900; }
   if (kind === 'opening' && key === 'side') o.side = Number(value);
-  if (kind === 'item' && key === 'extension') o.w = value === 'extended' ? o.openW : o.closedW;
+  if (kind === 'item' && key === 'extension' && o.openW) o.w = value === 'extended' ? o.openW : o.closedW;
+  if (kind === 'item' && key === 'extension' && o.openD) {
+    // grow or shrink towards the front only, so the part that doesn't move stays where it is
+    const nd = value === 'extended' ? o.openD : o.closedD, half = (nd - o.d) / 2, r = THREE.MathUtils.degToRad(o.rot || 0);
+    o.x = Math.round(o.x + half * Math.sin(r)); o.y = Math.round(o.y - half * Math.cos(r)); o.d = nd;
+  }
 }
 
 function renderProps() {

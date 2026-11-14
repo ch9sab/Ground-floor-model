@@ -252,6 +252,62 @@ function desk(g, it) {
   }
 }
 
+// Mid-sleeper cabin bed with a pull-out desk (local x = length, +z = front).
+// The bed frame is closedD deep at the back of the footprint; with extension 'extended' the item is
+// openD deep and the desk unit at the right-hand end is pulled out to the front edge.
+function midSleeper(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#8e9196', dark = shade(c, 0.85), post = 70;
+  const D = Math.min(it.closedD ?? 1050, d), zb = -d / 2, zf = zb + D;      // frame back / front
+  const deck = it.deck ?? 780, mattD = it.mattressH ?? 150;
+  const xL = -w / 2, xR = w / 2;
+  // posts and end panels (top rail, bottom rail, slats)
+  for (const x of [xL + post / 2, xR - post / 2]) for (const z of [zb + post / 2, zf - post / 2]) box(g, post, h, post, x, h / 2, z, c);
+  for (const x of [xL + post / 2, xR - post / 2]) {
+    box(g, 40, 90, D - post, x, h - 45, zb + D / 2, c);
+    box(g, 40, 90, D - post, x, deck - 45, zb + D / 2, c);
+    const n = 6, span = D - 2 * post;
+    for (let i = 0; i < n; i++) box(g, 30, h - deck - 90, 60, x, deck + (h - deck - 90) / 2, zb + post + span * (i + 0.5) / n, c);
+    box(g, 40, 90, D - post, x, 380, zb + D / 2, c);                        // low rail
+  }
+  // deck, side rails and guard rails
+  box(g, w - 2 * post, 40, D - 2 * post, 0, deck - 20, zb + D / 2, dark);
+  for (const z of [zb + 20, zf - 20]) box(g, w - 2 * post, 110, 40, 0, deck - 55, z, c);
+  box(g, w - 2 * post, 80, 40, 0, h - 40, zb + 20, c);                       // back guard rail
+  const lx = xL + post + 560, lw = 320;                                      // ladder position and width
+  box(g, lx - lw / 2 - xL - post, 80, 40, (xL + post + lx - lw / 2) / 2, h - 40, zf - 20, c);   // front rail left of ladder
+  box(g, xR - post - (lx + lw / 2), 80, 40, (lx + lw / 2 + xR - post) / 2, h - 40, zf - 20, c); // front rail right of ladder
+  box(g, xR - post - (lx + lw / 2), 70, 40, (lx + lw / 2 + xR - post) / 2, (deck + h) / 2, zf - 20, c);
+  // mattress and pillow
+  box(g, Math.min(1900, w - 2 * post), mattD, Math.min(900, D - 2 * post), 0, deck + mattD / 2, zb + D / 2, '#f4f2ee');
+  box(g, 500, 120, 340, xR - post - 300, deck + mattD + 60, zb + D / 2, '#ffffff');
+  // ladder: two stiles and rungs, flush with the front
+  for (const sx of [-1, 1]) box(g, 45, deck + 300, 70, lx + sx * (lw / 2 - 22), (deck + 300) / 2, zf + 15, c);
+  for (const y of [300, 560]) box(g, lw - 45, 30, 90, lx, y, zf + 15, c);
+  // storage cubes: open shelf over a pull-out drawer box
+  const cube = (x0, cw) => {
+    const ch = deck - 80, cd = D - 120, cz = zb + 60 + cd / 2, xc = x0 + cw / 2;
+    box(g, cw, 18, cd, xc, ch, cz, c);                                       // top
+    for (const sx of [-1, 1]) box(g, 18, ch, cd, xc + sx * (cw / 2 - 9), ch / 2, cz, c);
+    box(g, cw, ch, 12, xc, ch / 2, cz - cd / 2 + 6, dark);                   // back
+    box(g, cw - 36, 18, cd, xc, ch * 0.55, cz, c);                           // shelf
+    box(g, cw - 40, ch * 0.5, cd - 20, xc, ch * 0.25 + 10, cz + 10, shade(c, 1.05)); // drawer box
+    box(g, 140, 30, 8, xc, ch * 0.5 - 50, cz + cd / 2 + 5, '#3a3a3a');        // hand hole
+  };
+  cube(xL + post + 10, lx - lw / 2 - (xL + post) - 20);
+  const mx0 = lx + lw / 2 + 10, mw = 470;
+  cube(mx0, mw);
+  // desk unit on castors at the right-hand end, pulled to the front edge when extended
+  const dw = xR - post - (mx0 + mw) - 20, ddp = Math.min(it.deskD ?? 900, D - 60), dx = (mx0 + mw + 10 + xR - post - 10) / 2;
+  const dzf = it.extension === 'extended' ? d / 2 : zf - 20, dz = dzf - ddp / 2, dh = Math.min(720, deck - 60);
+  box(g, dw, 20, ddp, dx, dh - 10, dz, c);                                   // desk top
+  const uw = dw * 0.95, ud = ddp * 0.55, uz = dzf - ud / 2 - 10;             // 2 x 2 cubby unit under the front
+  for (const sx of [-1, 0, 1]) box(g, 18, dh - 60, ud, dx + sx * (uw / 2 - 9), (dh - 60) / 2 + 40, uz, c);
+  for (const y of [40, (dh - 20) / 2 + 20]) box(g, uw, 18, ud, dx, y + 9, uz, c);
+  box(g, 18, dh - 60, ddp - ud - 30, dx - uw / 2 + 9, (dh - 60) / 2 + 40, dz - ddp / 2 + (ddp - ud - 30) / 2 + 10, c); // back leg panel
+  for (const sx of [-1, 1]) for (const z of [uz - ud / 2 + 30, uz + ud / 2 - 30]) cyl(g, 18, 36, dx + sx * (uw / 2 - 30), 18, z, 'x', '#555555');
+}
+
 // ---------------------------------------------------------------- bathroom
 // Bath: rim, sunken tub floor, front panel and taps at the left (-x) end unless taps: 'right'.
 function bath(g, it) {
@@ -611,6 +667,9 @@ export function buildItem(it) {
       break;
     case 'vanity':
       vanity(g, it);
+      break;
+    case 'mid-sleeper':
+      midSleeper(g, it);
       break;
     case 'glass-block':
       glassBlock(g, it);
