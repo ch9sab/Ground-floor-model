@@ -75,6 +75,61 @@ function loungeChair(it) {
   return outer;
 }
 
+// Four-star swivel base: centre column up to y, arms reaching r from the centre. Local z = front.
+function starBase(g, r, y, color = '#1d1d1f') {
+  cyl(g, 35, y, 0, y / 2, 0, 'y', color, { metalness: 0.4, roughness: 0.4 });
+  for (let i = 0; i < 4; i++) {
+    const a = Math.PI / 4 + (i * Math.PI) / 2, arm = new THREE.Group();
+    arm.rotation.y = a;
+    g.add(arm);
+    const m = box(arm, 45, 35, r, 0, 45, r / 2, color, { metalness: 0.4, roughness: 0.4 });
+    m.rotation.x = Math.atan2(30, r);                            // slopes down to the foot
+    box(arm, 50, 15, 60, 0, 8, r - 30, '#111111');
+  }
+}
+
+// Swivel lounge chair: star base, leather shell with a thick seat cushion, back reclined it.recline
+// degrees (25) from vertical with a tufted cushion and a head roll, padded arm rests on the seat sides.
+function swivelChair(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#a8653a', shell = shade(c, 0.85), seam = shade(c, 0.7);
+  const seatH = it.seat ?? 420, cush = 150, rec = THREE.MathUtils.degToRad(it.recline ?? 25);
+  const trayY = seatH - cush - 40;                                 // underside of the seat cushion
+  starBase(g, Math.min(w, d) * 0.45, trayY - 30);
+  // back, reclined from the tray: shell, tufted cushion and a head roll. Its top-rear corner
+  // touches the back of the footprint.
+  const bt = 130, st = 50, L = (h - trayY) / Math.cos(rec);
+  const zb = -d / 2 + (bt + st) * Math.cos(rec) + L * Math.sin(rec);
+  const back = new THREE.Group();
+  back.position.set(0, trayY * S, zb * S);
+  back.rotation.x = -rec;
+  g.add(back);
+  const bw = w - 200, headL = Math.min(230, L * 0.3);
+  box(back, bw + 40, L, st, 0, L / 2, -bt - st / 2, shell);
+  box(back, bw, L - headL - 20, bt, 0, (L - headL - 20) / 2, -bt / 2, c);
+  box(back, bw - 20, headL, bt + 30, 0, L - headL / 2, -bt / 2 + 15, c);
+  for (const x of [-bw / 5, bw / 5]) cyl(back, 14, 10, x, (L - headL) * 0.6, 3, 'z', seam);
+  // seat: shell tray under everything, cushion from the back forwards, arm pads on the sides
+  const front = d / 2 - 30, rear = zb - 60, sd = front - rear;
+  box(g, w - 40, 50, d - 120, 0, trayY - 25, 0, shell);
+  box(g, w - 80, cush, sd, 0, trayY + cush / 2, rear + sd / 2, c);
+  box(g, w - 360, 4, 4, 0, trayY + cush + 1, rear + sd * 0.55, seam);   // tuft line
+  for (const sx of [-1, 1]) {
+    box(g, 170, 130, d * 0.5, sx * (w / 2 - 105), trayY + cush + 65, d * 0.15, c);  // arm pad
+    box(g, 120, 70, 90, sx * (w / 2 - 105), trayY + cush - 10, 0, shell);            // its support
+  }
+}
+
+// Matching swivel footstool: star base, shell tray and a deep cushion.
+function swivelStool(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#a8653a', shell = shade(c, 0.85), cush = Math.min(160, h * 0.4);
+  starBase(g, Math.min(w, d) * 0.42, h - cush - 50);
+  box(g, w - 30, 50, d - 30, 0, h - cush - 25, 0, shell);
+  box(g, w - 60, cush, d - 60, 0, h - cush / 2, 0, c);
+  box(g, w - 200, 4, 4, 0, h + 1, 0, shade(c, 0.7));
+}
+
 // Longview-style dining chair, modelled at its drawn size (508 x 673 x 749 mm)
 // and then stretched to the item's w/d/h. +z is the front.
 function longviewChair(it) {
@@ -720,6 +775,12 @@ export function buildItem(it) {
       box(g, 2 * lx, sh, 40, 0, low + sh / 2, 0, frame);                                          // centre stretcher
       break;
     }
+    case 'swivel-chair':
+      swivelChair(g, it);
+      break;
+    case 'swivel-stool':
+      swivelStool(g, it);
+      break;
     case 'lounge-chair':
       g.add(loungeChair(it));
       break;
