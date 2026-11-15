@@ -39,6 +39,42 @@ function strut(g, x, [y0, z0], [y1, z1], tx, tz, color) {
   return m;
 }
 
+// Oak-framed lounge armchair with leather seat and back cushions, drawn at 610 W x 1010 D x 860 H
+// (seat 440) from side-on photos and stretched to the item's w/d/h. +z is the front.
+function loungeChair(it) {
+  const outer = new THREE.Group(), g = new THREE.Group();
+  outer.add(g);
+  g.scale.set(it.w / 610, it.h / 860, it.d / 1010);
+  const oak = it.frame || '#d6a35f', c = it.color || '#8a4a32', seam = shade(c, 0.7);
+  const seat = (it.seat ?? 440) * 860 / it.h;                // seat height in the drawn model
+  for (const side of [-1, 1]) {
+    const x = side * (610 / 2 - 22);
+    strut(g, x, [0, 460], [560, 435], 40, 50, oak);          // front leg
+    strut(g, x, [0, -368], [560, -320], 40, 55, oak);        // back leg
+    strut(g, x, [540, -320], [860, -496], 40, 55, oak);      // back post, reclined
+    strut(g, x, [230, -330], [230, 455], 40, 55, oak);       // side seat rail
+    box(g, 50, 32, 860, side * (610 / 2 - 25), 575, 75, oak); // arm, past the front leg
+  }
+  box(g, 610 - 80, 50, 40, 0, 230, 440, oak);                // front cross rail
+  box(g, 610 - 80, 50, 40, 0, 230, -320, oak);               // back cross rail
+  const cw = 610 - 90;
+  // seat cushion, channel-stitched across
+  const sd = 700, st = 140, sz = 440 - sd / 2;
+  box(g, cw, st, sd, 0, seat - st / 2, sz, c);
+  for (let i = 1; i < 6; i++) box(g, cw + 2, 4, 4, 0, seat + 1, sz - sd / 2 + (sd / 6) * i, seam);
+  box(g, 4, 4, sd, 0, seat + 1, sz, seam);
+  // back cushion leaning with the back posts
+  const b0 = [seat - 60, -230], b1 = [860, -430], len = Math.hypot(b1[0] - b0[0], b1[1] - b0[1]);
+  const back = new THREE.Group();
+  back.position.set(0, ((b0[0] + b1[0]) / 2) * S, ((b0[1] + b1[1]) / 2) * S);
+  back.rotation.x = Math.atan2(b1[1] - b0[1], b1[0] - b0[0]);
+  g.add(back);
+  box(back, cw, len, 150, 0, 0, 0, c);
+  for (let i = 1; i < 6; i++) box(back, cw + 2, 4, 4, 0, -len / 2 + (len / 6) * i, 76, seam);
+  box(back, 4, len, 4, 0, 0, 76, seam);
+  return outer;
+}
+
 // Longview-style dining chair, modelled at its drawn size (508 x 673 x 749 mm)
 // and then stretched to the item's w/d/h. +z is the front.
 function longviewChair(it) {
@@ -684,6 +720,9 @@ export function buildItem(it) {
       box(g, 2 * lx, sh, 40, 0, low + sh / 2, 0, frame);                                          // centre stretcher
       break;
     }
+    case 'lounge-chair':
+      g.add(loungeChair(it));
+      break;
     case 'longview-chair':
       g.add(longviewChair(it));
       break;

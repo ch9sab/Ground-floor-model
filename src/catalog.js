@@ -12,6 +12,8 @@ export const CATALOG = [
   // arms 65, legs 15. From the front view: arms ~12 cm, two ~70 cm tufted seats, chaise ~90 cm wide with an arm
   // over its back part; main seat depth 87.5 as the 2.5-seater. Dark green fabric, aluminium legs.
   { group: 'Living', label: 'BoConcept Osaka chaise sofa (right)', item: { type: 'legged-sofa', name: 'Osaka chaise sofa', w: 2420, d: 1415, h: 770, seat: 450, armH: 650, armW: 120, legs: 150, cushion: 170, chaise: 'right', chaiseW: 900, seatD: 875, seatCushions: 2, backCushions: 3, color: '#34403a', legColor: '#b9bcc0' } },
+  // Oak-framed lounge armchair with tan leather cushions (own chair): 61 W x 101 D x 86 H cm, seat 44 cm.
+  { group: 'Living', label: 'Oak & leather armchair', item: { type: 'lounge-chair', name: 'Armchair', w: 610, d: 1010, h: 860, seat: 440, color: '#8a4a32', frame: '#d6a35f' } },
   { group: 'Living', label: 'Sofa (3 seat)', item: { type: 'sofa', name: 'Sofa', w: 2200, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Sofa (2 seat)', item: { type: 'sofa', name: 'Sofa', w: 1700, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Armchair', item: { type: 'sofa', name: 'Armchair', w: 900, d: 850, h: 850, color: '#8a6f5a' } },
@@ -149,4 +151,4 @@ CATALOG.push(
   { group: 'Bathroom', label: 'Heated towel rail 500', item: { type: 'box', name: 'Towel rail', w: 500, d: 80, h: 1200, z: 150, color: '#c9ced3' } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest', 'lounge-chair'];
