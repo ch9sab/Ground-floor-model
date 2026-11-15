@@ -308,6 +308,59 @@ function midSleeper(g, it) {
   for (const sx of [-1, 1]) for (const z of [uz - ud / 2 + 30, uz + ud / 2 - 30]) cyl(g, 18, 36, dx + sx * (uw / 2 - 30), 18, z, 'x', '#555555');
 }
 
+// Open cube shelf: it.cols x it.rows cubes of it.cell mm; panel thickness is whatever is left over.
+function cubeShelf(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#d9c4a5', cols = it.cols || 2, rows = it.rows || 4, cell = it.cell || 335;
+  const tv = Math.max(12, (w - cols * cell) / (cols + 1)), th = Math.max(12, (h - rows * cell) / (rows + 1));
+  for (let i = 0; i <= cols; i++) box(g, tv, h, d, -w / 2 + tv / 2 + i * (cell + tv), h / 2, 0, c);
+  for (let j = 0; j <= rows; j++) box(g, w - 2 * tv, th, d, 0, th / 2 + j * (cell + th), 0, shade(c, j === rows || j === 0 ? 1 : 0.97));
+}
+
+// Stepped toy storage: columns of it.heights (mm, left to right) holding pull-out boxes.
+function steppedStorage(g, it) {
+  const { w, d } = it;
+  const c = it.color || '#f2f2f0', bc = it.boxColor || '#fbfbf9', T = 18;
+  const hs = String(it.heights || '940/680/430').split('/').map(Number), n = hs.length, cw = (w - (n + 1) * T) / n;
+  const bh = it.boxH || 230, bw = it.boxW || 300, bd = Math.min(it.boxD || 420, d - 20);
+  for (let i = 0; i <= n; i++) {                              // side panels step down with the columns
+    const hh = Math.max(hs[Math.min(i, n - 1)], i > 0 ? hs[i - 1] : 0);
+    box(g, T, hh, d, -w / 2 + T / 2 + i * (cw + T), hh / 2, 0, c);
+  }
+  hs.forEach((hh, i) => {
+    const x = -w / 2 + T + cw / 2 + i * (cw + T);
+    box(g, cw, T, d, x, hh - T / 2, 0, c);                    // top
+    box(g, cw, 30, d - 20, x, 15, -10, c);                    // plinth / base
+    box(g, cw, 90, T, x, hh - T - 45, d / 2 - T / 2, c);      // top rail
+    const avail = hh - T - 90 - 30, boxes = Math.max(1, Math.floor(avail / (bh + 20))), pitch = avail / boxes;
+    for (let k = 0; k < boxes; k++) {
+      const y = hh - T - 95 - k * pitch;                      // top of each box (rim)
+      box(g, bw + 20, 12, bd, x, y - 6, 10, bc);               // rim on its runners
+      box(g, bw - 20, bh - 12, bd - 40, x, y - bh / 2 - 6, 10, bc);
+    }
+  });
+}
+
+// Chest of drawers on legs: framed carcass, overhanging top, it.drawers drawers with two knobs each.
+function framedChest(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#9fb5a5', top = it.top || '#c9a26b', knob = it.knob || '#d9b98a';
+  const tt = 25, leg = 55, foot = it.legs ?? 130, fr = 40, n = it.drawers || 3;
+  const bodyW = w - 40, bodyD = d - 20, y0 = foot, y1 = h - tt;
+  box(g, w, tt, d, 0, h - tt / 2, 0, top);
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) box(g, leg, y1, leg, sx * (bodyW / 2 - leg / 2), y1 / 2, sz * (bodyD / 2 - leg / 2) - 10, c);
+  box(g, bodyW - 2 * leg, y1 - y0, bodyD - 40, 0, (y0 + y1) / 2, -30, shade(c, 0.9));           // carcass
+  box(g, bodyW - 2 * leg, 60, 20, 0, y0 + 30, bodyD / 2 - 20, c);                                  // bottom rail
+  box(g, bodyW - 2 * leg, 50, 20, 0, y1 - 25, bodyD / 2 - 20, c);                                  // top rail
+  const span = y1 - 50 - (y0 + 60), gap = 25, dh = (span - (n + 1) * gap) / n;
+  for (let i = 0; i < n; i++) {
+    const yc = y1 - 50 - gap - dh / 2 - i * (dh + gap) - (i === n - 1 ? 0 : 0);
+    box(g, bodyW - 2 * leg - 2 * fr / 2, dh, 22, 0, yc, bodyD / 2 - 9, c);
+    if (i > 0) box(g, bodyW - 2 * leg, gap, 18, 0, yc + dh / 2 + gap / 2, bodyD / 2 - 20, c);
+    for (const sx of [-1, 1]) cyl(g, 18, 25, sx * (bodyW / 2 - leg - 180), yc + 10, bodyD / 2 + 12, 'z', knob);
+  }
+}
+
 // ---------------------------------------------------------------- bathroom
 // Bath: rim, sunken tub floor, front panel and taps at the left (-x) end unless taps: 'right'.
 function bath(g, it) {
@@ -670,6 +723,15 @@ export function buildItem(it) {
       break;
     case 'mid-sleeper':
       midSleeper(g, it);
+      break;
+    case 'cube-shelf':
+      cubeShelf(g, it);
+      break;
+    case 'stepped-storage':
+      steppedStorage(g, it);
+      break;
+    case 'framed-chest':
+      framedChest(g, it);
       break;
     case 'glass-block':
       glassBlock(g, it);

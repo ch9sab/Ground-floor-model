@@ -110,6 +110,13 @@ CATALOG.push(
   // with it pulled out), 109 cm high; 90 x 190 mattress up to 15–16 cm deep. Grey painted pine.
   { group: 'Bedroom', label: 'Mid-sleeper with pull-out desk', item: { type: 'mid-sleeper', name: 'Mid-sleeper bed', w: 1980, d: 1050, h: 1090,
     closedD: 1050, openD: 1880, extension: 'closed', deck: 780, mattressH: 150, deskD: 900, color: '#8e9196' } },
+  // IKEA Kallax shelf 2x4: 76.5 W x 39 D x 146.5 H cm, cubes 33.5 x 33.5 cm. White-stained oak effect.
+  { group: 'Bedroom', label: 'IKEA Kallax shelf 2×4', item: { type: 'cube-shelf', name: 'Kallax shelf', w: 765, d: 390, h: 1465, cols: 2, rows: 4, cell: 335, color: '#dcc8aa' } },
+  // IKEA Trofast stepped storage: 99 W x 44 D x 94 H cm (columns 94 / 68 / 43 high), boxes 42 x 30 x 23 cm.
+  { group: 'Bedroom', label: 'IKEA Trofast stepped storage', item: { type: 'stepped-storage', name: 'Trofast storage', w: 990, d: 440, h: 940, heights: '940/680/430', boxW: 300, boxD: 420, boxH: 230, color: '#f2f2f0', boxColor: '#fbfbf9' } },
+  // IKEA Hemnes chest of 3 drawers, grey-green with a light brown pine top. 108 W x 50 D x 96 H cm is
+  // IKEA's usual size for this chest (not given with the photo): check before buying.
+  { group: 'Bedroom', label: 'IKEA Hemnes chest, 3 drawers', item: { type: 'framed-chest', name: 'Hemnes chest', w: 1080, d: 500, h: 960, drawers: 3, color: '#9fb5a5', top: '#c9a26b' } },
   unit('Bedside table 450 (2 drawers)', 450, 400, 550, '1w/1w'),
   unit('Bedside table 400 (drawer + shelf)', 400, 350, 500, '150:1w/1o'),
   unit('Single wardrobe 500', 500, 600, 2000, '150:1w/1d'),
@@ -142,4 +149,4 @@ CATALOG.push(
   { group: 'Bathroom', label: 'Heated towel rail 500', item: { type: 'box', name: 'Towel rail', w: 500, d: 80, h: 1200, z: 150, color: '#c9ced3' } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest'];
