@@ -1,0 +1,1013 @@
+{
+ "name": "First floor (traced from the estate agent's floor plan, same origin as plan.json; verify with a tape measure)",
+ "units": "mm",
+ "walls": [
+  {
+   "id": "W1",
+   "name": "Back wall",
+   "a": [
+    13590,
+    14110
+   ],
+   "b": [
+    23450,
+    14110
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W2",
+   "name": "Left side wall",
+   "a": [
+    13590,
+    5930
+   ],
+   "b": [
+    13590,
+    14110
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W3",
+   "name": "Front wall",
+   "a": [
+    13590,
+    5930
+   ],
+   "b": [
+    20250,
+    5930
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W4",
+   "name": "Shower room side wall",
+   "a": [
+    20250,
+    5930
+   ],
+   "b": [
+    20250,
+    4900
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W5",
+   "name": "Shower room front wall",
+   "a": [
+    20250,
+    4900
+   ],
+   "b": [
+    23450,
+    4900
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W6",
+   "name": "Right side wall",
+   "a": [
+    23450,
+    4900
+   ],
+   "b": [
+    23450,
+    14110
+   ],
+   "thickness": 220,
+   "height": 2400
+  },
+  {
+   "id": "W7",
+   "name": "Landing / shower room",
+   "a": [
+    20250,
+    7534
+   ],
+   "b": [
+    20250,
+    5930
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W8",
+   "name": "Bedroom 1 / bedroom 3",
+   "a": [
+    19210,
+    14110
+   ],
+   "b": [
+    19210,
+    9750
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W9",
+   "name": "Bedroom 2 / bedroom 1",
+   "a": [
+    13590,
+    9750
+   ],
+   "b": [
+    19210,
+    9750
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W10",
+   "name": "Bedroom 2 / landing",
+   "a": [
+    18270,
+    9750
+   ],
+   "b": [
+    18270,
+    5930
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W11",
+   "name": "Bedroom 3 / landing",
+   "a": [
+    19210,
+    10266
+   ],
+   "b": [
+    23450,
+    10266
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W12",
+   "name": "Airing cupboard side",
+   "a": [
+    20100,
+    10266
+   ],
+   "b": [
+    20100,
+    9316
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W13",
+   "name": "Airing cupboard front",
+   "a": [
+    20100,
+    9316
+   ],
+   "b": [
+    21390,
+    9316
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W14",
+   "name": "Bathroom / landing",
+   "a": [
+    21390,
+    10266
+   ],
+   "b": [
+    21390,
+    7534
+   ],
+   "thickness": 100,
+   "height": 2400
+  },
+  {
+   "id": "W15",
+   "name": "Bathroom / shower room",
+   "a": [
+    20250,
+    7534
+   ],
+   "b": [
+    23450,
+    7534
+   ],
+   "thickness": 100,
+   "height": 2400
+  }
+ ],
+ "openings": [
+  {
+   "id": "O1",
+   "type": "window",
+   "wall": "W1",
+   "offset": 2260,
+   "width": 1980,
+   "height": 1200,
+   "sill": 900
+  },
+  {
+   "id": "O2",
+   "type": "window",
+   "wall": "W1",
+   "offset": 6910,
+   "width": 1880,
+   "height": 1200,
+   "sill": 900
+  },
+  {
+   "id": "O3",
+   "type": "window",
+   "wall": "W3",
+   "offset": 1330,
+   "width": 1820,
+   "height": 1200,
+   "sill": 900
+  },
+  {
+   "id": "O4",
+   "type": "window",
+   "wall": "W3",
+   "offset": 5230,
+   "width": 990,
+   "height": 1200,
+   "sill": 900
+  },
+  {
+   "id": "O5",
+   "type": "window",
+   "wall": "W5",
+   "offset": 1000,
+   "width": 1130,
+   "height": 1050,
+   "sill": 1050
+  },
+  {
+   "id": "O6",
+   "type": "window",
+   "wall": "W6",
+   "offset": 3190,
+   "width": 750,
+   "height": 1050,
+   "sill": 1050
+  },
+  {
+   "id": "O7",
+   "type": "door",
+   "wall": "W7",
+   "offset": 80,
+   "width": 762,
+   "height": 1981,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O8",
+   "type": "door",
+   "wall": "W9",
+   "offset": 4780,
+   "width": 762,
+   "height": 1981,
+   "hinge": "end",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O9",
+   "type": "door",
+   "wall": "W10",
+   "offset": 240,
+   "width": 838,
+   "height": 1981,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O10",
+   "type": "door",
+   "wall": "W11",
+   "offset": 220,
+   "width": 762,
+   "height": 1981,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  },
+  {
+   "id": "O11",
+   "type": "door",
+   "wall": "W13",
+   "offset": 120,
+   "width": 610,
+   "height": 1981,
+   "hinge": "start",
+   "side": -1,
+   "openAngle": 80
+  },
+  {
+   "id": "O12",
+   "type": "door",
+   "wall": "W14",
+   "offset": 1000,
+   "width": 762,
+   "height": 1981,
+   "hinge": "start",
+   "side": 1,
+   "openAngle": 80
+  }
+ ],
+ "rooms": [
+  {
+   "name": "Bedroom 1",
+   "x": 16800,
+   "y": 11050,
+   "floor": "#cbbfae",
+   "poly": [
+    [
+     13590,
+     9750
+    ],
+    [
+     13590,
+     14110
+    ],
+    [
+     19210,
+     14110
+    ],
+    [
+     19210,
+     9750
+    ]
+   ]
+  },
+  {
+   "name": "Bedroom 2",
+   "x": 15900,
+   "y": 6900,
+   "floor": "#cbbfae",
+   "poly": [
+    [
+     13590,
+     5930
+    ],
+    [
+     13590,
+     9750
+    ],
+    [
+     18270,
+     9750
+    ],
+    [
+     18270,
+     5930
+    ]
+   ]
+  },
+  {
+   "name": "Bedroom 3",
+   "x": 21300,
+   "y": 11300,
+   "floor": "#cbbfae",
+   "poly": [
+    [
+     19210,
+     10266
+    ],
+    [
+     19210,
+     14110
+    ],
+    [
+     23450,
+     14110
+    ],
+    [
+     23450,
+     10266
+    ]
+   ]
+  },
+  {
+   "name": "Bathroom",
+   "x": 22400,
+   "y": 8700,
+   "floor": "#d5d8da",
+   "poly": [
+    [
+     21390,
+     7534
+    ],
+    [
+     21390,
+     10266
+    ],
+    [
+     23450,
+     10266
+    ],
+    [
+     23450,
+     7534
+    ]
+   ]
+  },
+  {
+   "name": "Shower room",
+   "x": 21300,
+   "y": 5600,
+   "floor": "#d5d8da",
+   "poly": [
+    [
+     20250,
+     4900
+    ],
+    [
+     20250,
+     7534
+    ],
+    [
+     23450,
+     7534
+    ],
+    [
+     23450,
+     4900
+    ]
+   ]
+  },
+  {
+   "name": "Cupboard",
+   "x": 20745,
+   "y": 9790,
+   "floor": "#c8c2b6",
+   "poly": [
+    [
+     20100,
+     9316
+    ],
+    [
+     20100,
+     10266
+    ],
+    [
+     21390,
+     10266
+    ],
+    [
+     21390,
+     9316
+    ]
+   ]
+  },
+  {
+   "name": "Landing",
+   "x": 19300,
+   "y": 8500,
+   "floor": "#cbbfae",
+   "poly": [
+    [
+     18270,
+     7600
+    ],
+    [
+     18270,
+     9750
+    ],
+    [
+     19210,
+     9750
+    ],
+    [
+     19210,
+     10266
+    ],
+    [
+     20100,
+     10266
+    ],
+    [
+     20100,
+     9316
+    ],
+    [
+     21390,
+     9316
+    ],
+    [
+     21390,
+     7534
+    ],
+    [
+     20250,
+     7534
+    ],
+    [
+     20250,
+     7600
+    ]
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "i1",
+   "z": -650,
+   "rot": 0,
+   "type": "box",
+   "name": "Winders / half landing",
+   "x": 19275,
+   "y": 5995,
+   "w": 1850,
+   "d": 100,
+   "h": 40,
+   "color": "#b08b62"
+  },
+  {
+   "id": "i2",
+   "z": -690,
+   "rot": 0,
+   "type": "box",
+   "name": "Winders / half landing",
+   "x": 19275,
+   "y": 6440,
+   "w": 1850,
+   "d": 900,
+   "h": 40,
+   "color": "#b08b62"
+  },
+  {
+   "id": "i3",
+   "z": -650,
+   "rot": 0,
+   "type": "stairs",
+   "name": "Stairs (top flight)",
+   "x": 19727,
+   "y": 7240,
+   "w": 900,
+   "d": 700,
+   "h": 650,
+   "color": "#b08b62"
+  },
+  {
+   "id": "i4",
+   "z": 0,
+   "rot": 0,
+   "type": "box",
+   "name": "Balustrade",
+   "x": 18799,
+   "y": 7610,
+   "w": 1000,
+   "d": 40,
+   "h": 900,
+   "color": "#f2efe8"
+  },
+  {
+   "id": "i5",
+   "z": 0,
+   "rot": 0,
+   "type": "box",
+   "name": "Balustrade",
+   "x": 19254,
+   "y": 6900,
+   "w": 40,
+   "d": 1420,
+   "h": 900,
+   "color": "#f2efe8"
+  },
+  {
+   "id": "i6",
+   "z": 0,
+   "rot": 90,
+   "type": "cabinet",
+   "name": "Built-in wardrobe",
+   "x": 14000,
+   "y": 12540,
+   "w": 2770,
+   "d": 600,
+   "h": 2200,
+   "plinth": 50,
+   "fronts": "3d",
+   "color": "#efede8",
+   "carcass": "#efede8"
+  },
+  {
+   "id": "i7",
+   "z": 0,
+   "rot": 180,
+   "type": "cabinet",
+   "name": "Built-in wardrobe",
+   "x": 15240,
+   "y": 10100,
+   "w": 2900,
+   "d": 600,
+   "h": 2200,
+   "plinth": 50,
+   "fronts": "4d",
+   "color": "#efede8",
+   "carcass": "#efede8"
+  },
+  {
+   "id": "i8",
+   "z": 0,
+   "rot": 270,
+   "type": "cabinet",
+   "name": "Built-in wardrobe",
+   "x": 23040,
+   "y": 12188,
+   "w": 3700,
+   "d": 600,
+   "h": 2200,
+   "plinth": 50,
+   "fronts": "6d",
+   "color": "#efede8",
+   "carcass": "#efede8"
+  },
+  {
+   "id": "i9",
+   "z": 0,
+   "rot": 0,
+   "type": "bath",
+   "name": "Bath",
+   "x": 22410,
+   "y": 9866,
+   "w": 1700,
+   "d": 700,
+   "h": 550,
+   "taps": "right",
+   "color": "#f6f6f3",
+   "panel": "#c9c3b8"
+  },
+  {
+   "id": "i10",
+   "z": 0,
+   "rot": 180,
+   "type": "vanity",
+   "name": "Vanity unit",
+   "x": 22390,
+   "y": 7784,
+   "w": 1900,
+   "d": 400,
+   "h": 850,
+   "fronts": "150:3w/3d",
+   "basinAt": 350,
+   "color": "#f2f2f0",
+   "carcass": "#f2f2f0"
+  },
+  {
+   "id": "i11",
+   "z": 1250,
+   "rot": 180,
+   "type": "cabinet",
+   "name": "Mirror cabinet",
+   "x": 22650,
+   "y": 7659,
+   "w": 1100,
+   "d": 150,
+   "h": 700,
+   "fronts": "2d",
+   "handle": "bottom",
+   "color": "#c7d2d8",
+   "carcass": "#e8e8e6"
+  },
+  {
+   "id": "i12",
+   "z": 0,
+   "rot": 270,
+   "type": "toilet",
+   "name": "Toilet (wall-hung)",
+   "style": "wall-hung",
+   "x": 22970,
+   "y": 8480,
+   "w": 360,
+   "d": 740,
+   "h": 1000,
+   "color": "#f6f6f3"
+  },
+  {
+   "id": "i13",
+   "z": 100,
+   "rot": 270,
+   "type": "box",
+   "name": "Heated towel rail",
+   "x": 23300,
+   "y": 9250,
+   "w": 500,
+   "d": 80,
+   "h": 1400,
+   "color": "#c9ced3"
+  },
+  {
+   "id": "i14",
+   "z": 0,
+   "rot": 270,
+   "type": "shower-tray",
+   "name": "Walk-in shower",
+   "x": 22840,
+   "y": 7017,
+   "w": 930,
+   "d": 1000,
+   "h": 20,
+   "screen": "none",
+   "color": "#eeeeea"
+  },
+  {
+   "id": "i15",
+   "z": 0,
+   "rot": 0,
+   "type": "glass-block",
+   "name": "Glass-block wall",
+   "x": 22840,
+   "y": 6480,
+   "w": 1000,
+   "d": 80,
+   "h": 2100
+  },
+  {
+   "id": "i16",
+   "z": 0,
+   "rot": 270,
+   "type": "vanity",
+   "name": "Vanity unit",
+   "x": 23115,
+   "y": 6010,
+   "w": 700,
+   "d": 450,
+   "h": 850,
+   "fronts": "2d",
+   "color": "#f6f6f3",
+   "carcass": "#f6f6f3"
+  },
+  {
+   "id": "i17",
+   "z": 0,
+   "rot": 270,
+   "type": "cabinet",
+   "name": "Vanity drawers",
+   "x": 23115,
+   "y": 5480,
+   "w": 360,
+   "d": 450,
+   "h": 850,
+   "topT": 40,
+   "fronts": "1w/1w/1w/1w",
+   "color": "#f6f6f3",
+   "carcass": "#f6f6f3",
+   "worktop": "#f6f6f3"
+  },
+  {
+   "id": "i18",
+   "z": 1150,
+   "rot": 270,
+   "type": "box",
+   "name": "Mirror",
+   "x": 23315,
+   "y": 6010,
+   "w": 800,
+   "d": 30,
+   "h": 600,
+   "color": "#c7d2d8"
+  },
+  {
+   "id": "i19",
+   "z": 150,
+   "rot": 180,
+   "type": "box",
+   "name": "Radiator",
+   "x": 20850,
+   "y": 5070,
+   "w": 800,
+   "d": 100,
+   "h": 600,
+   "color": "#f0f0f0"
+  },
+  {
+   "id": "i20",
+   "z": 0,
+   "rot": 270,
+   "type": "bed",
+   "name": "King bed",
+   "x": 18115,
+   "y": 11900,
+   "w": 1560,
+   "d": 2090,
+   "h": 550,
+   "mattressW": 1500,
+   "mattressD": 2000,
+   "headboard": 1050,
+   "color": "#b9a48a"
+  },
+  {
+   "id": "i21",
+   "z": 0,
+   "rot": 270,
+   "type": "cabinet",
+   "name": "Bedside table",
+   "x": 18960,
+   "y": 10880,
+   "w": 450,
+   "d": 400,
+   "h": 550,
+   "plinth": 50,
+   "fronts": "1w/1w",
+   "color": "#e4d8c4",
+   "carcass": "#e4d8c4"
+  },
+  {
+   "id": "i22",
+   "z": 0,
+   "rot": 270,
+   "type": "cabinet",
+   "name": "Bedside table",
+   "x": 18960,
+   "y": 12920,
+   "w": 450,
+   "d": 400,
+   "h": 550,
+   "plinth": 50,
+   "fronts": "1w/1w",
+   "color": "#e4d8c4",
+   "carcass": "#e4d8c4"
+  },
+  {
+   "id": "i23",
+   "z": 0,
+   "rot": 0,
+   "type": "dressing-table",
+   "name": "Dressing table",
+   "x": 15050,
+   "y": 13800,
+   "w": 1000,
+   "d": 400,
+   "h": 760,
+   "mirror": "round",
+   "drawers": 1,
+   "color": "#e8d9b8"
+  },
+  {
+   "id": "i24",
+   "z": 0,
+   "rot": 0,
+   "type": "bed",
+   "name": "Double bed",
+   "x": 16300,
+   "y": 8705,
+   "w": 1410,
+   "d": 1990,
+   "h": 550,
+   "mattressW": 1350,
+   "mattressD": 1900,
+   "headboard": 1050,
+   "color": "#e9e4dc"
+  },
+  {
+   "id": "i25",
+   "z": 0,
+   "rot": 90,
+   "type": "cabinet",
+   "name": "Bedside chest",
+   "x": 13900,
+   "y": 9300,
+   "w": 500,
+   "d": 400,
+   "h": 750,
+   "plinth": 50,
+   "fronts": "1w/1w/1w",
+   "color": "#e8d9b8",
+   "carcass": "#e8d9b8"
+  },
+  {
+   "id": "i26",
+   "z": 300,
+   "rot": 90,
+   "type": "box",
+   "name": "Mirror",
+   "x": 13715,
+   "y": 8300,
+   "w": 500,
+   "d": 30,
+   "h": 1500,
+   "color": "#c7d2d8"
+  },
+  {
+   "id": "i27",
+   "z": 0,
+   "rot": 0,
+   "type": "desk",
+   "name": "Desk",
+   "x": 21600,
+   "y": 13650,
+   "w": 1600,
+   "d": 700,
+   "h": 740,
+   "pedestal": "left",
+   "color": "#d8b98c"
+  },
+  {
+   "id": "i28",
+   "z": 0,
+   "rot": 180,
+   "type": "chair",
+   "name": "Desk chair",
+   "x": 21800,
+   "y": 13050,
+   "w": 550,
+   "d": 550,
+   "h": 950,
+   "color": "#f2f2f2",
+   "seat": 480
+  },
+  {
+   "id": "i29",
+   "z": 0,
+   "rot": 90,
+   "type": "desk",
+   "name": "Desk",
+   "x": 19560,
+   "y": 12700,
+   "w": 1400,
+   "d": 600,
+   "h": 740,
+   "color": "#e8d9b8"
+  },
+  {
+   "id": "i30",
+   "z": 0,
+   "rot": 270,
+   "type": "chair",
+   "name": "Desk chair",
+   "x": 20150,
+   "y": 12700,
+   "w": 550,
+   "d": 550,
+   "h": 950,
+   "color": "#f2f2f2",
+   "seat": 480
+  },
+  {
+   "id": "i31",
+   "z": 0,
+   "rot": 180,
+   "type": "cabinet",
+   "name": "Storage units",
+   "x": 21450,
+   "y": 10516,
+   "w": 2400,
+   "d": 400,
+   "h": 600,
+   "plinth": 0,
+   "fronts": "4d",
+   "color": "#a9d6c8",
+   "carcass": "#f2f2f0"
+  },
+  {
+   "id": "i32",
+   "z": 1500,
+   "rot": 180,
+   "type": "cabinet",
+   "name": "Wall units",
+   "x": 21450,
+   "y": 10491,
+   "w": 2400,
+   "d": 350,
+   "h": 700,
+   "fronts": "4d",
+   "handle": "bottom",
+   "color": "#a9d6c8",
+   "carcass": "#f2f2f0"
+  },
+  {
+   "id": "i33",
+   "z": 0,
+   "rot": 0,
+   "type": "rug",
+   "name": "Rug",
+   "x": 21300,
+   "y": 11900,
+   "w": 2000,
+   "d": 1400,
+   "h": 10,
+   "color": "#e07a5f"
+  }
+ ]
+}
