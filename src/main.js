@@ -470,6 +470,7 @@ function fieldsFor(kind, o) {
       if (o.screen === 'enclosure') f.push(['wall', ['right', 'left'], 'Side wall']);
     }
     if (o.type === 'vanity') { f.push(['fronts', 'text', 'Fronts layout']); f.push(['basinAt', 'num', 'Basin offset']); }
+    if (o.type === 'shell-chair') f.push(['seat', 'num', 'Seat height']);
     if (o.type === 'swivel-chair') { f.push(['seat', 'num', 'Seat height']); f.push(['recline', 'num', 'Back recline °']); }
     if (o.type === 'toilet') f.push(['style', ['close-coupled', 'wall-hung'], 'Style']);
     if (o.type === 'dressing-table') f.push(['mirror', [['', 'Rectangular'], ['round', 'Round']], 'Mirror']);

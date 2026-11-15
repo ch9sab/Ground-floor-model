@@ -130,6 +130,47 @@ function swivelStool(g, it) {
   box(g, w - 200, 4, 4, 0, h + 1, 0, shade(c, 0.7));
 }
 
+// Upholstered shell armchair on four splayed round wooden legs joined by an H-frame (Vedbo-style).
+// The shell's back curves round into arms that run forward over the front legs; +z is the front.
+function shellChair(g, it) {
+  const { w, d, h } = it;
+  const c = it.color || '#3f5a73', cushion = it.cushion || shade(c, 1.15), wood = it.frame || '#e3c99a';
+  const seat = it.seat ?? 400, t = 55;                        // seat (cushion top) height, shell thickness
+  const pan = seat - 50, armTop = Math.min(h - 120, seat + 230);
+  const lx = w / 2 - 45;                                      // legs line up under the arms
+  // legs: front legs rise into the arms, back legs splay out behind
+  for (const sx of [-1, 1]) {
+    strut(g, sx * lx, [0, d / 2 - 70], [pan + 120, d / 2 - 110], 44, 44, wood);
+    strut(g, sx * (lx - 20), [0, -d / 2 + 50], [pan, -d / 2 + 210], 44, 44, wood);
+    box(g, 30, 60, d - 230, sx * (lx - 10), 240, 0, wood);  // side rail
+  }
+  box(g, 2 * lx - 40, 60, 30, 0, 240, 0, wood);              // cross rail
+  // seat pan and cushion
+  box(g, w - 150, t, d - 170, 0, pan - t / 2, 20, c);
+  box(g, w - 250, 50, d - 260, 0, pan + 25, 50, cushion);
+  // back: three panels curving round, leaning back about 10 degrees
+  const tilt = THREE.MathUtils.degToRad(10), bh = h - pan + 20;
+  const panel = (x, z, len, rotY) => {
+    const p = new THREE.Group();
+    p.position.set(x * S, (pan - 20) * S, z * S);
+    p.rotation.set(-tilt, rotY, 0, 'YXZ');
+    g.add(p);
+    box(p, len, bh, t, 0, bh / 2, 0, c);
+  };
+  const zb = -d / 2 + t / 2 + bh * Math.sin(tilt);
+  panel(0, zb, w - 330, 0);
+  for (const sx of [-1, 1]) panel(sx * (w / 2 - 110), zb + 70, 230, -sx * 0.6);
+  // arms: wings from the back corners forward over the front legs, sloping down a little
+  for (const sx of [-1, 1]) {
+    const len = d - 230, a = new THREE.Group();
+    a.position.set(sx * (w / 2 - t / 2 - 15) * S, (pan - 20) * S, (zb + 120 + len / 2) * S);
+    a.rotation.x = Math.atan2(armTop - (armTop - 40), len) * -1;
+    g.add(a);
+    box(a, t, armTop - pan + 20, len, 0, (armTop - pan + 20) / 2, 0, c);
+    box(a, t + 50, 50, len, sx * -10, armTop - pan - 5, 0, c);  // rolled top edge, flaring out
+  }
+}
+
 // Longview-style dining chair, modelled at its drawn size (508 x 673 x 749 mm)
 // and then stretched to the item's w/d/h. +z is the front.
 function longviewChair(it) {
@@ -775,6 +816,9 @@ export function buildItem(it) {
       box(g, 2 * lx, sh, 40, 0, low + sh / 2, 0, frame);                                          // centre stretcher
       break;
     }
+    case 'shell-chair':
+      shellChair(g, it);
+      break;
     case 'swivel-chair':
       swivelChair(g, it);
       break;
