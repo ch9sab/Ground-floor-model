@@ -66,6 +66,8 @@ CATALOG.push(
   { group: 'Gym', label: 'Freak Athlete Hyper Pro X', item: { type: 'hyper-bench', name: 'Hyper Pro X', w: 760, d: 1650, h: 950, color: '#1d1d1f' } },
   // REP Fitness Ares 2.0 wall-mounted cable rack with storage wings: 2391 W (2685 with plates), 2085 high,
   // 737 from the wall to the frame front, 1113 to the pull-up bar extension. Back of the item goes against the wall.
+  // Mobile workbench with built-in table saw: a full 8x4 ft sheet top (2440 x 1220), ~900 high on casters.
+  { group: 'Garage', label: 'Workbench 8×4 with table saw', item: { type: 'saw-bench', name: 'Workbench with table saw', w: 2440, d: 1220, h: 900, saw: 'right', color: '#e3cb9f' } },
   { group: 'Gym', label: 'REP Ares 2.0 cable rack', item: { type: 'cable-rack', name: 'REP Ares 2.0', w: 2391, d: 1113, h: 2085, frameD: 737, coreW: 1404, color: '#1b1b1d' } },
   { group: 'Gym', label: 'Hyper Pro X (stored upright)', item: { type: 'box', name: 'Hyper Pro X (stored)', w: 760, d: 585, h: 1470, color: '#1d1d1f' } },
 );
@@ -158,4 +160,4 @@ CATALOG.push(
   { group: 'Bathroom', label: 'Heated towel rail 500', item: { type: 'box', name: 'Towel rail', w: 500, d: 80, h: 1200, z: 150, color: '#c9ced3' } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest', 'lounge-chair', 'swivel-chair', 'swivel-stool', 'shell-chair'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest', 'lounge-chair', 'swivel-chair', 'swivel-stool', 'shell-chair', 'saw-bench'];

@@ -596,6 +596,55 @@ function glassBlock(g, it) {
 const STEEL = '#1d1d1f', PAD = '#202022', CHROME = '#c8ccd0';
 
 // Seated leg extension / curl machine (user faces +z, rollers at the front).
+// Mobile workbench / table-saw station: plywood top on a 2x4 frame with casters, a drawer bank
+// at one end of the front, an open lower shelf, and a benchtop table saw dropped in flush with the
+// top at the other end (it.saw = 'right' | 'left' | 'none', as you face the front).
+function sawBench(g, it) {
+  const { w, d, h } = it, ply = it.color || '#e3cb9f', stud = shade(ply, 1.04), T = 19, post = 89;
+  const caster = 100, x0 = -w / 2, z0 = -d / 2;
+  const sawSide = it.saw === 'left' ? -1 : it.saw === 'none' ? 0 : 1;
+  const sawW = it.sawW ?? 560, sawD = it.sawD ?? 600;              // saw table footprint
+  // casters
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+    box(g, 60, caster - 30, 60, sx * (w / 2 - 80), (caster - 30) / 2 + 20, sz * (d / 2 - 80), '#2b2b2e');
+    cyl(g, 30, 30, sx * (w / 2 - 80), 30, sz * (d / 2 - 80), 'x', '#1a1a1a');
+  }
+  // base platform and lower shelf
+  box(g, w - 40, T + 70, d - 40, 0, caster + (T + 70) / 2, 0, stud);
+  // posts (2x4 doubled) around the frame
+  const postsX = [x0 + 60, x0 + w * 0.36, w / 2 - 60 - (sawSide === 1 ? sawW : 0), w / 2 - 60];
+  const postsXl = sawSide === -1 ? [x0 + 60, x0 + 60 + sawW, w / 2 - w * 0.36, w / 2 - 60] : postsX;
+  for (const px of postsXl) for (const sz of [-1, 1]) box(g, post, h - T - caster - 89, 64, px, (caster + 89 + h - T) / 2, sz * (d / 2 - 50), stud);
+  // top rails
+  for (const sz of [-1, 1]) box(g, w - 40, 89, 38, 0, h - T - 45, sz * (d / 2 - 30), stud);
+  // drawer bank at the opposite end to the saw: two columns, 3 drawers and 2 drawers + open bin
+  const bankW = w * 0.36 - 60, bx0 = sawSide === -1 ? w / 2 - 60 - bankW : x0 + 60;
+  const colW = bankW / 2, top = h - T - 89, bot = caster + 89, rowH = (top - bot) / 3;
+  box(g, bankW, top - bot, d * 0.5, bx0 + bankW / 2, (top + bot) / 2, d / 2 - d * 0.25 - 30, shade(ply, 0.88)); // carcass
+  for (let c = 0; c < 2; c++) for (let r = 0; r < 3; r++) {
+    const cx = bx0 + colW * (c + 0.5), cy = bot + rowH * (r + 0.5);
+    if (c === 1 && r === 0) box(g, colW - 30, rowH * 0.6, 18, cx, bot + rowH * 0.3 + 10, d / 2 - 30, ply); // low-front bin
+    else box(g, colW - 30, rowH - 25, 18, cx, cy, d / 2 - 30, ply);
+  }
+  // back panel behind the open bay and a clamp rail along the front
+  box(g, w - 80, top - bot - 40, T, 0, (top + bot) / 2, -d / 2 + 40, shade(ply, 0.9));
+  cyl(g, 18, w * 0.4, 0, top - 60, d / 2 - 30, 'x', shade(ply, 0.95));
+  // worktop, with a cut-out for the saw
+  if (sawSide) {
+    const sx = sawSide * (w / 2 - sawW / 2), rest = w - sawW;
+    box(g, rest, T, d, -sawSide * sawW / 2, h - T / 2, 0, ply);                          // main top
+    box(g, sawW, T, d - sawD, sx, h - T / 2, d / 2 - (d - sawD) / 2, ply);              // strip in front of the saw
+    // the saw: grey cast table flush with the top, yellow body underneath, fence, blade guard
+    box(g, sawW - 10, 25, sawD - 10, sx, h - 12, z0 + sawD / 2, '#9da1a6', { metalness: 0.4, roughness: 0.35 });
+    box(g, sawW - 80, 300, sawD - 120, sx, h - 25 - 150, z0 + sawD / 2, '#f0b323');
+    box(g, 40, 70, sawD - 20, sx + sawW * 0.2, h + 35, z0 + sawD / 2, '#cfd3d6', { metalness: 0.4 });
+    box(g, 10, 60, 180, sx - sawW * 0.1, h + 30, z0 + sawD / 2, '#c8202a');
+    box(g, sawW, 60, 60, sx, h - 30, z0 + sawD + 30, '#cfd3d6', { metalness: 0.4 });     // fence rail
+  } else {
+    box(g, w, T, d, 0, h - T / 2, 0, ply);
+  }
+}
+
 function legMachine(g, it) {
   const { w, d, h } = it, red = it.color || '#c4262e', t = 60;
   const z0 = -d / 2 + 120, z1 = d / 2 - 260;          // base frame (front leaves room for the lower roller)
@@ -956,6 +1005,9 @@ export function buildItem(it) {
       box(g, w - 4, h - plinth - lower - 4, 18, 0, plinth + lower + (h - plinth - lower) / 2, d / 2 - 9, c);
       break;
     }
+    case 'saw-bench':
+      sawBench(g, it);
+      break;
     case 'leg-machine':
       legMachine(g, it);
       break;
