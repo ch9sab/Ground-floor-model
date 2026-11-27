@@ -450,6 +450,7 @@ function fieldsFor(kind, o) {
     if (o.type === 'walking-pad') f.push(['handlebar', ['up', 'down'], 'Handlebar']);
     if (o.type === 'cabinet') {
       f.push(['fronts', 'text', 'Fronts layout']);
+      f.push(['handle', ['top', 'bottom', 'none'], 'Handles']);
       f.push(['carcass', 'color', 'Carcass']);
       if (o.topT > 0) f.push(['worktop', 'color', 'Worktop']);
     }

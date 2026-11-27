@@ -21,6 +21,9 @@ export const CATALOG = [
   // IKEA Vedbo armchair, Gunnared blue: 73 W x 65 D x 75 H cm, seat 48 W x 45 D, 22 cm clear underneath.
   // Seat height 40 cm is an estimate. Birch legs.
   { group: 'Living', label: 'IKEA Vedbo armchair', item: { type: 'shell-chair', name: 'Vedbo armchair', w: 730, d: 650, h: 750, seat: 400, color: '#3f5a73', cushion: '#4b6c8a', frame: '#e3c99a' } },
+  // IKEA BESTÅ storage combination with drawers, 180x42x75 cm: black-brown frame, Krukmakare dark grey-green
+  // fronts (door | 2 drawers | door, no handles), walnut-effect top, legs.
+  { group: 'Living', label: 'IKEA BESTÅ 180×42×75 (drawers)', item: { type: 'cabinet', name: 'BESTÅ storage', w: 1800, d: 420, h: 750, legs: 100, topT: 16, topFront: 0, fronts: '1d|1w/1w|1d', handle: 'none', shaker: true, color: '#5f7a6c', carcass: '#2c2724', worktop: '#7a5a3e', legColor: '#1f1d1b' } },
   { group: 'Living', label: 'Sofa (3 seat)', item: { type: 'sofa', name: 'Sofa', w: 2200, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Sofa (2 seat)', item: { type: 'sofa', name: 'Sofa', w: 1700, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Armchair', item: { type: 'sofa', name: 'Armchair', w: 900, d: 850, h: 850, color: '#8a6f5a' } },

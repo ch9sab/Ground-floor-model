@@ -220,59 +220,86 @@ function baseUnit(g, it) {
 // [height:]<count><kind>, e.g. "150:1w/1w/1w" = shallow drawer over two drawers.
 // Kinds: d door, w drawer, o open, b wire basket, x empty space (e.g. for a fridge),
 // v oven, m compact oven. Rows without a height share the remaining space.
+// Side-by-side sections go between '|', e.g. "1d|1w/1w|1d" = door, two drawers, door.
+// Options: it.legs (height, instead of a plinth), it.handle 'top'/'bottom'/'none',
+// it.shaker (framed fronts), it.topFront (worktop overhang at the front, default 20).
 const PLY = '#dcc39b';
 function cabinet(g, it) {
   const T = 18;
   const { w, d, h } = it;
   const ply = it.carcass || PLY, front = it.color || '#b5654c';
-  const plinth = it.plinth ?? 0, top = it.topT ?? 0;
-  const cH = h - plinth - top, y0 = plinth;
-  const handle = (x, y) => box(g, 100, 16, 4, x, y, d / 2 + 1, '#4a3a2e');
+  const legH = it.legs ?? 0, plinth = legH ? 0 : (it.plinth ?? 0), top = it.topT ?? 0;
+  const y0 = legH || plinth, cH = h - y0 - top;
+  const handle = (x, y) => { if (it.handle !== 'none') box(g, 100, 16, 4, x, y, d / 2 + 1, '#4a3a2e'); };
+  const frontPanel = (cw, rh, xc, yc) => {
+    box(g, cw - 4, rh - 4, T, xc, yc, d / 2 - T / 2, front);
+    if (it.shaker && cw > 160 && rh > 160) {                 // raised frame around a recessed centre
+      const f = 55, dark = shade(front, 0.9);
+      box(g, cw - 4 - 2 * f, rh - 4 - 2 * f, 3, xc, yc, d / 2 + 2.5, dark); // sits just proud, no overlap
+    }
+  };
   if (plinth > 0) box(g, w - 4, plinth, d - 60, 0, plinth / 2, -30, shade(ply, 0.82));
+  if (legH > 0) {
+    const legC = it.legColor || '#1f1d1b', nx = w > 1300 ? 3 : 2;
+    for (let i = 0; i < nx; i++) for (const sz of [-1, 1]) {
+      const lx = nx === 2 ? (i ? 1 : -1) * (w / 2 - 60) : -w / 2 + 60 + (w - 120) * i / (nx - 1);
+      box(g, 40, legH, 40, lx, legH / 2, sz * (d / 2 - 60), legC);
+    }
+  }
   // carcass panels: sides, base, top, back
   for (const sx of [-1, 1]) box(g, T, cH, d, sx * (w / 2 - T / 2), y0 + cH / 2, 0, ply);
   box(g, w - 2 * T, T, d, 0, y0 + T / 2, 0, ply);
   box(g, w - 2 * T, T, d, 0, y0 + cH - T / 2, 0, ply);
   box(g, w - 2 * T, cH - 2 * T, T, 0, y0 + cH / 2, -d / 2 + T / 2, shade(ply, 0.92));
-  // rows
-  const rows = String(it.fronts || '1d').split('/').map((r) => {
-    const m = r.trim().match(/^(?:(\d+):)?(\d*)([dwobxvm])$/);
-    return m ? { h: m[1] ? Number(m[1]) : null, n: Number(m[2] || 1), k: m[3] } : { h: null, n: 1, k: 'd' };
+  // sections side by side, each with its own rows
+  const sections = String(it.fronts || '1d').split('|');
+  const iwAll = w - 2 * T, secW = (iwAll - (sections.length - 1) * T) / sections.length;
+  sections.forEach((spec, si) => {
+    const xL = -iwAll / 2 + si * (secW + T);
+    if (si > 0) box(g, T, cH - 2 * T, d - T, xL - T / 2, y0 + cH / 2, T / 2, ply);   // upright between sections
+    drawRows(spec, xL, secW);
   });
-  const inner = cH - 2 * T - (rows.length - 1) * T;
-  const fixed = rows.reduce((a, r) => a + (r.h || 0), 0);
-  const free = rows.filter((r) => !r.h).length;
-  const share = free ? Math.max(50, (inner - fixed) / free) : 0;
-  let yTop = y0 + cH - T;
-  const iw = w - 2 * T;
-  rows.forEach((r, ri) => {
-    const rh = r.h || share;
-    const yc = yTop - rh / 2;
-    const open = 'obx'.includes(r.k);
-    const cw = (iw - (open ? (r.n - 1) * T : 0)) / r.n;
-    for (let i = 0; i < r.n; i++) {
-      const xc = -iw / 2 + cw / 2 + i * (cw + (open ? T : 0));
-      if (open && i > 0) box(g, T, rh, d - T, xc - cw / 2 - T / 2, yc, T / 2, ply); // divider
-      if (r.k === 'd' || r.k === 'w') {
-        box(g, cw - 4, rh - 4, T, xc, yc, d / 2 - T / 2, front);
-        const hy = r.k === 'w' ? yc + Math.min(rh / 2 - 40, 60) : (it.handle === 'bottom' ? yc - rh / 2 + 70 : yc + rh / 2 - 70);
-        handle(xc, hy);
-      } else if (r.k === 'b') {
-        box(g, cw - 40, rh - 50, d - 80, xc, yc - 10, 20, '#4b4f55');
-      } else if (r.k === 'v' || r.k === 'm') {
-        box(g, cw - 4, rh - 4, 25, xc, yc, d / 2 - 12, '#161616', { roughness: 0.3 });
-        const winH = r.k === 'v' ? rh * 0.5 : rh * 0.42;
-        box(g, cw * 0.72, winH, 4, xc, yc - rh * 0.08, d / 2 + 2, '#2c2f33', { roughness: 0.15 });
-        box(g, cw * 0.12, 22, 4, xc, yc + rh / 2 - 40, d / 2 + 2, '#d8d2c0');
+  function drawRows(spec, xL, iw) {
+    const rows = spec.split('/').map((r) => {
+      const m = r.trim().match(/^(?:(\d+):)?(\d*)([dwobxvm])$/);
+      return m ? { h: m[1] ? Number(m[1]) : null, n: Number(m[2] || 1), k: m[3] } : { h: null, n: 1, k: 'd' };
+    });
+    const inner = cH - 2 * T - (rows.length - 1) * T;
+    const fixed = rows.reduce((a, r) => a + (r.h || 0), 0);
+    const free = rows.filter((r) => !r.h).length;
+    const share = free ? Math.max(50, (inner - fixed) / free) : 0;
+    let yTop = y0 + cH - T;
+    const xMid = xL + iw / 2;
+    rows.forEach((r, ri) => {
+      const rh = r.h || share;
+      const yc = yTop - rh / 2;
+      const open = 'obx'.includes(r.k);
+      const cw = (iw - (open ? (r.n - 1) * T : 0)) / r.n;
+      for (let i = 0; i < r.n; i++) {
+        const xc = xL + cw / 2 + i * (cw + (open ? T : 0));
+        if (open && i > 0) box(g, T, rh, d - T, xc - cw / 2 - T / 2, yc, T / 2, ply); // divider
+        if (r.k === 'd' || r.k === 'w') {
+          frontPanel(cw, rh, xc, yc);
+          const hy = r.k === 'w' ? yc + Math.min(rh / 2 - 40, 60) : (it.handle === 'bottom' ? yc - rh / 2 + 70 : yc + rh / 2 - 70);
+          handle(xc, hy);
+        } else if (r.k === 'b') {
+          box(g, cw - 40, rh - 50, d - 80, xc, yc - 10, 20, '#4b4f55');
+        } else if (r.k === 'v' || r.k === 'm') {
+          box(g, cw - 4, rh - 4, 25, xc, yc, d / 2 - 12, '#161616', { roughness: 0.3 });
+          const winH = r.k === 'v' ? rh * 0.5 : rh * 0.42;
+          box(g, cw * 0.72, winH, 4, xc, yc - rh * 0.08, d / 2 + 2, '#2c2f33', { roughness: 0.15 });
+          box(g, cw * 0.12, 22, 4, xc, yc + rh / 2 - 40, d / 2 + 2, '#d8d2c0');
+        }
       }
-    }
-    if (ri < rows.length - 1) box(g, iw, T, open ? d - T : d, 0, yTop - rh - T / 2, open ? T / 2 : 0, ply); // rail/shelf
-    yTop -= rh + T;
-  });
+      if (ri < rows.length - 1) box(g, iw, T, open ? d - T : d, xMid, yTop - rh - T / 2, open ? T / 2 : 0, ply); // rail/shelf
+      yTop -= rh + T;
+    });
+  }
   // worktop, sink and hob
   if (top > 0) {
     const wt = it.worktop || '#e6e2da';
-    box(g, w, top, d + 20, 0, h - top / 2, 10, wt);
+    const over = it.topFront ?? 20;
+    box(g, w, top, d + over, 0, h - top / 2, over / 2, wt);
     if (it.sink) {
       const bowls = it.sink === 'double' ? 2 : 1, bw = (w - 160) / bowls;
       for (let i = 0; i < bowls; i++) {
