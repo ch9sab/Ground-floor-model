@@ -482,6 +482,7 @@ function steppedStorage(g, it) {
   const c = it.color || '#f2f2f0', bc = it.boxColor || '#fbfbf9', T = 18;
   const hs = String(it.heights || '940/680/430').split('/').map(Number), n = hs.length, cw = (w - (n + 1) * T) / n;
   const bh = it.boxH || 230, bw = it.boxW || 300, bd = Math.min(it.boxD || 420, d - 20);
+  const boxColors = it.boxColors ? String(it.boxColors).split(',').map((x) => x.trim()) : null;
   for (let i = 0; i <= n; i++) {                              // side panels step down with the columns
     const hh = Math.max(hs[Math.min(i, n - 1)], i > 0 ? hs[i - 1] : 0);
     box(g, T, hh, d, -w / 2 + T / 2 + i * (cw + T), hh / 2, 0, c);
@@ -494,8 +495,9 @@ function steppedStorage(g, it) {
     const avail = hh - T - 90 - 30, boxes = Math.max(1, Math.floor(avail / (bh + 20))), pitch = avail / boxes;
     for (let k = 0; k < boxes; k++) {
       const y = hh - T - 95 - k * pitch;                      // top of each box (rim)
-      box(g, bw + 20, 12, bd, x, y - 6, 10, bc);               // rim on its runners
-      box(g, bw - 20, bh - 12, bd - 40, x, y - bh / 2 - 6, 10, bc);
+      const kc = boxColors ? boxColors[(i * 5 + k) % boxColors.length] : bc;   // mixed colours if given
+      box(g, bw + 20, 12, bd, x, y - 6, 10, kc);               // rim on its runners
+      box(g, bw - 20, bh - 12, bd - 40, x, y - bh / 2 - 6, 10, kc);
     }
   });
 }

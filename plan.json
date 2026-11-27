@@ -983,6 +983,15 @@
    "width": 580,
    "height": 1200,
    "sill": 900
+  },
+  {
+   "id": "O41",
+   "type": "window",
+   "wall": "W23",
+   "offset": 1600,
+   "width": 1000,
+   "height": 900,
+   "sill": 1100
   }
  ],
  "rooms": [
@@ -1655,6 +1664,87 @@
    "h": 2400,
    "rot": 0,
    "color": "#e8e4dc"
+  },
+  {
+   "id": "i19",
+   "z": 1150,
+   "type": "cabinet",
+   "name": "White wall unit (fixed)",
+   "x": 26620,
+   "y": 12215,
+   "w": 1200,
+   "d": 330,
+   "h": 900,
+   "rot": 0,
+   "fronts": "2d",
+   "color": "#f4f4f2",
+   "carcass": "#f4f4f2",
+   "handle": "bottom"
+  },
+  {
+   "id": "i20",
+   "z": 1150,
+   "type": "cabinet",
+   "name": "White wall unit (fixed)",
+   "x": 27520,
+   "y": 12215,
+   "w": 600,
+   "d": 330,
+   "h": 900,
+   "rot": 0,
+   "fronts": "1d",
+   "color": "#f4f4f2",
+   "carcass": "#f4f4f2",
+   "handle": "bottom"
+  },
+  {
+   "id": "i21",
+   "z": 1350,
+   "type": "cabinet",
+   "name": "White wall unit (fixed)",
+   "x": 30090,
+   "y": 12635,
+   "w": 600,
+   "d": 330,
+   "h": 720,
+   "rot": 0,
+   "fronts": "1d",
+   "color": "#f4f4f2",
+   "carcass": "#f4f4f2",
+   "handle": "bottom"
+  },
+  {
+   "id": "i22",
+   "z": 0,
+   "type": "cabinet",
+   "name": "PAX wardrobe (fixed)",
+   "x": 25970,
+   "y": 8900,
+   "w": 1500,
+   "d": 580,
+   "h": 2010,
+   "rot": 90,
+   "fronts": "1d/180:1w/180:1w/180:1w/180:1w|1o/1o/1o/1o/1o/1o|1d/180:1w/180:1w/180:1w/180:1w",
+   "color": "#d49a55",
+   "carcass": "#d49a55"
+  },
+  {
+   "id": "i23",
+   "z": 0,
+   "type": "stepped-storage",
+   "name": "Box storage unit (fixed)",
+   "x": 25900,
+   "y": 10170,
+   "w": 980,
+   "d": 440,
+   "h": 1500,
+   "rot": 90,
+   "heights": "1500/1500/800",
+   "boxW": 280,
+   "boxD": 420,
+   "boxH": 230,
+   "color": "#c99a5e",
+   "boxColors": "#f1f1ee,#f2c400,#f0b8c8,#e8792e,#f2c400,#f1f1ee,#e8792e"
   }
  ]
 }

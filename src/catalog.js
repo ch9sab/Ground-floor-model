@@ -71,6 +71,12 @@ CATALOG.push(
   // 737 from the wall to the frame front, 1113 to the pull-up bar extension. Back of the item goes against the wall.
   // Mobile workbench with built-in table saw: a full 8x4 ft sheet top (2440 x 1220), ~900 high on casters.
   { group: 'Garage', label: 'Workbench 8×4 with table saw', item: { type: 'saw-bench', name: 'Workbench with table saw', w: 2440, d: 1220, h: 900, saw: 'right', color: '#e3cb9f' } },
+  // Units already in the garage (from photos): white gloss kitchen wall units, an IKEA PAX combination
+  // (door over 4 drawers | open shelves | door over 4 drawers) and a pine Trofast-style unit with coloured bins.
+  { group: 'Garage', label: 'White wall unit, 2-door 1200', item: { type: 'cabinet', name: 'White wall unit', w: 1200, d: 330, h: 900, z: 1150, fronts: '2d', color: '#f4f4f2', carcass: '#f4f4f2', handle: 'bottom' } },
+  { group: 'Garage', label: 'White wall unit, 1-door 600', item: { type: 'cabinet', name: 'White wall unit', w: 600, d: 330, h: 900, z: 1150, fronts: '1d', color: '#f4f4f2', carcass: '#f4f4f2', handle: 'bottom' } },
+  { group: 'Garage', label: 'IKEA PAX wardrobe 150 (doors, drawers, shelves)', item: { type: 'cabinet', name: 'PAX wardrobe', w: 1500, d: 580, h: 2010, fronts: '1d/180:1w/180:1w/180:1w/180:1w|1o/1o/1o/1o/1o/1o|1d/180:1w/180:1w/180:1w/180:1w', color: '#d49a55', carcass: '#d49a55' } },
+  { group: 'Garage', label: 'Trofast-style box unit (coloured bins)', item: { type: 'stepped-storage', name: 'Box storage unit', w: 980, d: 440, h: 1500, heights: '1500/1500/800', boxW: 280, boxD: 420, boxH: 230, color: '#c99a5e', boxColors: '#f1f1ee,#f2c400,#f0b8c8,#e8792e,#f2c400,#f1f1ee,#e8792e' } },
   { group: 'Gym', label: 'REP Ares 2.0 cable rack', item: { type: 'cable-rack', name: 'REP Ares 2.0', w: 2391, d: 1113, h: 2085, frameD: 737, coreW: 1404, color: '#1b1b1d' } },
   { group: 'Gym', label: 'Hyper Pro X (stored upright)', item: { type: 'box', name: 'Hyper Pro X (stored)', w: 760, d: 585, h: 1470, color: '#1d1d1f' } },
 );
