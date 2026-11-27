@@ -630,6 +630,63 @@ const STEEL = '#1d1d1f', PAD = '#202022', CHROME = '#c8ccd0';
 // top at the other end (it.saw = 'right' | 'left' | 'none', as you face the front).
 // Plywood bookshelf with staggered shelves that overhang alternately left and right, offset
 // uprights in each tier, a row of drawers near the top, low book dividers on top, tapered legs.
+// a round rod between two points (mm)
+function rod(g, p0, p1, r, color, opts) {
+  const a = new THREE.Vector3(...p0).multiplyScalar(S), b = new THREE.Vector3(...p1).multiplyScalar(S);
+  const dir = b.clone().sub(a), len = dir.length();
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r * S, r * S, len, 12), mat(color, opts));
+  m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+  m.position.copy(a.add(b).multiplyScalar(0.5));
+  m.castShadow = true;
+  g.add(m);
+  return m;
+}
+
+// Bicycle. Sized by it.len (overall length), it.bar (handlebar width), it.ht (height to the bars)
+// and it.wheel (tyre outside diameter). it.orient 'floor' stands it on its wheels; 'upright' stands
+// it on its back wheel with the front wheel up and the wheels against the wall at the back (-z).
+function bike(g, it) {
+  const b = new THREE.Group();
+  g.add(b);
+  const len = it.len ?? 1900, bar = it.bar ?? 780, ht = it.ht ?? 1100, D = it.wheel ?? 740;
+  const R = D / 2, tyre = it.tyre ?? 60, c = it.color || '#2f6f9f', k = ht / 1100;
+  const WB = len - D;                                    // wheelbase
+  const rear = [-WB / 2, R, 0], front = [WB / 2, R, 0];
+  const bb = [-WB * 0.05, R * 0.9, 0];
+  const seatTop = [-WB * 0.14, 820 * k, 0], headTop = [WB / 2 - 170 * k, 960 * k, 0], headBot = [WB / 2 - 120 * k, 800 * k, 0];
+  for (const [x] of [rear, front]) {
+    const t = new THREE.Mesh(new THREE.TorusGeometry((R - tyre / 2) * S, (tyre / 2) * S, 10, 36), mat('#1b1b1b', { roughness: 0.9 }));
+    t.position.set(x * S, R * S, 0); t.castShadow = true; b.add(t);
+    const rim = new THREE.Mesh(new THREE.TorusGeometry((R - tyre - 8) * S, 8 * S, 6, 36), mat('#7d8288', { metalness: 0.4 }));
+    rim.position.set(x * S, R * S, 0); b.add(rim);
+    cyl(b, 25, 110, x, R, 0, 'z', '#555');
+  }
+  const tube = (p0, p1, r = 22) => rod(b, p0, p1, r * Math.max(0.7, k), c, { roughness: 0.4 });
+  tube(bb, seatTop, 20); tube(seatTop, headTop, 22); tube(bb, headBot, 26); tube(headBot, headTop, 24);
+  for (const sz of [-1, 1]) {
+    tube([bb[0], bb[1], sz * 30], [rear[0], rear[1], sz * 55], 12);            // chain stays
+    tube([seatTop[0], seatTop[1], sz * 20], [rear[0], rear[1], sz * 55], 11);  // seat stays
+    rod(b, [headBot[0], headBot[1], sz * 30], [front[0], front[1], sz * 55], 16 * Math.max(0.7, k), '#2a2a2a'); // fork
+  }
+  // saddle and seatpost
+  const saddle = [seatTop[0] - 40 * k, ht - 70 * k, 0];
+  rod(b, seatTop, saddle, 14, '#2a2a2a');
+  box(b, 260 * k, 50, 140 * k, saddle[0] - 20, saddle[1] + 25, 0, '#151515');
+  // stem and handlebars
+  const stem = [headTop[0] + 40 * k, ht - 20, 0];
+  rod(b, headTop, stem, 16, '#2a2a2a');
+  rod(b, [stem[0], stem[1], -bar / 2], [stem[0], stem[1], bar / 2], 12, '#2a2a2a');
+  for (const sz of [-1, 1]) rod(b, [stem[0], stem[1], sz * (bar / 2 - 90)], [stem[0], stem[1], sz * bar / 2], 17, '#111');
+  // cranks and chainring
+  cyl(b, 95 * k, 10, bb[0], bb[1], 45, 'z', '#3a3a3a');
+  for (const sz of [-1, 1]) rod(b, [bb[0], bb[1], sz * 60], [bb[0] + sz * 120 * k, bb[1] - sz * 120 * k, sz * 60], 9, '#3a3a3a');
+  // orientation
+  if (it.orient === 'upright') {
+    b.rotation.set(0, Math.PI / 2, Math.PI / 2);        // length up, bike's top pointing away from the wall
+    b.position.set(0, len / 2 * S + 0.01, -ht / 2 * S);
+  }
+}
+
 function staggerShelf(g, it) {
   const { w, d, h } = it, c = it.color || '#e4d0a8', T = 18, legH = it.legs ?? 150;
   const edge = shade(c, 0.9), notch = shade(c, 0.6);
@@ -1084,6 +1141,9 @@ export function buildItem(it) {
       box(g, w - 4, h - plinth - lower - 4, 18, 0, plinth + lower + (h - plinth - lower) / 2, d / 2 - 9, c);
       break;
     }
+    case 'bike':
+      bike(g, it);
+      break;
     case 'stagger-shelf':
       staggerShelf(g, it);
       break;

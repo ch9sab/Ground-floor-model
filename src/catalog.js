@@ -83,6 +83,12 @@ CATALOG.push(
   { group: 'Garage', label: 'White wall unit, 1-door 600', item: { type: 'cabinet', name: 'White wall unit', w: 600, d: 330, h: 900, z: 1150, fronts: '1d', color: '#f4f4f2', carcass: '#f4f4f2', handle: 'bottom' } },
   { group: 'Garage', label: 'IKEA PAX wardrobe 150 (doors, drawers, shelves)', item: { type: 'cabinet', name: 'PAX wardrobe', w: 1500, d: 580, h: 2010, fronts: '1d/180:1w/180:1w/180:1w/180:1w|1o/1o/1o/1o/1o/1o|1d/180:1w/180:1w/180:1w/180:1w', color: '#d49a55', carcass: '#d49a55' } },
   { group: 'Garage', label: 'Trofast-style box unit (coloured bins)', item: { type: 'stepped-storage', name: 'Box storage unit', w: 980, d: 440, h: 1500, heights: '1500/1500/800', boxW: 280, boxD: 420, boxH: 230, color: '#c99a5e', boxColors: '#f1f1ee,#f2c400,#f0b8c8,#e8792e,#f2c400,#f1f1ee,#e8792e' } },
+  // Bikes. Full-size 29er mountain bike ~190 cm long, 78 cm bars, ~110 cm to the bars; child's 20" bike
+  // ~135 cm long, 56 cm bars, ~85 cm high. Orientation switches between lying on the wheels and stored upright.
+  { group: 'Garage', label: 'Mountain bike (adult, 29")', item: { type: 'bike', name: 'Mountain bike', w: 1900, d: 780, h: 1100, len: 1900, bar: 780, ht: 1100, wheel: 740, tyre: 60, orient: 'floor', color: '#2f6f9f' } },
+  { group: 'Garage', label: 'Mountain bike (adult), upright', item: { type: 'bike', name: 'Mountain bike', w: 780, d: 1100, h: 1900, len: 1900, bar: 780, ht: 1100, wheel: 740, tyre: 60, orient: 'upright', color: '#2f6f9f' } },
+  { group: 'Garage', label: 'Child\'s bike (20" wheels)', item: { type: 'bike', name: 'Child\'s bike', w: 1350, d: 560, h: 850, len: 1350, bar: 560, ht: 850, wheel: 500, tyre: 50, orient: 'floor', color: '#d6392f' } },
+  { group: 'Garage', label: 'Child\'s bike (20"), upright', item: { type: 'bike', name: 'Child\'s bike', w: 560, d: 850, h: 1350, len: 1350, bar: 560, ht: 850, wheel: 500, tyre: 50, orient: 'upright', color: '#d6392f' } },
   { group: 'Gym', label: 'REP Ares 2.0 cable rack', item: { type: 'cable-rack', name: 'REP Ares 2.0', w: 2391, d: 1113, h: 2085, frameD: 737, coreW: 1404, color: '#1b1b1d' } },
   { group: 'Gym', label: 'Hyper Pro X (stored upright)', item: { type: 'box', name: 'Hyper Pro X (stored)', w: 760, d: 585, h: 1470, color: '#1d1d1f' } },
 );
@@ -175,4 +181,4 @@ CATALOG.push(
   { group: 'Bathroom', label: 'Heated towel rail 500', item: { type: 'box', name: 'Towel rail', w: 500, d: 80, h: 1200, z: 150, color: '#c9ced3' } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest', 'lounge-chair', 'swivel-chair', 'swivel-stool', 'shell-chair', 'saw-bench', 'stagger-shelf', 'trolley'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest', 'lounge-chair', 'swivel-chair', 'swivel-stool', 'shell-chair', 'saw-bench', 'stagger-shelf', 'trolley', 'bike'];

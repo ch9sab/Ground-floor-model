@@ -446,6 +446,7 @@ function fieldsFor(kind, o) {
     const f = [...ITEM_FIELDS];
     if (['base-unit', 'sink-unit', 'hob-unit'].includes(o.type)) f.push(['worktop', 'color', 'Worktop']);
     if ((o.type === 'trestle-table' && o.openW) || o.openD) f.push(['extension', ['closed', 'extended'], 'Extension']);
+    if (o.type === 'bike') f.push(['orient', [['floor', 'Lying on its wheels'], ['upright', 'Upright (stored)']], 'Orientation']);
     if (o.type === 'saw-bench') f.push(['saw', ['right', 'left', 'none'], 'Table saw']);
     if (o.type === 'walking-pad') f.push(['handlebar', ['up', 'down'], 'Handlebar']);
     if (o.type === 'cabinet') {
@@ -509,6 +510,10 @@ function setField(kind, o, key, value) {
   }
   if (kind === 'opening' && key === 'type' && value === 'window') { o.sill ??= 900; }
   if (kind === 'opening' && key === 'side') o.side = Number(value);
+  if (kind === 'item' && key === 'orient' && o.type === 'bike') {
+    // turn the footprint with the bike: lying = length x bars x height, upright = bars x height x length
+    Object.assign(o, value === 'upright' ? { w: o.bar, d: o.ht, h: o.len } : { w: o.len, d: o.bar, h: o.ht });
+  }
   if (kind === 'item' && key === 'extension' && o.openW) o.w = value === 'extended' ? o.openW : o.closedW;
   if (kind === 'item' && key === 'extension' && o.openD) {
     // grow or shrink towards the front only, so the part that doesn't move stays where it is
