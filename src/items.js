@@ -222,7 +222,7 @@ function baseUnit(g, it) {
 // v oven, m compact oven. Rows without a height share the remaining space.
 // Side-by-side sections go between '|', e.g. "1d|1w/1w|1d" = door, two drawers, door.
 // Options: it.legs (height, instead of a plinth), it.handle 'top'/'bottom'/'none',
-// it.shaker (framed fronts), it.topFront (worktop overhang at the front, default 20).
+// it.shaker (framed fronts), it.topFront (worktop overhang at the front, default 20), it.back (back panel colour).
 const PLY = '#dcc39b';
 function cabinet(g, it) {
   const T = 18;
@@ -250,7 +250,7 @@ function cabinet(g, it) {
   for (const sx of [-1, 1]) box(g, T, cH, d, sx * (w / 2 - T / 2), y0 + cH / 2, 0, ply);
   box(g, w - 2 * T, T, d, 0, y0 + T / 2, 0, ply);
   box(g, w - 2 * T, T, d, 0, y0 + cH - T / 2, 0, ply);
-  box(g, w - 2 * T, cH - 2 * T, T, 0, y0 + cH / 2, -d / 2 + T / 2, shade(ply, 0.92));
+  box(g, w - 2 * T, cH - 2 * T, T, 0, y0 + cH / 2, -d / 2 + T / 2, it.back || shade(ply, 0.92));
   // sections side by side, each with its own rows
   const sections = String(it.fronts || '1d').split('|');
   const iwAll = w - 2 * T, secW = (iwAll - (sections.length - 1) * T) / sections.length;
@@ -628,6 +628,56 @@ const STEEL = '#1d1d1f', PAD = '#202022', CHROME = '#c8ccd0';
 // Mobile workbench / table-saw station: plywood top on a 2x4 frame with casters, a drawer bank
 // at one end of the front, an open lower shelf, and a benchtop table saw dropped in flush with the
 // top at the other end (it.saw = 'right' | 'left' | 'none', as you face the front).
+// Plywood bookshelf with staggered shelves that overhang alternately left and right, offset
+// uprights in each tier, a row of drawers near the top, low book dividers on top, tapered legs.
+function staggerShelf(g, it) {
+  const { w, d, h } = it, c = it.color || '#e4d0a8', T = 18, legH = it.legs ?? 150;
+  const edge = shade(c, 0.9), notch = shade(c, 0.6);
+  // shelf heights from the floor: base, two book tiers, a drawer tier, then the top
+  const ys = [legH, legH + (h - legH) * 0.34, legH + (h - legH) * 0.64, legH + (h - legH) * 0.84];
+  const shelfW = w * 0.9, shift = w * 0.05;
+  ys.forEach((y, i) => box(g, shelfW, T, d, (i % 2 ? 1 : -1) * shift, y + T / 2, 0, c));
+  // uprights for each tier, offset so they don't line up (fractions across the width)
+  const tiers = [[0.08, 0.3, 0.6, 0.82], [0.12, 0.3, 0.43, 0.65, 0.9], [0.1, 0.42, 0.55, 0.7, 0.92]];
+  tiers.forEach((xs, i) => {
+    const yA = ys[i] + T, yB = ys[i + 1], hh = yB - yA;
+    for (const f of xs) box(g, T, hh, d, -w / 2 + w * f, yA + hh / 2, 0, c);
+    box(g, w * (xs[xs.length - 1] - xs[0]), hh, 6, -w / 2 + w * (xs[0] + xs[xs.length - 1]) / 2, yA + hh / 2, -d / 2 + 3, edge); // back
+  });
+  // drawers in the drawer tier (wide, small, [open], medium)
+  const xs = tiers[2], yA = ys[2] + T, hh = ys[3] - yA;
+  [[0, 1], [1, 2], [3, 4]].forEach(([a, b]) => {
+    const x0 = -w / 2 + w * xs[a] + T / 2, x1 = -w / 2 + w * xs[b] - T / 2;
+    box(g, x1 - x0 - 6, hh - 8, T, (x0 + x1) / 2, yA + hh / 2, d / 2 - T / 2, c);
+    box(g, Math.min(90, (x1 - x0) * 0.3), 20, 4, (x0 + x1) / 2, yA + hh - 18, d / 2 + 1, notch); // finger notch
+  });
+  // low book dividers on top
+  const top = ys[3] + T, divH = h - top;
+  for (const f of [0.12, 0.25, 0.38, 0.55, 0.78, 0.92]) box(g, T, divH, d * 0.7, -w / 2 + w * f, top + divH / 2, -d * 0.15, c);
+  // tapered legs
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+    const leg = box(g, 32, legH, 32, sx * (w / 2 - w * 0.13), legH / 2, sz * (d / 2 - 60), it.legColor || '#c9a06a');
+    leg.rotation.z = sx * 0.06;
+  }
+}
+
+// Kitchen-style trolley: black steel frame on casters, two lower shelves and a plywood tray on top.
+function trolley(g, it) {
+  const { w, d, h } = it, frame = it.color || '#1e1e20', tray = it.tray || '#d9a868', post = 35, wheel = 90;
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+    box(g, post, h - wheel - 80, post, sx * (w / 2 - post / 2 - 30), wheel + (h - wheel - 80) / 2, sz * (d / 2 - post / 2 - 30), frame);
+    cyl(g, 35, 25, sx * (w / 2 - 50), 35, sz * (d / 2 - 50), 'x', '#2a2a2a');
+    box(g, 30, wheel - 60, 30, sx * (w / 2 - 50), 60 + (wheel - 60) / 2, sz * (d / 2 - 50), '#9a9da2');
+  }
+  for (const y of [wheel + 200, wheel + 520]) box(g, w - 80, 20, d - 80, 0, y, 0, frame);        // lower shelves
+  for (const sz of [-1, 1]) box(g, w - 80, 40, 20, 0, h - 100, sz * (d / 2 - 40), frame);         // top rails
+  // plywood tray with raised sides sitting on the frame
+  const ty = h - 80, rim = 80;
+  box(g, w, 15, d, 0, ty + 7, 0, tray);
+  for (const sz of [-1, 1]) box(g, w, rim, 15, 0, ty + rim / 2, sz * (d / 2 - 7), tray);
+  for (const sx of [-1, 1]) box(g, 15, rim, d, sx * (w / 2 - 7), ty + rim / 2, 0, tray);
+}
+
 function sawBench(g, it) {
   const { w, d, h } = it, ply = it.color || '#e3cb9f', stud = shade(ply, 1.04), T = 19, post = 89;
   const caster = 100, x0 = -w / 2, z0 = -d / 2;
@@ -1034,6 +1084,12 @@ export function buildItem(it) {
       box(g, w - 4, h - plinth - lower - 4, 18, 0, plinth + lower + (h - plinth - lower) / 2, d / 2 - 9, c);
       break;
     }
+    case 'stagger-shelf':
+      staggerShelf(g, it);
+      break;
+    case 'trolley':
+      trolley(g, it);
+      break;
     case 'saw-bench':
       sawBench(g, it);
       break;

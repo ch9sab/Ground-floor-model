@@ -24,6 +24,12 @@ export const CATALOG = [
   // IKEA BESTÅ storage combination with drawers, 180x42x75 cm: black-brown frame, Krukmakare dark grey-green
   // fronts (door | 2 drawers | door, no handles), walnut-effect top, legs.
   { group: 'Living', label: 'IKEA BESTÅ 180×42×75 (drawers)', item: { type: 'cabinet', name: 'BESTÅ storage', w: 1800, d: 420, h: 750, legs: 100, topT: 16, topFront: 0, fronts: '1d|1w/1w|1d', handle: 'none', shaker: true, color: '#5f7a6c', carcass: '#2c2724', worktop: '#7a5a3e', legColor: '#1f1d1b' } },
+  // Oak-effect bookcase with red back, 4 shelves over 2 drawers, black hairpin legs: 85 W x 30 D x 180 H cm.
+  { group: 'Living', label: 'Bookcase with drawers 85×30×180', item: { type: 'cabinet', name: 'Bookcase', w: 850, d: 300, h: 1800, legs: 200, fronts: '1o/1o/1o/1o/220:2w', color: '#d8ad72', carcass: '#d8ad72', back: '#d8432a', legColor: '#1b1b1b' } },
+  // Plywood bookshelf with staggered shelves, offset dividers, drawers and tapered legs: 180 W x 37 D x 121 H cm.
+  { group: 'Living', label: 'Plywood bookshelf 180×37×121', item: { type: 'stagger-shelf', name: 'Plywood bookshelf', w: 1800, d: 370, h: 1210, color: '#e4d0a8' } },
+  // IKEA trolley (black steel, two shelves) with a birch plywood tray on top. Size assumed from IKEA BROR: 85 x 55 x 88 cm.
+  { group: 'Other', label: 'IKEA trolley with plywood tray', item: { type: 'trolley', name: 'Trolley', w: 850, d: 550, h: 880, color: '#1e1e20', tray: '#d9a868' } },
   { group: 'Living', label: 'Sofa (3 seat)', item: { type: 'sofa', name: 'Sofa', w: 2200, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Sofa (2 seat)', item: { type: 'sofa', name: 'Sofa', w: 1700, d: 900, h: 850, color: '#6b7c93' } },
   { group: 'Living', label: 'Armchair', item: { type: 'sofa', name: 'Armchair', w: 900, d: 850, h: 850, color: '#8a6f5a' } },
@@ -169,4 +175,4 @@ CATALOG.push(
   { group: 'Bathroom', label: 'Heated towel rail 500', item: { type: 'box', name: 'Towel rail', w: 500, d: 80, h: 1200, z: 150, color: '#c9ced3' } },
 );
 
-export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest', 'lounge-chair', 'swivel-chair', 'swivel-stool', 'shell-chair', 'saw-bench'];
+export const ITEM_TYPES = ['box', 'sofa', 'table', 'chair', 'bed', 'rug', 'base-unit', 'sink-unit', 'hob-unit', 'wall-unit', 'tall-unit', 'appliance', 'stairs', 'sectional', 'longview-chair', 'trestle-table', 'french-door-fridge', 'cabinet', 'leg-machine', 'walking-pad', 'hyper-bench', 'cable-rack', 'legged-sofa', 'sliding-wardrobe', 'dressing-table', 'desk', 'bath', 'shower-tray', 'toilet', 'basin', 'vanity', 'glass-block', 'mid-sleeper', 'cube-shelf', 'stepped-storage', 'framed-chest', 'lounge-chair', 'swivel-chair', 'swivel-stool', 'shell-chair', 'saw-bench', 'stagger-shelf', 'trolley'];
